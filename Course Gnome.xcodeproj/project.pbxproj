@@ -278,7 +278,7 @@
 				DEVELOPMENT_TEAM = AW3JDRAG27;
 				INFOPLIST_FILE = "Course Gnome/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.traversy.Course-Gnome";
+				PRODUCT_BUNDLE_IDENTIFIER = com.traversy.coursegnome;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -293,7 +293,7 @@
 				DEVELOPMENT_TEAM = AW3JDRAG27;
 				INFOPLIST_FILE = "Course Gnome/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.traversy.Course-Gnome";
+				PRODUCT_BUNDLE_IDENTIFIER = com.traversy.coursegnome;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
