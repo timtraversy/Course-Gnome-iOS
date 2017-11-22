@@ -7,19 +7,43 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		27A100D781C66EFA45D73938 /* Pods_Course_Gnome.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBAAE2DA9EBC15F77AC328 /* Pods_Course_Gnome.framework */; };
+		EC2E81331FC3848B0043351F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC2E81321FC3848B0043351F /* Assets.xcassets */; };
+		ECB6878B1FC54B8200EEA506 /* DatabaseJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB6878A1FC54B8200EEA506 /* DatabaseJSON.swift */; };
+		ECCB1BAA1FC54DCA00DB7EB9 /* PullCourses.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB1BA91FC54DCA00DB7EB9 /* PullCourses.swift */; };
+		ECCB1BAC1FC54E7700DB7EB9 /* jsonString.json in Resources */ = {isa = PBXBuildFile; fileRef = ECCB1BAB1FC54E7700DB7EB9 /* jsonString.json */; };
+		ECCB1BAE1FC553C200DB7EB9 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB1BAD1FC553C200DB7EB9 /* Course.swift */; };
+		ECDC03D01FBBF93C00B97C7E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ECDC03CF1FBBF93C00B97C7E /* GoogleService-Info.plist */; };
+		ECF5BD5B1FC4C7B6006988B9 /* CourseDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF5BD5A1FC4C7B6006988B9 /* CourseDatabase.swift */; };
+		ECF5BD5F1FC4CE99006988B9 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF5BD5E1FC4CE99006988B9 /* ProfileViewController.swift */; };
+		ECF5BD611FC4CED6006988B9 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF5BD601FC4CED6006988B9 /* SearchViewController.swift */; };
+		ECF5BD631FC4CEEE006988B9 /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF5BD621FC4CEEE006988B9 /* SearchResults.swift */; };
+		ECF5BD651FC4D202006988B9 /* SearchNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF5BD641FC4D202006988B9 /* SearchNavigationController.swift */; };
 		ECF73F9D1FA7D2A800F030FC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF73F9C1FA7D2A800F030FC /* AppDelegate.swift */; };
 		ECF73F9F1FA7D2A800F030FC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF73F9E1FA7D2A800F030FC /* ViewController.swift */; };
 		ECF73FA21FA7D2A800F030FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECF73FA01FA7D2A800F030FC /* Main.storyboard */; };
-		ECF73FA41FA7D2A800F030FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ECF73FA31FA7D2A800F030FC /* Assets.xcassets */; };
 		ECF73FA71FA7D2A800F030FC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECF73FA51FA7D2A800F030FC /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1AFBAAE2DA9EBC15F77AC328 /* Pods_Course_Gnome.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Course_Gnome.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A1BFBF6E93E5DEE43688DEC /* Pods-Course Gnome.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Course Gnome.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Course Gnome/Pods-Course Gnome.debug.xcconfig"; sourceTree = "<group>"; };
+		D1D0B79AF72E4DBF39B2A884 /* Pods-Course Gnome.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Course Gnome.release.xcconfig"; path = "Pods/Target Support Files/Pods-Course Gnome/Pods-Course Gnome.release.xcconfig"; sourceTree = "<group>"; };
+		EC2E81321FC3848B0043351F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		ECB6878A1FC54B8200EEA506 /* DatabaseJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseJSON.swift; sourceTree = "<group>"; };
+		ECCB1BA91FC54DCA00DB7EB9 /* PullCourses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullCourses.swift; sourceTree = "<group>"; };
+		ECCB1BAB1FC54E7700DB7EB9 /* jsonString.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jsonString.json; sourceTree = "<group>"; };
+		ECCB1BAD1FC553C200DB7EB9 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
+		ECDC03CF1FBBF93C00B97C7E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		ECF5BD5A1FC4C7B6006988B9 /* CourseDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDatabase.swift; sourceTree = "<group>"; };
+		ECF5BD5E1FC4CE99006988B9 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		ECF5BD601FC4CED6006988B9 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		ECF5BD621FC4CEEE006988B9 /* SearchResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResults.swift; sourceTree = "<group>"; };
+		ECF5BD641FC4D202006988B9 /* SearchNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNavigationController.swift; sourceTree = "<group>"; };
 		ECF73F991FA7D2A800F030FC /* Course Gnome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Course Gnome.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECF73F9C1FA7D2A800F030FC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ECF73F9E1FA7D2A800F030FC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		ECF73FA11FA7D2A800F030FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		ECF73FA31FA7D2A800F030FC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ECF73FA61FA7D2A800F030FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ECF73FA81FA7D2A800F030FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -29,17 +53,88 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27A100D781C66EFA45D73938 /* Pods_Course_Gnome.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1423274F027513AE74EBD24B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5A1BFBF6E93E5DEE43688DEC /* Pods-Course Gnome.debug.xcconfig */,
+				D1D0B79AF72E4DBF39B2A884 /* Pods-Course Gnome.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		36B3478CA9FABDF0CE63C9C4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1AFBAAE2DA9EBC15F77AC328 /* Pods_Course_Gnome.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EC6A74C91FC33F810039840C /* model */ = {
+			isa = PBXGroup;
+			children = (
+				ECCB1BAD1FC553C200DB7EB9 /* Course.swift */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		EC6A74CB1FC33F900039840C /* view */ = {
+			isa = PBXGroup;
+			children = (
+				EC2E81321FC3848B0043351F /* Assets.xcassets */,
+				ECF73FA01FA7D2A800F030FC /* Main.storyboard */,
+				ECF73FA51FA7D2A800F030FC /* LaunchScreen.storyboard */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		EC6A74CC1FC33F970039840C /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				ECF73F9E1FA7D2A800F030FC /* ViewController.swift */,
+				ECF5BD601FC4CED6006988B9 /* SearchViewController.swift */,
+				ECF5BD621FC4CEEE006988B9 /* SearchResults.swift */,
+				ECF5BD5E1FC4CE99006988B9 /* ProfileViewController.swift */,
+				ECF5BD641FC4D202006988B9 /* SearchNavigationController.swift */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		EC6A74CD1FC33FA50039840C /* app */ = {
+			isa = PBXGroup;
+			children = (
+				ECF73F9C1FA7D2A800F030FC /* AppDelegate.swift */,
+				ECDC03CF1FBBF93C00B97C7E /* GoogleService-Info.plist */,
+				ECF73FA81FA7D2A800F030FC /* Info.plist */,
+			);
+			path = app;
+			sourceTree = "<group>";
+		};
+		EC977C981FBB99E600611C47 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				ECCB1BAB1FC54E7700DB7EB9 /* jsonString.json */,
+				ECCB1BA91FC54DCA00DB7EB9 /* PullCourses.swift */,
+				ECF5BD5A1FC4C7B6006988B9 /* CourseDatabase.swift */,
+				ECB6878A1FC54B8200EEA506 /* DatabaseJSON.swift */,
+			);
+			path = utils;
+			sourceTree = "<group>";
+		};
 		ECF73F901FA7D2A800F030FC = {
 			isa = PBXGroup;
 			children = (
 				ECF73F9B1FA7D2A800F030FC /* Course Gnome */,
 				ECF73F9A1FA7D2A800F030FC /* Products */,
+				1423274F027513AE74EBD24B /* Pods */,
+				36B3478CA9FABDF0CE63C9C4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,12 +149,11 @@
 		ECF73F9B1FA7D2A800F030FC /* Course Gnome */ = {
 			isa = PBXGroup;
 			children = (
-				ECF73F9C1FA7D2A800F030FC /* AppDelegate.swift */,
-				ECF73F9E1FA7D2A800F030FC /* ViewController.swift */,
-				ECF73FA01FA7D2A800F030FC /* Main.storyboard */,
-				ECF73FA31FA7D2A800F030FC /* Assets.xcassets */,
-				ECF73FA51FA7D2A800F030FC /* LaunchScreen.storyboard */,
-				ECF73FA81FA7D2A800F030FC /* Info.plist */,
+				EC6A74CD1FC33FA50039840C /* app */,
+				EC6A74CC1FC33F970039840C /* controller */,
+				EC6A74CB1FC33F900039840C /* view */,
+				EC6A74C91FC33F810039840C /* model */,
+				EC977C981FBB99E600611C47 /* utils */,
 			);
 			path = "Course Gnome";
 			sourceTree = "<group>";
@@ -71,9 +165,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = ECF73FAB1FA7D2A800F030FC /* Build configuration list for PBXNativeTarget "Course Gnome" */;
 			buildPhases = (
+				D1D3297D5008000F64232D8A /* [CP] Check Pods Manifest.lock */,
 				ECF73F951FA7D2A800F030FC /* Sources */,
 				ECF73F961FA7D2A800F030FC /* Frameworks */,
 				ECF73F971FA7D2A800F030FC /* Resources */,
+				C6103E77C8D2C8BFF18C8701 /* [CP] Embed Pods Frameworks */,
+				5C6C38DE1809C8EE10CDDA79 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -97,6 +194,11 @@
 					ECF73F981FA7D2A800F030FC = {
 						CreatedOnToolsVersion = 9.0.1;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -124,19 +226,91 @@
 			buildActionMask = 2147483647;
 			files = (
 				ECF73FA71FA7D2A800F030FC /* LaunchScreen.storyboard in Resources */,
-				ECF73FA41FA7D2A800F030FC /* Assets.xcassets in Resources */,
+				ECCB1BAC1FC54E7700DB7EB9 /* jsonString.json in Resources */,
+				ECDC03D01FBBF93C00B97C7E /* GoogleService-Info.plist in Resources */,
+				EC2E81331FC3848B0043351F /* Assets.xcassets in Resources */,
 				ECF73FA21FA7D2A800F030FC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		5C6C38DE1809C8EE10CDDA79 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Course Gnome/Pods-Course Gnome-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseUI/FirebaseAuthUI.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseUI/FirebaseFacebookAuthUI.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Course Gnome/Pods-Course Gnome-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C6103E77C8D2C8BFF18C8701 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Course Gnome/Pods-Course Gnome-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Course Gnome/Pods-Course Gnome-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D1D3297D5008000F64232D8A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Course Gnome-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		ECF73F951FA7D2A800F030FC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECF5BD5F1FC4CE99006988B9 /* ProfileViewController.swift in Sources */,
+				ECCB1BAA1FC54DCA00DB7EB9 /* PullCourses.swift in Sources */,
+				ECCB1BAE1FC553C200DB7EB9 /* Course.swift in Sources */,
+				ECF5BD611FC4CED6006988B9 /* SearchViewController.swift in Sources */,
+				ECF5BD651FC4D202006988B9 /* SearchNavigationController.swift in Sources */,
+				ECF5BD5B1FC4C7B6006988B9 /* CourseDatabase.swift in Sources */,
+				ECB6878B1FC54B8200EEA506 /* DatabaseJSON.swift in Sources */,
 				ECF73F9F1FA7D2A800F030FC /* ViewController.swift in Sources */,
+				ECF5BD631FC4CEEE006988B9 /* SearchResults.swift in Sources */,
 				ECF73F9D1FA7D2A800F030FC /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -213,7 +387,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -264,6 +438,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
@@ -272,11 +447,12 @@
 		};
 		ECF73FAC1FA7D2A800F030FC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5A1BFBF6E93E5DEE43688DEC /* Pods-Course Gnome.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AW3JDRAG27;
-				INFOPLIST_FILE = "Course Gnome/Info.plist";
+				INFOPLIST_FILE = "Course Gnome/app/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.traversy.coursegnome;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -287,11 +463,12 @@
 		};
 		ECF73FAD1FA7D2A800F030FC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1D0B79AF72E4DBF39B2A884 /* Pods-Course Gnome.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AW3JDRAG27;
-				INFOPLIST_FILE = "Course Gnome/Info.plist";
+				INFOPLIST_FILE = "Course Gnome/app/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.traversy.coursegnome;
 				PRODUCT_NAME = "$(TARGET_NAME)";
