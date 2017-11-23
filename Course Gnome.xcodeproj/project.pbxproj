@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		27A100D781C66EFA45D73938 /* Pods_Course_Gnome.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBAAE2DA9EBC15F77AC328 /* Pods_Course_Gnome.framework */; };
 		EC2E81331FC3848B0043351F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC2E81321FC3848B0043351F /* Assets.xcassets */; };
-		ECB6878B1FC54B8200EEA506 /* DatabaseJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB6878A1FC54B8200EEA506 /* DatabaseJSON.swift */; };
 		ECCB1BAA1FC54DCA00DB7EB9 /* PullCourses.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB1BA91FC54DCA00DB7EB9 /* PullCourses.swift */; };
 		ECCB1BAC1FC54E7700DB7EB9 /* jsonString.json in Resources */ = {isa = PBXBuildFile; fileRef = ECCB1BAB1FC54E7700DB7EB9 /* jsonString.json */; };
 		ECCB1BAE1FC553C200DB7EB9 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB1BAD1FC553C200DB7EB9 /* Course.swift */; };
@@ -30,7 +29,6 @@
 		5A1BFBF6E93E5DEE43688DEC /* Pods-Course Gnome.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Course Gnome.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Course Gnome/Pods-Course Gnome.debug.xcconfig"; sourceTree = "<group>"; };
 		D1D0B79AF72E4DBF39B2A884 /* Pods-Course Gnome.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Course Gnome.release.xcconfig"; path = "Pods/Target Support Files/Pods-Course Gnome/Pods-Course Gnome.release.xcconfig"; sourceTree = "<group>"; };
 		EC2E81321FC3848B0043351F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		ECB6878A1FC54B8200EEA506 /* DatabaseJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseJSON.swift; sourceTree = "<group>"; };
 		ECCB1BA91FC54DCA00DB7EB9 /* PullCourses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullCourses.swift; sourceTree = "<group>"; };
 		ECCB1BAB1FC54E7700DB7EB9 /* jsonString.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jsonString.json; sourceTree = "<group>"; };
 		ECCB1BAD1FC553C200DB7EB9 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
@@ -123,7 +121,6 @@
 				ECCB1BAB1FC54E7700DB7EB9 /* jsonString.json */,
 				ECCB1BA91FC54DCA00DB7EB9 /* PullCourses.swift */,
 				ECF5BD5A1FC4C7B6006988B9 /* CourseDatabase.swift */,
-				ECB6878A1FC54B8200EEA506 /* DatabaseJSON.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -188,7 +185,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0900;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = "Tim Traversy";
 				TargetAttributes = {
 					ECF73F981FA7D2A800F030FC = {
@@ -262,12 +259,14 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Course Gnome/Pods-Course Gnome-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
@@ -308,7 +307,6 @@
 				ECF5BD611FC4CED6006988B9 /* SearchViewController.swift in Sources */,
 				ECF5BD651FC4D202006988B9 /* SearchNavigationController.swift in Sources */,
 				ECF5BD5B1FC4C7B6006988B9 /* CourseDatabase.swift in Sources */,
-				ECB6878B1FC54B8200EEA506 /* DatabaseJSON.swift in Sources */,
 				ECF73F9F1FA7D2A800F030FC /* ViewController.swift in Sources */,
 				ECF5BD631FC4CEEE006988B9 /* SearchResults.swift in Sources */,
 				ECF73F9D1FA7D2A800F030FC /* AppDelegate.swift in Sources */,
@@ -387,7 +385,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";

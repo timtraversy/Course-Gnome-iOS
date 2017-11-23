@@ -1,10 +1,35 @@
 import Foundation
 import RealmSwift
 import SwiftyJSON
+import Alamofire
 
 class PullCourses {
     
-    func fetchCourses () {
+    func checkForUpdate() {
+        
+        let realm = try! Realm()
+        let results = realm.objects(LastRevised.self)
+        
+        let parameters: Parameters = ["timeOrString": "time"]
+        Alamofire.request("http://coursegnome.com/php/forApp/getJson.php", parameters: parameters).responseJSON
+            { response in
+                let json = response.result.value as? NSDictionary
+                let databaseUpdateTime = json?.object(forKey: "updateTime") as! String
+                
+                // if courses never pulled, update them
+                if (results.count == 0) {
+                    self.fetchCourses(databaseUpdateTime: databaseUpdateTime)
+                    return
+                }
+                // if courses pulled before, but new update available, update them
+                let localUpdateTime = results[0].lastRevised
+                if (localUpdateTime != databaseUpdateTime) {
+                    self.fetchCourses(databaseUpdateTime: databaseUpdateTime)
+                }
+            }
+    }
+    
+    func fetchCourses (databaseUpdateTime: String) {
         
         // open database connection
         let realm = try! Realm()
@@ -17,6 +42,11 @@ class PullCourses {
         // get ready to Realm, delete all course data
         realm.beginWrite()
         realm.deleteAll()
+        
+        //add updateTime
+        let revisedTime = LastRevised()
+        revisedTime.lastRevised = databaseUpdateTime
+        realm.add(revisedTime)
         
         // loop over all courses
         for (_, subJson) in json {
@@ -76,13 +106,6 @@ class PullCourses {
         }
         
         try! realm.commitWrite()
-        
-        let results = realm.objects(Course.self)
-        
-        let object = results[0]
-        
-        print ("Count: \(results.count)")
-        print ("One: \(object)")
-        
+                
     }
 }

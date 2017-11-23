@@ -16,10 +16,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         noLoginSearchButton.layer.borderColor = #colorLiteral(red: 0.9999018312, green: 1, blue: 0.9998798966, alpha: 1)
 
-//        let pullCourses = PullCourses()
-//        pullCourses.fetchCourses()
-//        let courseDB = CourseDatabase()
-//        courseDB.getStuff()
+        let pullCourses = PullCourses()
+        pullCourses.checkForUpdate()
         
     }
 

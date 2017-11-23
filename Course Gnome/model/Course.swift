@@ -30,3 +30,7 @@ class ClassDay: Object {
     @objc dynamic var startTime: String = ""
     @objc dynamic var endTime: String = ""
 }
+
+class LastRevised: Object {
+    @objc dynamic var lastRevised: String = ""
+}
