@@ -11,7 +11,7 @@ class Course: Object {
     @objc dynamic var sectionNumber: String = ""
     @objc dynamic var courseName: String = ""
     @objc dynamic var credit: String = ""
-    let instructor = List<String>()
+    let instructors = List<Instructor>()
     let classDays = List<ClassDay>()
     @objc dynamic var start: String = ""
     @objc dynamic var end: String = ""
@@ -20,8 +20,16 @@ class Course: Object {
     @objc dynamic var findBooksLink: String = ""
     let xList = List<Course>()
     let linked = List<Course>()
-    let courseAttributes = List<String>()
+    let courseAttributes = List<CourseAttribute>()
     @objc dynamic var fee: String = ""
+}
+
+class Instructor: Object {
+    @objc dynamic var name: String = ""
+}
+
+class CourseAttribute: Object {
+    @objc dynamic var attribute: String = ""
 }
 
 class ClassDay: Object {
@@ -34,3 +42,9 @@ class ClassDay: Object {
 class LastRevised: Object {
     @objc dynamic var lastRevised: String = ""
 }
+
+class SavedSearch: Object {
+    @objc dynamic var search: String = ""
+    @objc dynamic var searchCategory: String = ""
+}
+

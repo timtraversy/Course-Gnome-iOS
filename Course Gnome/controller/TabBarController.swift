@@ -1,27 +1,18 @@
 //
-//  SearchNavigationController.swift
+//  TabBarController.swift
 //  Course Gnome
 //
-//  Created by Tim Traversy on 11/21/17.
+//  Created by Tim Traversy on 11/24/17.
 //  Copyright © 2017 Tim Traversy. All rights reserved.
 //
 
 import UIKit
 
-class SearchNavigationController: UINavigationController {
+class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        navigationBar.shadowImage = UIImage()
-        navigationBar.isTranslucent = false
-        navigationBar.barTintColor = UIColor(red:(205/255), green:(44/255), blue:(36/250), alpha:1.0)
-        navigationBar.tintColor = UIColor.white
-        
-        navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white,
-                                             NSAttributedStringKey.font: UIFont(name: "AvenirNext-Bold", size: 19)!]
-
-        // Do any additional setup after loading the view.
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: UIFont(name: "Avenir Next", size: 11)!], for: .normal)
     }
 
     override func didReceiveMemoryWarning() {

@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		27A100D781C66EFA45D73938 /* Pods_Course_Gnome.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBAAE2DA9EBC15F77AC328 /* Pods_Course_Gnome.framework */; };
 		EC2E81331FC3848B0043351F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC2E81321FC3848B0043351F /* Assets.xcassets */; };
+		EC5A79541FC8A52900F38F34 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5A79531FC8A52900F38F34 /* TabBarController.swift */; };
 		ECCB1BAA1FC54DCA00DB7EB9 /* PullCourses.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB1BA91FC54DCA00DB7EB9 /* PullCourses.swift */; };
-		ECCB1BAC1FC54E7700DB7EB9 /* jsonString.json in Resources */ = {isa = PBXBuildFile; fileRef = ECCB1BAB1FC54E7700DB7EB9 /* jsonString.json */; };
 		ECCB1BAE1FC553C200DB7EB9 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB1BAD1FC553C200DB7EB9 /* Course.swift */; };
 		ECDC03D01FBBF93C00B97C7E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ECDC03CF1FBBF93C00B97C7E /* GoogleService-Info.plist */; };
 		ECF5BD5B1FC4C7B6006988B9 /* CourseDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF5BD5A1FC4C7B6006988B9 /* CourseDatabase.swift */; };
@@ -29,8 +29,8 @@
 		5A1BFBF6E93E5DEE43688DEC /* Pods-Course Gnome.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Course Gnome.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Course Gnome/Pods-Course Gnome.debug.xcconfig"; sourceTree = "<group>"; };
 		D1D0B79AF72E4DBF39B2A884 /* Pods-Course Gnome.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Course Gnome.release.xcconfig"; path = "Pods/Target Support Files/Pods-Course Gnome/Pods-Course Gnome.release.xcconfig"; sourceTree = "<group>"; };
 		EC2E81321FC3848B0043351F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EC5A79531FC8A52900F38F34 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		ECCB1BA91FC54DCA00DB7EB9 /* PullCourses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullCourses.swift; sourceTree = "<group>"; };
-		ECCB1BAB1FC54E7700DB7EB9 /* jsonString.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jsonString.json; sourceTree = "<group>"; };
 		ECCB1BAD1FC553C200DB7EB9 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		ECDC03CF1FBBF93C00B97C7E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ECF5BD5A1FC4C7B6006988B9 /* CourseDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDatabase.swift; sourceTree = "<group>"; };
@@ -101,6 +101,7 @@
 				ECF5BD621FC4CEEE006988B9 /* SearchResults.swift */,
 				ECF5BD5E1FC4CE99006988B9 /* ProfileViewController.swift */,
 				ECF5BD641FC4D202006988B9 /* SearchNavigationController.swift */,
+				EC5A79531FC8A52900F38F34 /* TabBarController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -118,7 +119,6 @@
 		EC977C981FBB99E600611C47 /* utils */ = {
 			isa = PBXGroup;
 			children = (
-				ECCB1BAB1FC54E7700DB7EB9 /* jsonString.json */,
 				ECCB1BA91FC54DCA00DB7EB9 /* PullCourses.swift */,
 				ECF5BD5A1FC4C7B6006988B9 /* CourseDatabase.swift */,
 			);
@@ -223,7 +223,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				ECF73FA71FA7D2A800F030FC /* LaunchScreen.storyboard in Resources */,
-				ECCB1BAC1FC54E7700DB7EB9 /* jsonString.json in Resources */,
 				ECDC03D01FBBF93C00B97C7E /* GoogleService-Info.plist in Resources */,
 				EC2E81331FC3848B0043351F /* Assets.xcassets in Resources */,
 				ECF73FA21FA7D2A800F030FC /* Main.storyboard in Resources */,
@@ -260,6 +259,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Course Gnome/Pods-Course Gnome-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Alamofire-SwiftyJSON/Alamofire_SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
@@ -267,6 +267,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire_SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
@@ -304,6 +305,7 @@
 				ECF5BD5F1FC4CE99006988B9 /* ProfileViewController.swift in Sources */,
 				ECCB1BAA1FC54DCA00DB7EB9 /* PullCourses.swift in Sources */,
 				ECCB1BAE1FC553C200DB7EB9 /* Course.swift in Sources */,
+				EC5A79541FC8A52900F38F34 /* TabBarController.swift in Sources */,
 				ECF5BD611FC4CED6006988B9 /* SearchViewController.swift in Sources */,
 				ECF5BD651FC4D202006988B9 /* SearchNavigationController.swift in Sources */,
 				ECF5BD5B1FC4C7B6006988B9 /* CourseDatabase.swift in Sources */,
