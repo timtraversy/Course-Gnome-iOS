@@ -4,26 +4,51 @@ import SwiftyJSON
 import Alamofire
 import Alamofire_SwiftyJSON
 
+protocol PullCoursesDelegate {
+    func coursesPulled(updateTime: String)
+    func coursesNotPulled(newUser: Bool)
+}
+
 class PullCourses {
     
+    // delegate reports status of pulliing
+    var delegate: PullCoursesDelegate?
+    
+    // first check if update is needed
     func checkForUpdate() {
+        
+        // open realm, read time courses were last revised
         let realm = try! Realm()
         let results = realm.objects(LastRevised.self)
         
+        // make HTTP request to get JSON containing time of last course update
         let parameters: Parameters = ["timeOrString": "time"]
         Alamofire.request("http://coursegnome.com/php/forApp/getJson.php", parameters: parameters).responseString
             { response in
+                
+                // if request fails, tell delegate, and say if user is new
+                if (response.result.isFailure) {
+                    self.delegate?.coursesNotPulled(newUser: results.count == 0)
+                    return
+                }
+                
                 let databaseUpdateTime = response.result.value
                 
-                // if courses never pulled, update them
+                // if no data ever pulled, user is new
+                // get time update string from database and call fetch courses
                 if (results.count == 0) {
                     self.fetchCourses(databaseUpdateTime: databaseUpdateTime!)
                     return
-                }
-                // if courses pulled before, but new update available, update them
-                let localUpdateTime = results[0].lastRevised
-                if (localUpdateTime != databaseUpdateTime) {
-                    self.fetchCourses(databaseUpdateTime: databaseUpdateTime!)
+                } else {
+                    // else, user is not new
+                    // get locally stored update time and see if it matches fresh one
+                    // if they don't match, pull new course data
+                    let localUpdateTime = results[0].lastRevised
+                    if (localUpdateTime != databaseUpdateTime) {
+                        self.fetchCourses(databaseUpdateTime: databaseUpdateTime!)
+                    } else {
+                        self.delegate?.coursesPulled(updateTime: localUpdateTime)
+                    }
                 }
         }
     }
@@ -107,8 +132,8 @@ class PullCourses {
                     realm.add(newCourse)
                     
                 }
-                
                 try! realm.commitWrite()
+                self.delegate?.coursesPulled(updateTime: databaseUpdateTime)
         }
     }
 }
