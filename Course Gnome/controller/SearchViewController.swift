@@ -9,9 +9,13 @@
 import UIKit
 import RealmSwift
 
+// prototype cell definitions
 class SearchResultCell: UITableViewCell {
     @IBOutlet weak var searchResultTitle: UILabel!
-    @IBOutlet weak var searchResultSubtitle: UILabel!
+}
+
+class CategoryCell: UITableViewCell {
+    @IBOutlet weak var categoryTitle: UILabel!
 }
 
 class SavedSearchResultCell: UITableViewCell {
@@ -20,188 +24,324 @@ class SavedSearchResultCell: UITableViewCell {
     @IBOutlet weak var deleteButton: UIButton!
 }
 
-// store search result data
-struct SearchResult {
-    let searchResultTitle: String
-    let searchResultSubtitle: String
-}
+class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
-    
-    // open realm
-    let realm = try! Realm()
-    
-    //return all courses, empty filtered result object, and saved searches
-    let results = try! Realm().objects(Course.self)
+    // pull local savedSearches
     let savedSearches = try! Realm().objects(SavedSearch.self)
-    var filteredResults = try! Realm().objects(Course.self).filter("status contains 'x'")
-    var searchResults = [SearchResult]()
-    let searchTermsOne = ["instructors.name": "Instructor", "courseAttributes.attribute": "Course Attribute"]
-    let searchTermsTwo = ["subjectName": "Department", "status": "Status", "crn": "CRN", "subjectNumber": "Subject Number", "courseName": "Course Name"]
+    
+    // set up arrays to hold results for different categories
+    var departments = [String]()
+    var crns = [String]()
+    var instructors = [String]()
+    var statuses = [String]()
+    var attributes = [String]()
+    var names = [String]()
+    var numbers = [String]()
+    var allArrays = [String:[String]]()
+    
+    // holds user text entry
+    var text = ""
     
     // define width of cancel button to move text view
     let cancelButtonSize: CGFloat = 70.0
-    var searchFocused = false
+    var screenWidth: CGFloat =  0.0
     
     // outlets
     @IBOutlet weak var tableView: SearchResults!
     @IBOutlet weak var searchBox: UITextField!
-    var screenWidth: CGFloat =  0.0
     @IBOutlet weak var topBar: UIView!
     
-    // load
+    // on load, determine screen size and set up delegates
     override func viewDidLoad() {
         super.viewDidLoad()
         screenWidth = UIScreen.main.bounds.width
         tableView.dataSource = self
         tableView.delegate = self
-        tabBarController?.tabBar.isHidden = false;
-        searchBox.becomeFirstResponder()
+        searchBox.delegate = self
     }
     
-    //actions
-    @IBAction func searchBoxTouched(_ sender: Any, forEvent event: UIEvent) {
-        // shrink box unless user already focused on it
-        if (!searchFocused) {
-            searchBox.frame.size.width -= cancelButtonSize
-            searchFocused = true
-        }
+    // update results so freshly saved search will appear
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateResults()
     }
     
+    // when user cancels, clear any entered text, resign keyboard, update table
     @IBAction func cancelSearchButton(_ sender: Any) {
-        searchBox.frame.size.width += cancelButtonSize
         searchBox.text = ""
         searchBox.resignFirstResponder()
-        searchFocused = true
-        updatedFilteredResults()
+        updateResults()
     }
     
+    // deletes saved search. get id tag from button, use it to find object
     @IBAction func searchResultDeleteButton(_ sender: UIButton) {
-        /*print (candies[sender.tag])
-         let givenCandy = filteredCandies[sender.tag]
-         for (index, candy) in candies.enumerated() {
-         if (candy == givenCandy) {
-         candies.remove(at: index)
-         updateFilteredCandies()
-         break
-         }
-         }*/
+        let realm = try! Realm()
+        realm.beginWrite()
+        let savedSearchID = sender.tag
+        let toDelete = realm.objects(SavedSearch.self).filter("id = \(savedSearchID)")
+        realm.delete(toDelete)
+        try! realm.commitWrite()
+        updateResults()
     }
     
-    @IBAction func unwindToMainMenu(segue: UIStoryboardSegue) {
-        
+    // clears all arrays
+    func deleteAllResults() {
+        departments.removeAll()
+        crns.removeAll()
+        statuses.removeAll()
+        instructors.removeAll()
+        names.removeAll()
+        numbers.removeAll()
+        attributes.removeAll()
+        return
     }
     
-    func updatedFilteredResults() {
-        guard let text = searchBox.text?.lowercased().trimmingCharacters(in: .whitespaces) else {
-            return
-        }
+    // update search results
+    func updateResults() {
         
-        searchResults.removeAll()
-        if (text.count < 2) {
-            filteredResults = results.filter("status contains 'x'")
+        // delete old result, get entered text, return if empty
+        deleteAllResults()
+        text = searchBox.text?.lowercased().trimmingCharacters(in: .whitespaces) ?? ""
+        if (text.count == 0) {
             self.tableView.reloadData()
             return
         }
-        var tempResultTitles = [String]()
         
-        for (term,termTitle) in searchTermsTwo {
-            let subjectNamePredicate = NSPredicate(format: "\(term) beginswith [c]'\(text)'")
-            filteredResults = results.filter(subjectNamePredicate)
-            resultLoop: for result in filteredResults {
-                for title in tempResultTitles {
-                    if (result[term] as! String == title) {
-                        continue resultLoop
-                    }
-                }
-                tempResultTitles.append(result[term] as! String)
-            }
-            for title in tempResultTitles {
-                searchResults.append(SearchResult(searchResultTitle: title, searchResultSubtitle: termTitle))
-            }
-            tempResultTitles.removeAll()
-        }
-        
-        for (term,termTitle) in searchTermsTwo {
-            let subjectNamePredicate = NSPredicate(format: "\(term) contains [c]'\(text)' and not \(term) beginswith [c]'\(text)'")
-            filteredResults = results.filter(subjectNamePredicate)
-            resultLoop: for result in filteredResults {
-                for title in tempResultTitles {
-                    if (result[term] as! String == title) {
-                        continue resultLoop
-                    }
-                }
-                tempResultTitles.append(result[term] as! String)
-            }
-            for title in tempResultTitles {
-                searchResults.append(SearchResult(searchResultTitle: title, searchResultSubtitle: termTitle))
-            }
-            tempResultTitles.removeAll()
-        }
-        
-        for (term,termTitle) in searchTermsOne {
-            let subjectNamePredicate = NSPredicate(format: "ANY \(term) beginswith [c]'\(text)'")
-            filteredResults = results.filter(subjectNamePredicate)
-            resultLoop: for result in filteredResults {
-                if (termTitle == "Instructor") {
-                    for instructor in result.instructors {
-                        if (!instructor.name.lowercased().hasPrefix(text)) {
+        // set up predicates to query for strings containing or beginning with text
+        let predicates =  [NSPredicate(format: "name beginswith [c]'\(text)'"), NSPredicate(format: "name contains [c]'\(text)' and not name beginswith [c]'\(text)'")]
+        let courseNamePredicates = [NSPredicate(format: "courseName beginswith [c]'\(text)'"), NSPredicate(format: "courseName contains [c]'\(text)' and not courseName beginswith [c]'\(text)'")]
+        let subjectNumberPredicate = NSPredicate(format: "subjectNumber beginswith [c]'\(text)'")
+
+        // in background do realm query
+        DispatchQueue.global(qos: .background).async {
+            var totalCount = 0
+            let maxResults = 10
+            let realm = try! Realm()
+            mainRun: while(true) {
+                
+                /* algorithm: for each returned object (department, crn, etc),
+                add it to that array, and increase the total count. If the max
+                number of results is reached, stop the search (main run).
+                Don't add if already a saved search. */
+                
+                for predicate in predicates {
+                    for result in realm.objects(Department.self).filter(predicate) {
+                        if (!realm.objects(SavedSearch.self).filter("search = %@", result.name).isEmpty) {
                             continue
                         }
-                        for title in tempResultTitles {
-                            if (instructor.name == title) {
-                                continue resultLoop
-                            }
-                        }
-                        tempResultTitles.append(instructor.name)
+                        self.departments.append(result.name)
+                        totalCount += 1
+                        if (totalCount == maxResults) { break mainRun }
                     }
-                }
-                else {
-                    for attribute in result.courseAttributes {
-                        if (!attribute.attribute.lowercased().hasPrefix(text)) {
+                    for result in realm.objects(Status.self).filter(predicate) {
+                        if (!realm.objects(SavedSearch.self).filter("search = %@", result.name).isEmpty) {
                             continue
                         }
-                        for title in tempResultTitles {
-                            if (attribute.attribute == title) {
-                                continue resultLoop
-                            }
+                        self.statuses.append(result.name)
+                        totalCount += 1
+                        if (totalCount == maxResults) { break mainRun }
+                    }
+                    for result in realm.objects(Instructor.self).filter(predicate) {
+                        if (!realm.objects(SavedSearch.self).filter("search = %@", result.name).isEmpty) {
+                            continue
                         }
-                        tempResultTitles.append(attribute.attribute)
+                        self.instructors.append(result.name)
+                        totalCount += 1
+                        if (totalCount == maxResults) { break mainRun }
+                    }
+                    for result in realm.objects(CourseAttribute.self).filter(predicate) {
+                        if (!realm.objects(SavedSearch.self).filter("search = %@", result.name).isEmpty) {
+                            continue
+                        }
+                        self.attributes.append(result.name)
+                        totalCount += 1
+                        if (totalCount == maxResults) { break mainRun }
                     }
                 }
+                for predicate in courseNamePredicates {
+                    for result in realm.objects(Course.self).filter(predicate) {
+                        if (!realm.objects(SavedSearch.self).filter("search = %@", result.courseName).isEmpty) {
+                            continue
+                        }
+                        self.names.append(result.courseName)
+                        totalCount += 1
+                        if (totalCount == maxResults) { break mainRun }
+                    }
+                }
+                // TODO, won't show 3s or 5s
+                for result in realm.objects(Course.self).filter("subjectNumber beginswith '\(self.text)'") {
+                    if (!realm.objects(SavedSearch.self).filter("search = %@", result.subjectNumber).isEmpty) {
+                        continue
+                    }
+                    self.numbers.append(result.subjectNumber)
+                    totalCount += 1
+                    if (totalCount == maxResults) { break mainRun }
+                }
+                // missing CRNS too UGH
+                for result in realm.objects(CRN.self).filter(predicates[1]) {
+                    if (!realm.objects(SavedSearch.self).filter("search = %@", result.name).isEmpty) {
+                        continue
+                    }
+                    self.crns.append(result.name)
+                    totalCount += 1
+                    if (totalCount == maxResults) { break mainRun }
+                }
+                break mainRun
             }
-            for title in tempResultTitles {
-                searchResults.append(SearchResult(searchResultTitle: title, searchResultSubtitle: termTitle))
+            
+            // back on main, reload table with new result info
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
-            tempResultTitles.removeAll()
         }
-        self.tableView.reloadData()
     }
     
     @IBAction func userEnteredText(_ sender: Any) {
-        updatedFilteredResults()
+        updateResults()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let x = searchResults.count+savedSearches.count
-        return (searchResults.count+savedSearches.count)
+        
+        /* need row for each saved search and result, as well as one row
+        for each category title */
+        
+        var categoryTitlesCount = 0
+        if (!departments.isEmpty) { categoryTitlesCount += 1 }
+        if (!crns.isEmpty) { categoryTitlesCount += 1 }
+        if (!statuses.isEmpty) { categoryTitlesCount += 1 }
+        if (!instructors.isEmpty) { categoryTitlesCount += 1 }
+        if (!names.isEmpty) { categoryTitlesCount += 1 }
+        if (!numbers.isEmpty) { categoryTitlesCount += 1 }
+        if (!attributes.isEmpty) { categoryTitlesCount += 1 }
+        return (categoryTitlesCount+savedSearches.count+departments.count+crns.count+statuses.count+attributes.count+instructors.count+names.count+numbers.count)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         if (indexPath.row < savedSearches.count) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "savedSearchResult") as! SavedSearchResultCell
             cell.searchResultTitle?.text = savedSearches[indexPath.row].search
             cell.searchResultSubtitle?.text = savedSearches[indexPath.row].searchCategory
-            cell.deleteButton.tag = indexPath.row
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "searchResult") as! SearchResultCell
-            let newRow = indexPath.row - savedSearches.count
-            cell.searchResultTitle?.text = searchResults[newRow].searchResultTitle
-            cell.searchResultSubtitle?.text = searchResults[newRow].searchResultSubtitle
+            cell.deleteButton.tag = savedSearches[indexPath.row].id
             return cell
         }
+        
+        var currentCount = savedSearches.count
+        
+        if (!departments.isEmpty) {
+            if (indexPath.row == currentCount) {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell") as! CategoryCell
+                cell.categoryTitle?.text = "DEPARTMENT"
+                return cell
+            }
+            if (indexPath.row <= (currentCount+departments.count)) {
+                currentCount += 1
+                let cell = tableView.dequeueReusableCell(withIdentifier: "searchResult") as! SearchResultCell
+                cell.searchResultTitle?.attributedText = attributedText(withString: departments[indexPath.row - currentCount], boldString: text)
+                return cell
+
+            }
+            currentCount += departments.count + 1
+        }
+        if (!crns.isEmpty) {
+            if (indexPath.row == currentCount) {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell") as! CategoryCell
+                cell.categoryTitle?.text = "CRN"
+                return cell
+            }
+            if (indexPath.row <= (currentCount+crns.count)) {
+                currentCount += 1
+                let cell = tableView.dequeueReusableCell(withIdentifier: "searchResult") as! SearchResultCell
+                cell.searchResultTitle?.attributedText = attributedText(withString: crns[indexPath.row - currentCount], boldString: text)
+                return cell
+            }
+            currentCount += crns.count + 1
+        }
+        if (!statuses.isEmpty) {
+            if (indexPath.row == currentCount) {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell") as! CategoryCell
+                cell.categoryTitle?.text = "STATUS"
+                return cell
+            }
+            if (indexPath.row <= (currentCount+statuses.count)) {
+                currentCount += 1
+                let cell = tableView.dequeueReusableCell(withIdentifier: "searchResult") as! SearchResultCell
+                cell.searchResultTitle?.attributedText = attributedText(withString: statuses[indexPath.row - currentCount], boldString: text)
+                return cell
+            }
+            currentCount += statuses.count + 1
+        }
+        if (!instructors.isEmpty) {
+            if (indexPath.row == currentCount) {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell") as! CategoryCell
+                cell.categoryTitle?.text = "INSTRUCTOR"
+                return cell
+            }
+            if (indexPath.row <= (currentCount+instructors.count)) {
+                currentCount += 1
+                let cell = tableView.dequeueReusableCell(withIdentifier: "searchResult") as! SearchResultCell
+                cell.searchResultTitle?.attributedText = attributedText(withString: instructors[indexPath.row - currentCount], boldString: text)
+                return cell
+            }
+            currentCount += instructors.count + 1
+        }
+        if (!names.isEmpty) {
+            if (indexPath.row == currentCount) {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell") as! CategoryCell
+                cell.categoryTitle?.text = "COURSE NAME"
+                return cell
+            }
+            if (indexPath.row <= (currentCount+names.count)) {
+                currentCount += 1
+                let cell = tableView.dequeueReusableCell(withIdentifier: "searchResult") as! SearchResultCell
+                cell.searchResultTitle?.attributedText = attributedText(withString: names[indexPath.row - currentCount], boldString: text)
+                return cell
+            }
+            currentCount += names.count + 1
+        }
+        if (!numbers.isEmpty) {
+            if (indexPath.row == currentCount) {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell") as! CategoryCell
+                cell.categoryTitle?.text = "SUBJECT NUMBER"
+                return cell
+            }
+            if (indexPath.row <= (currentCount+numbers.count)) {
+                currentCount += 1
+                let cell = tableView.dequeueReusableCell(withIdentifier: "searchResult") as! SearchResultCell
+                cell.searchResultTitle?.attributedText = attributedText(withString: numbers[indexPath.row - currentCount], boldString: text)
+                return cell
+            }
+            currentCount += numbers.count + 1
+        }
+        if (!attributes.isEmpty) {
+            if (indexPath.row == currentCount) {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell") as! CategoryCell
+                cell.categoryTitle?.text = "COURSE ATTRIBUTE"
+                return cell
+            }
+            if (indexPath.row <= (currentCount+attributes.count)) {
+                currentCount += 1
+                let cell = tableView.dequeueReusableCell(withIdentifier: "searchResult") as! SearchResultCell
+                cell.searchResultTitle?.attributedText = attributedText(withString: attributes[indexPath.row - currentCount], boldString: text)
+                return cell
+            }
+            currentCount += attributes.count + 1
+        }
+        // this will never be reached
+        let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell") as! CategoryCell
+        return cell
     }
+    
+    func attributedText(withString string: String, boldString: String) -> NSAttributedString {
+        let attributedString = NSMutableAttributedString(string: string,
+                                                         attributes: [NSAttributedStringKey.font: UIFont(name: "AvenirNext-Regular", size: 16.0)!])
+        let boldFontAttribute: [NSAttributedStringKey: Any] = [NSAttributedStringKey.font: UIFont(name: "AvenirNext-DemiBold", size: 16.0)!]
+        let range = (string.lowercased() as NSString).range(of: boldString)
+        attributedString.addAttributes(boldFontAttribute, range: range)
+        return attributedString
+    }
+    
+    let titleArray = ["DEPARTMENT", "CRN", "INSTRUCTOR", "STATUS", "ATTRIBUTES", "COURSE NAME", "SUBJECT NUMBER"]
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (indexPath.row < savedSearches.count) {
@@ -210,15 +350,45 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
             realm.beginWrite()
             let newSavedSearch = SavedSearch()
             let newRow = indexPath.row - savedSearches.count
-            newSavedSearch.search = searchResults[newRow].searchResultTitle
-            newSavedSearch.searchCategory = searchResults[newRow].searchResultSubtitle
+            var countThroughArrays = 1
+            let allArrays = [departments, crns, instructors, statuses, attributes, names, numbers]
+            for (index, array) in allArrays.enumerated() {
+                for item in array {
+                    if (countThroughArrays == newRow) {
+                        newSavedSearch.search = item
+                        newSavedSearch.searchCategory = titleArray[index]
+                    }
+                    //TODO
+                    countThroughArrays += 1
+                }
+                if (!array.isEmpty) { countThroughArrays += 1 }
+            }
+            newSavedSearch.id = (realm.objects(SavedSearch.self).max(ofProperty: "id") as Int? ?? 0) + 1
             realm.add(newSavedSearch)
             try! realm.commitWrite()
-            tableView.reloadData()
         }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
+    }
+}
+
+
+
+extension SearchViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {    //delegate method
+        textField.frame.size.width -= cancelButtonSize
+    }
+    
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {  //delegate method
+        textField.resignFirstResponder()
+        textField.frame.size.width += cancelButtonSize
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {   //delegate method
+        textField.resignFirstResponder()
+        return true
     }
 }

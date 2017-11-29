@@ -56,7 +56,6 @@ class PullCourses {
     func fetchCourses(databaseUpdateTime: String) {
         Alamofire.request("http://coursegnome.com/php/forApp/getJson.php").responseJSON
             { response in
-                let json = JSON(response.result.value!)
                 
                 // open database connection
                 let realm = try! Realm()
@@ -70,67 +69,149 @@ class PullCourses {
                 revisedTime.lastRevised = databaseUpdateTime
                 realm.add(revisedTime)
                 
-                // loop over all courses
-                for (_, subJson) in json {
+                let json = JSON(response.result.value!)
+                
+                var x = 0
+                let count = json.count
+                
+                // loop over offerings
+                for (_, course) in json {
+                    print("Count \(x)/\(count)")
+                    x += 1
                     let newCourse = Course()
-                    newCourse.status = subJson["status"].stringValue
-                    newCourse.crn = subJson["CRN"].stringValue
-                    newCourse.subjectAcronym = subJson["subjectAcronym"].stringValue
-                    newCourse.subjectName = subJson["subjectName"].stringValue
-                    newCourse.subjectNumber = subJson["subjectNumber"].stringValue
-                    newCourse.bulletinLink = subJson["bulletinLink"].stringValue
-                    newCourse.sectionNumber = subJson["sectionNumber"].stringValue
-                    newCourse.courseName = subJson["courseName"].stringValue
-                    newCourse.credit = subJson["credit"].stringValue
                     
-                    // add instructors
-                    for instructor in subJson["instructor"] {
-                        let newInstructor = Instructor()
-                        newInstructor.name = instructor.1.stringValue
-                        realm.add(newInstructor)
-                        newCourse.instructors.append(newInstructor)
+                    newCourse.courseName = course["courseName"].stringValue
+                    newCourse.subjectNumber = course["subjectNumber"].stringValue
+
+                    var found = false
+                    for department in realm.objects(Department.self) {
+                        if (department.acronym == course["subjectAcronym"].stringValue) {
+                            newCourse.department = department
+                            found = true
+                            break
+                        }
+                    }
+                    if (!found) {
+                        let newDept = Department()
+                        newDept.name = course["subjectName"].stringValue
+                        newDept.acronym = course["subjectAcronym"].stringValue
+                        realm.add(newDept)
+                        newCourse.department = newDept
                     }
                     
-                    //loop over days within course
-                    for (_,day):(String, JSON ) in subJson["classDays"] {
-                        let newDay = ClassDay()
-                        newDay.location = day["location"].stringValue
+                    for (_, offering) in course["offerings"] {
+                        let newOffering = Offering()
+                        newOffering.courseName = offering["courseName"].stringValue
+                        newOffering.subjectNumber = offering["subjectNumber"].stringValue
                         
-                        // days entered as string (ex: TW) so check for each one and enter boolean if there/not there
-                        let dayBools = day["days"].stringValue
-                        newDay.days.append(dayBools.contains("U") ? true : false)
-                        newDay.days.append(dayBools.contains("M") ? true : false)
-                        newDay.days.append(dayBools.contains("T") ? true : false)
-                        newDay.days.append(dayBools.contains("W") ? true : false)
-                        newDay.days.append(dayBools.contains("R") ? true : false)
-                        newDay.days.append(dayBools.contains("F") ? true : false)
-                        newDay.days.append(dayBools.contains("S") ? true : false)
+                        found = false
+                        for status in realm.objects(Status.self) {
+                            if (status.name == offering["status"].stringValue) {
+                                newOffering.status = status
+                                found = true
+                                break
+                            }
+                        }
+                        if (!found) {
+                            let newStatus = Status()
+                            newStatus.name = offering["status"].stringValue
+                            realm.add(newStatus)
+                            newOffering.status = newStatus
+                        }
+                                            
+                        let newCrn = CRN()
+                        newCrn.name = offering["CRN"].stringValue
+                        realm.add(newCrn)
+                        newOffering.crn = newCrn
                         
-                        newDay.startTime = day["startTime"].stringValue
-                        newDay.endTime = day["endTime"].stringValue
+                        newOffering.bulletinLink = offering["bulletinLink"].stringValue
+                        newOffering.sectionNumber = offering["sectionNumber"].stringValue
+                        newOffering.credit = offering["credit"].stringValue
                         
-                        realm.add(newDay)
-                        newCourse.classDays.append(newDay)
+                        // add instructors
+                        for instructor in offering["instructor"] {
+                            found = false
+                            for savedInstructor in realm.objects(Instructor.self) {
+                                if (savedInstructor.name == instructor.1.stringValue) {
+                                    newOffering.instructors.append(savedInstructor)
+                                    found = true
+                                    break
+                                }
+                            }
+                            if (!found) {
+                                let newInstructor = Instructor()
+                                newInstructor.name = instructor.1.stringValue
+                                realm.add(newInstructor)
+                                newOffering.instructors.append(newInstructor)
+                            }
+                        }
+                        
+                        //loop over days within course
+                        for (_,day):(String, JSON ) in offering["classDays"] {
+                            let newDay = ClassDay()
+                            newDay.location = day["location"].stringValue
+                            
+                            // days entered as string (ex: TW) so check for each one and enter boolean if there/not there
+                            let dayBools = day["days"].stringValue
+                            newDay.days.append(dayBools.contains("U") ? true : false)
+                            newDay.days.append(dayBools.contains("M") ? true : false)
+                            newDay.days.append(dayBools.contains("T") ? true : false)
+                            newDay.days.append(dayBools.contains("W") ? true : false)
+                            newDay.days.append(dayBools.contains("R") ? true : false)
+                            newDay.days.append(dayBools.contains("F") ? true : false)
+                            newDay.days.append(dayBools.contains("S") ? true : false)
+                            
+                            newDay.startTime = day["startTime"].stringValue
+                            newDay.endTime = day["endTime"].stringValue
+                            
+                            realm.add(newDay)
+                            newOffering.classDays.append(newDay)
+                        }
+                        
+                        newOffering.start = offering["start"].stringValue
+                        newOffering.end = offering["end"].stringValue
+                        newOffering.comment = offering["comment"].stringValue
+                        newOffering.oldCourseNumber = offering["oldCourseNumber"].stringValue
+                        newOffering.findBooksLink = offering["findBooksLink"].stringValue
+                        
+                        // add course attributes
+                        for instructor in offering["instructor"] {
+                            found = false
+                            for savedInstructor in realm.objects(Instructor.self) {
+                                if (savedInstructor.name == instructor.1.stringValue) {
+                                    newOffering.instructors.append(savedInstructor)
+                                    found = true
+                                    break
+                                }
+                            }
+                            if (!found) {
+                                let newInstructor = Instructor()
+                                newInstructor.name = instructor.1.stringValue
+                                realm.add(newInstructor)
+                                newOffering.instructors.append(newInstructor)
+                            }
+                        }
+                        for attribute in offering["courseAttributes"] {
+                            found = false
+                            for savedAttribute in realm.objects(CourseAttribute.self) {
+                                if (savedAttribute.name == attribute.1.stringValue) {
+                                    newOffering.courseAttributes.append(savedAttribute)
+                                    found = true
+                                    break
+                                }
+                            }
+                            if (!found) {
+                                let newAttribute = CourseAttribute()
+                                newAttribute.name = attribute.1.stringValue
+                                realm.add(newAttribute)
+                                newOffering.courseAttributes.append(newAttribute)
+                            }
+                        }
+                        newOffering.fee = offering["fee"].stringValue
+                        realm.add(newOffering)
+                        newCourse.offerings.append(newOffering)
                     }
-                    
-                    newCourse.start = subJson["start"].stringValue
-                    newCourse.end = subJson["end"].stringValue
-                    newCourse.comment = subJson["comment"].stringValue
-                    newCourse.oldCourseNumber = subJson["oldCourseNumber"].stringValue
-                    newCourse.findBooksLink = subJson["findBooksLink"].stringValue
-                    newCourse.courseName = subJson["courseName"].stringValue
-                    
-                    // add course attriburtes
-                    for attribute in subJson["courseAttributes"] {
-                        let newAttribute = CourseAttribute()
-                        newAttribute.attribute = attribute.1.stringValue
-                        realm.add(newAttribute)
-                        newCourse.courseAttributes.append(newAttribute)
-                    }
-                    
-                    newCourse.fee = subJson["fee"].stringValue
                     realm.add(newCourse)
-                    
                 }
                 try! realm.commitWrite()
                 self.delegate?.coursesPulled(updateTime: databaseUpdateTime)
