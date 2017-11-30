@@ -101,7 +101,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         
         // delete old result, get entered text, return if empty
         deleteAllResults()
-        text = searchBox.text?.lowercased().trimmingCharacters(in: .whitespaces) ?? ""
+        text = searchBox.text?.lowercased().trimmingCharacters(in: .whitespaces).replacingOccurrences(of: "\\", with: "") ?? ""
         if (text.count == 0) {
             self.tableView.reloadData()
             return
@@ -168,7 +168,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                         if (totalCount == maxResults) { break mainRun }
                     }
                 }
-                // TODO, won't show 3s or 5s
                 for result in realm.objects(Course.self).filter("subjectNumber beginswith '\(self.text)'") {
                     if (!realm.objects(SavedSearch.self).filter("search = %@", result.subjectNumber).isEmpty) {
                         continue
@@ -358,7 +357,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                         newSavedSearch.search = item
                         newSavedSearch.searchCategory = titleArray[index]
                     }
-                    //TODO
                     countThroughArrays += 1
                 }
                 if (!array.isEmpty) { countThroughArrays += 1 }

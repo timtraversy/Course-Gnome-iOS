@@ -12,6 +12,7 @@
 		EC5926531FCCE81C00E73268 /* CourseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5926521FCCE81C00E73268 /* CourseListViewController.swift */; };
 		EC5A79541FC8A52900F38F34 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5A79531FC8A52900F38F34 /* TabBarController.swift */; };
 		ECBA71981FCDC95100B7364A /* SearchBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBA71971FCDC95100B7364A /* SearchBox.swift */; };
+		ECC8E56F1FCFAF9200E49DCE /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC8E56E1FCFAF9200E49DCE /* CalendarViewController.swift */; };
 		ECCB1BAA1FC54DCA00DB7EB9 /* PullCourses.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB1BA91FC54DCA00DB7EB9 /* PullCourses.swift */; };
 		ECCB1BAE1FC553C200DB7EB9 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB1BAD1FC553C200DB7EB9 /* Course.swift */; };
 		ECDC03D01FBBF93C00B97C7E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ECDC03CF1FBBF93C00B97C7E /* GoogleService-Info.plist */; };
@@ -33,6 +34,7 @@
 		EC5926521FCCE81C00E73268 /* CourseListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListViewController.swift; sourceTree = "<group>"; };
 		EC5A79531FC8A52900F38F34 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		ECBA71971FCDC95100B7364A /* SearchBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBox.swift; sourceTree = "<group>"; };
+		ECC8E56E1FCFAF9200E49DCE /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		ECCB1BA91FC54DCA00DB7EB9 /* PullCourses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullCourses.swift; sourceTree = "<group>"; };
 		ECCB1BAD1FC553C200DB7EB9 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		ECDC03CF1FBBF93C00B97C7E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 				EC5A79531FC8A52900F38F34 /* TabBarController.swift */,
 				EC5926521FCCE81C00E73268 /* CourseListViewController.swift */,
 				ECBA71971FCDC95100B7364A /* SearchBox.swift */,
+				ECC8E56E1FCFAF9200E49DCE /* CalendarViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -305,6 +308,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECC8E56F1FCFAF9200E49DCE /* CalendarViewController.swift in Sources */,
 				ECF5BD5F1FC4CE99006988B9 /* ProfileViewController.swift in Sources */,
 				ECCB1BAA1FC54DCA00DB7EB9 /* PullCourses.swift in Sources */,
 				EC5926531FCCE81C00E73268 /* CourseListViewController.swift in Sources */,

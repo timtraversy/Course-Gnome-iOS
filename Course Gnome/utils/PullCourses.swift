@@ -81,6 +81,7 @@ class PullCourses {
                     let newCourse = Course()
                     
                     newCourse.courseName = course["courseName"].stringValue
+
                     newCourse.subjectNumber = course["subjectNumber"].stringValue
 
                     var found = false
