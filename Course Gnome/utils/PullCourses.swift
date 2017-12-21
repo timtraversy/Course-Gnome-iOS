@@ -81,8 +81,8 @@ class PullCourses {
                     let newCourse = Course()
                     
                     newCourse.courseName = course["courseName"].stringValue
-
                     newCourse.subjectNumber = course["subjectNumber"].stringValue
+                    newCourse.credit = course["credit"].stringValue
 
                     var found = false
                     for department in realm.objects(Department.self) {
@@ -127,7 +127,6 @@ class PullCourses {
                         
                         newOffering.bulletinLink = offering["bulletinLink"].stringValue
                         newOffering.sectionNumber = offering["sectionNumber"].stringValue
-                        newOffering.credit = offering["credit"].stringValue
                         
                         // add instructors
                         for instructor in offering["instructor"] {
@@ -162,8 +161,22 @@ class PullCourses {
                             newDay.days.append(dayBools.contains("F") ? true : false)
                             newDay.days.append(dayBools.contains("S") ? true : false)
                             
-                            newDay.startTime = day["startTime"].stringValue
-                            newDay.endTime = day["endTime"].stringValue
+                            let dateFormatterIn = DateFormatter()
+                            dateFormatterIn.dateFormat = "HH:mm"
+                            let dateFormatterOut = DateFormatter()
+                            dateFormatterOut.dateFormat = "h:mm"
+                            let startString = day["startTime"].stringValue
+                            guard let startDateIn = dateFormatterIn.date(from: startString) else {
+                                // can't parse date, date probably empty
+                                continue
+                            }
+                            newDay.startTime = dateFormatterOut.string(from: startDateIn)
+                            let endString = day["endTime"].stringValue
+                            guard let endDateIn = dateFormatterIn.date(from: endString) else {
+                                // can't parse date, date probably empty
+                                continue
+                            }
+                            newDay.endTime = dateFormatterOut.string(from: endDateIn)
                             
                             realm.add(newDay)
                             newOffering.classDays.append(newDay)

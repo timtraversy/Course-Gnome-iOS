@@ -58,7 +58,7 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
                 let cell = tableView.dequeueReusableCell(withIdentifier: "courseCell", for: indexPath) as! CourseCell
                 var departmentLabel = ""
                 if let department = courses[course].department?.acronym {
-                    departmentLabel = "\(department) \(courses[course].subjectNumber)"
+                    departmentLabel = "\(department) \(courses[course].subjectNumber) - \(courses[course].credit) Credits"
                 }
                 cell.departmentLabel.text = departmentLabel
                 cell.courseNameLabel.text = courses[course].courseName
