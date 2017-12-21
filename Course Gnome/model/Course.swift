@@ -2,8 +2,6 @@ import Foundation
 import RealmSwift
 
 class Course: Object {
-//    @objc dynamic var subjectAcronym: String = ""
-//    @objc dynamic var subjectName: String = ""
     @objc dynamic var department: Department? = nil
     @objc dynamic var subjectNumber: String = ""
     @objc dynamic var courseName: String = ""

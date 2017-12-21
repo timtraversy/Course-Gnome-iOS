@@ -39,6 +39,10 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     var numbers = [String]()
     var allArrays = [String:[String]]()
     
+    // set up variables to pass to next controller
+    var selectedSearch = ""
+    var selectedCategory = ""
+    
     // holds user text entry
     var text = ""
     
@@ -64,6 +68,14 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateResults()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SearchResultSegue" {
+            let destinationViewController = segue.destination as? CourseListViewController
+            destinationViewController?.selectedSearch = selectedSearch
+            destinationViewController?.selectedCategory = selectedCategory
+        }
     }
     
     // when user cancels, clear any entered text, resign keyboard, update table
@@ -110,7 +122,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         // set up predicates to query for strings containing or beginning with text
         let predicates =  [NSPredicate(format: "name beginswith [c]'\(text)'"), NSPredicate(format: "name contains [c]'\(text)' and not name beginswith [c]'\(text)'")]
         let courseNamePredicates = [NSPredicate(format: "courseName beginswith [c]'\(text)'"), NSPredicate(format: "courseName contains [c]'\(text)' and not courseName beginswith [c]'\(text)'")]
-        let subjectNumberPredicate = NSPredicate(format: "subjectNumber beginswith [c]'\(text)'")
+//        let subjectNumberPredicate = NSPredicate(format: "subjectNumber beginswith [c]'\(text)'")
 
         // in background do realm query
         DispatchQueue.global(qos: .background).async {
@@ -340,10 +352,13 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         return attributedString
     }
     
-    let titleArray = ["DEPARTMENT", "CRN", "INSTRUCTOR", "STATUS", "ATTRIBUTES", "COURSE NAME", "SUBJECT NUMBER"]
+    let titleArray = ["Department", "CRN", "Instructor", "Status", "Attributes", "Course Name", "Subject Number"]
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (indexPath.row < savedSearches.count) {
+            selectedSearch = savedSearches[indexPath.row].search
+            selectedCategory = savedSearches[indexPath.row].searchCategory
+            performSegue(withIdentifier: "SearchResultSegue", sender: self)
         } else {
             let realm = try! Realm()
             realm.beginWrite()
@@ -351,11 +366,14 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
             let newRow = indexPath.row - savedSearches.count
             var countThroughArrays = 1
             let allArrays = [departments, crns, instructors, statuses, attributes, names, numbers]
-            for (index, array) in allArrays.enumerated() {
+            mainLoop: for (index, array) in allArrays.enumerated() {
                 for item in array {
                     if (countThroughArrays == newRow) {
+                        selectedSearch = item
+                        selectedCategory = titleArray[index]
                         newSavedSearch.search = item
                         newSavedSearch.searchCategory = titleArray[index]
+                        break mainLoop
                     }
                     countThroughArrays += 1
                 }
@@ -364,6 +382,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
             newSavedSearch.id = (realm.objects(SavedSearch.self).max(ofProperty: "id") as Int? ?? 0) + 1
             realm.add(newSavedSearch)
             try! realm.commitWrite()
+            performSegue(withIdentifier: "SearchResultSegue", sender: self)
         }
     }
     
@@ -371,8 +390,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         return 1
     }
 }
-
-
 
 extension SearchViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {    //delegate method

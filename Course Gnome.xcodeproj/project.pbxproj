@@ -11,6 +11,7 @@
 		EC2E81331FC3848B0043351F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC2E81321FC3848B0043351F /* Assets.xcassets */; };
 		EC5926531FCCE81C00E73268 /* CourseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5926521FCCE81C00E73268 /* CourseListViewController.swift */; };
 		EC5A79541FC8A52900F38F34 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5A79531FC8A52900F38F34 /* TabBarController.swift */; };
+		EC5BAE141FEB61850056448F /* PersistanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5BAE131FEB61850056448F /* PersistanceManager.swift */; };
 		ECBA71981FCDC95100B7364A /* SearchBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBA71971FCDC95100B7364A /* SearchBox.swift */; };
 		ECC8E56F1FCFAF9200E49DCE /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC8E56E1FCFAF9200E49DCE /* CalendarViewController.swift */; };
 		ECCB1BAA1FC54DCA00DB7EB9 /* PullCourses.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB1BA91FC54DCA00DB7EB9 /* PullCourses.swift */; };
@@ -33,6 +34,7 @@
 		EC2E81321FC3848B0043351F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC5926521FCCE81C00E73268 /* CourseListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListViewController.swift; sourceTree = "<group>"; };
 		EC5A79531FC8A52900F38F34 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		EC5BAE131FEB61850056448F /* PersistanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistanceManager.swift; sourceTree = "<group>"; };
 		ECBA71971FCDC95100B7364A /* SearchBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBox.swift; sourceTree = "<group>"; };
 		ECC8E56E1FCFAF9200E49DCE /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		ECCB1BA91FC54DCA00DB7EB9 /* PullCourses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullCourses.swift; sourceTree = "<group>"; };
@@ -79,6 +81,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		EC5BAE121FEB61490056448F /* data */ = {
+			isa = PBXGroup;
+			children = (
+				EC5BAE131FEB61850056448F /* PersistanceManager.swift */,
+			);
+			path = data;
+			sourceTree = "<group>";
+		};
 		EC6A74C91FC33F810039840C /* model */ = {
 			isa = PBXGroup;
 			children = (
@@ -90,6 +100,7 @@
 		EC6A74CB1FC33F900039840C /* view */ = {
 			isa = PBXGroup;
 			children = (
+				ECBA71971FCDC95100B7364A /* SearchBox.swift */,
 				EC2E81321FC3848B0043351F /* Assets.xcassets */,
 				ECF73FA01FA7D2A800F030FC /* Main.storyboard */,
 				ECF73FA51FA7D2A800F030FC /* LaunchScreen.storyboard */,
@@ -107,7 +118,6 @@
 				ECF5BD641FC4D202006988B9 /* SearchNavigationController.swift */,
 				EC5A79531FC8A52900F38F34 /* TabBarController.swift */,
 				EC5926521FCCE81C00E73268 /* CourseListViewController.swift */,
-				ECBA71971FCDC95100B7364A /* SearchBox.swift */,
 				ECC8E56E1FCFAF9200E49DCE /* CalendarViewController.swift */,
 			);
 			path = controller;
@@ -152,6 +162,7 @@
 		ECF73F9B1FA7D2A800F030FC /* Course Gnome */ = {
 			isa = PBXGroup;
 			children = (
+				EC5BAE121FEB61490056448F /* data */,
 				EC6A74CD1FC33FA50039840C /* app */,
 				EC6A74CC1FC33F970039840C /* controller */,
 				EC6A74CB1FC33F900039840C /* view */,
@@ -313,6 +324,7 @@
 				ECCB1BAA1FC54DCA00DB7EB9 /* PullCourses.swift in Sources */,
 				EC5926531FCCE81C00E73268 /* CourseListViewController.swift in Sources */,
 				ECCB1BAE1FC553C200DB7EB9 /* Course.swift in Sources */,
+				EC5BAE141FEB61850056448F /* PersistanceManager.swift in Sources */,
 				EC5A79541FC8A52900F38F34 /* TabBarController.swift in Sources */,
 				ECF5BD611FC4CED6006988B9 /* SearchViewController.swift in Sources */,
 				ECF5BD651FC4D202006988B9 /* SearchNavigationController.swift in Sources */,
