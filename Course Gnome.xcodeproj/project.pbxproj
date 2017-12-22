@@ -8,10 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		27A100D781C66EFA45D73938 /* Pods_Course_Gnome.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBAAE2DA9EBC15F77AC328 /* Pods_Course_Gnome.framework */; };
-		EC2E81331FC3848B0043351F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC2E81321FC3848B0043351F /* Assets.xcassets */; };
 		EC5926531FCCE81C00E73268 /* CourseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5926521FCCE81C00E73268 /* CourseListViewController.swift */; };
 		EC5A79541FC8A52900F38F34 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5A79531FC8A52900F38F34 /* TabBarController.swift */; };
 		EC5BAE141FEB61850056448F /* PersistanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5BAE131FEB61850056448F /* PersistanceManager.swift */; };
+		EC5BAE181FEC29C70056448F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC5BAE171FEC29C50056448F /* Assets.xcassets */; };
+		ECB975161FECAB5B00989467 /* CourseDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB975151FECAB5B00989467 /* CourseDetailViewController.swift */; };
+		ECB975181FECAD7500989467 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB975171FECAD7500989467 /* FilterViewController.swift */; };
 		ECBA71981FCDC95100B7364A /* SearchBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBA71971FCDC95100B7364A /* SearchBox.swift */; };
 		ECC8E56F1FCFAF9200E49DCE /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC8E56E1FCFAF9200E49DCE /* CalendarViewController.swift */; };
 		ECCB1BAA1FC54DCA00DB7EB9 /* PullCourses.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB1BA91FC54DCA00DB7EB9 /* PullCourses.swift */; };
@@ -31,10 +33,12 @@
 		1AFBAAE2DA9EBC15F77AC328 /* Pods_Course_Gnome.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Course_Gnome.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A1BFBF6E93E5DEE43688DEC /* Pods-Course Gnome.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Course Gnome.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Course Gnome/Pods-Course Gnome.debug.xcconfig"; sourceTree = "<group>"; };
 		D1D0B79AF72E4DBF39B2A884 /* Pods-Course Gnome.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Course Gnome.release.xcconfig"; path = "Pods/Target Support Files/Pods-Course Gnome/Pods-Course Gnome.release.xcconfig"; sourceTree = "<group>"; };
-		EC2E81321FC3848B0043351F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC5926521FCCE81C00E73268 /* CourseListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListViewController.swift; sourceTree = "<group>"; };
 		EC5A79531FC8A52900F38F34 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		EC5BAE131FEB61850056448F /* PersistanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistanceManager.swift; sourceTree = "<group>"; };
+		EC5BAE171FEC29C50056448F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		ECB975151FECAB5B00989467 /* CourseDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailViewController.swift; sourceTree = "<group>"; };
+		ECB975171FECAD7500989467 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		ECBA71971FCDC95100B7364A /* SearchBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBox.swift; sourceTree = "<group>"; };
 		ECC8E56E1FCFAF9200E49DCE /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		ECCB1BA91FC54DCA00DB7EB9 /* PullCourses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullCourses.swift; sourceTree = "<group>"; };
@@ -100,8 +104,8 @@
 		EC6A74CB1FC33F900039840C /* view */ = {
 			isa = PBXGroup;
 			children = (
+				EC5BAE171FEC29C50056448F /* Assets.xcassets */,
 				ECBA71971FCDC95100B7364A /* SearchBox.swift */,
-				EC2E81321FC3848B0043351F /* Assets.xcassets */,
 				ECF73FA01FA7D2A800F030FC /* Main.storyboard */,
 				ECF73FA51FA7D2A800F030FC /* LaunchScreen.storyboard */,
 			);
@@ -119,6 +123,8 @@
 				EC5A79531FC8A52900F38F34 /* TabBarController.swift */,
 				EC5926521FCCE81C00E73268 /* CourseListViewController.swift */,
 				ECC8E56E1FCFAF9200E49DCE /* CalendarViewController.swift */,
+				ECB975151FECAB5B00989467 /* CourseDetailViewController.swift */,
+				ECB975171FECAD7500989467 /* FilterViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -241,7 +247,7 @@
 			files = (
 				ECF73FA71FA7D2A800F030FC /* LaunchScreen.storyboard in Resources */,
 				ECDC03D01FBBF93C00B97C7E /* GoogleService-Info.plist in Resources */,
-				EC2E81331FC3848B0043351F /* Assets.xcassets in Resources */,
+				EC5BAE181FEC29C70056448F /* Assets.xcassets in Resources */,
 				ECF73FA21FA7D2A800F030FC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -325,8 +331,10 @@
 				EC5926531FCCE81C00E73268 /* CourseListViewController.swift in Sources */,
 				ECCB1BAE1FC553C200DB7EB9 /* Course.swift in Sources */,
 				EC5BAE141FEB61850056448F /* PersistanceManager.swift in Sources */,
+				ECB975161FECAB5B00989467 /* CourseDetailViewController.swift in Sources */,
 				EC5A79541FC8A52900F38F34 /* TabBarController.swift in Sources */,
 				ECF5BD611FC4CED6006988B9 /* SearchViewController.swift in Sources */,
+				ECB975181FECAD7500989467 /* FilterViewController.swift in Sources */,
 				ECF5BD651FC4D202006988B9 /* SearchNavigationController.swift in Sources */,
 				ECF73F9F1FA7D2A800F030FC /* ViewController.swift in Sources */,
 				ECBA71981FCDC95100B7364A /* SearchBox.swift in Sources */,
