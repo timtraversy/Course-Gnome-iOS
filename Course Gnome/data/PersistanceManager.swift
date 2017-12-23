@@ -10,35 +10,85 @@ import Foundation
 import RealmSwift
 
 class PersistanceManager {
-    func getCourses (selections: [String:String]) -> Results<Course>{
-        let realm = try! Realm()
-        var courses = realm.objects(Course.self)
+    func getCourses (selections: [String:String]) -> (courses: Results<Course>, offerings: Results<Offering>){
         
-        for (term, category) in selections {
-            print(term)
+        let realm = try! Realm()
+        var offerings = realm.objects(Offering.self)
+        
+        for (category, term) in selections {
             switch category {
             case "Department" :
-                courses = courses.filter("department.name = %@", term)
+                offerings = offerings.filter("department.name = %@", term)
             case "CRN" :
-                courses = courses.filter("ANY offerings.crn.name = %@", term)
+                offerings = offerings.filter("crn.name = %@", term)
             case "Instructor" :
-                let instructors = realm.objects(Offering.self).filter("ANY instructors.name = %@", term)
-                courses = courses.filter("ANY offerings IN %@", instructors)
+                offerings = offerings.filter("ANY instructors.name = %@", term)
             case "Status" :
-                courses = courses.filter("ANY offerings.status.name = %@", term)
+                offerings = offerings.filter("status.name = %@", term)
             case "Attributes" :
-                let attributes = realm.objects(Offering.self).filter("ANY courseAttributes.name = %@", term)
-                courses = courses.filter("ANY offerings IN %@", attributes)
+                offerings = offerings.filter("ANY courseAttributes.name = %@", term)
             case "Course Name" :
-                courses = courses.filter("courseName = %@", term)
+                offerings = offerings.filter("courseName = %@", term)
             case "Subject Number" :
-                courses = courses.filter("subjectNumber = %@", term)
+                offerings = offerings.filter("subjectNumber = %@", term)
+            case "Days" :
+                //term = E/O-M-T-W-R-F
+                let daysArray = term.components(separatedBy: " ")
+                var eitherOnly = ""
+                if (daysArray[0] == "O") {
+                    eitherOnly = "AND"
+                } else {
+                    eitherOnly = "OR"
+                }
+                var predicateString = ""
+                
+                if (daysArray[1] == "true") {
+                    predicateString = "ANY classDays.days contains 'M'"
+                }
+                if (daysArray[2] == "true") {
+                    if (predicateString.isEmpty) {
+                        predicateString = "ANY classDays.days contains 'T'"
+                    } else {
+                        predicateString += " \(eitherOnly) ANY classDays.days contains 'T'"
+                    }
+                }
+                if (daysArray[3] == "true") {
+                    if (predicateString.isEmpty) {
+                        predicateString = "ANY classDays.days contains 'W'"
+                    } else {
+                        predicateString += " \(eitherOnly) ANY classDays.days contains 'W'"
+                    }
+                }
+                if (daysArray[4] == "true") {
+                    if (predicateString.isEmpty) {
+                        predicateString = "ANY classDays.days contains 'R'"
+                    } else {
+                        predicateString += " \(eitherOnly) ANY classDays.days contains 'R'"
+                    }
+                }
+                if (daysArray[5] == "true") {
+                    if (predicateString.isEmpty) {
+                        predicateString = "ANY classDays.days contains 'F'"
+                    } else {
+                        predicateString += " \(eitherOnly) ANY classDays.days contains 'F'"
+                    }
+                }
+                
+                if (!predicateString.isEmpty) {
+                    offerings = offerings.filter(predicateString)
+                }
+                
             default :
                 print ("No category found!")
             }
         }
         
-        return courses.sorted(byKeyPath: "subjectNumber")
+        var courses = realm.objects(Course.self).filter("ANY offerings IN %@", offerings)
+        courses = courses.sorted(byKeyPath: "subjectNumber")
+
+        return (courses: courses, offerings: offerings)
         
     }
 }
+
+

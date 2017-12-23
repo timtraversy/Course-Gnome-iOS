@@ -2,6 +2,7 @@ import Foundation
 import RealmSwift
 
 class Course: Object {
+    @objc dynamic var courseID: Int = 0
     @objc dynamic var department: Department? = nil
     @objc dynamic var subjectNumber: String = ""
     @objc dynamic var courseName: String = ""
@@ -49,7 +50,7 @@ class CourseAttribute: Object {
 }
 
 class ClassDay: Object {
-    let days = List<Bool>()
+    @objc dynamic var days : String = ""
     @objc dynamic var location: String = ""
     @objc dynamic var startTime: String = ""
     @objc dynamic var endTime: String = ""

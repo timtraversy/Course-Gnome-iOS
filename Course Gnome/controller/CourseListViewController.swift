@@ -9,15 +9,10 @@ class CourseCell: UITableViewCell {
 
 class OfferingCell: UITableViewCell {
     @IBOutlet weak var sectionNumberLabel: UILabel!
-    @IBOutlet weak var mondayImage: UIImageView!
-    @IBOutlet weak var tuesdayImage: UIImageView!
-    @IBOutlet weak var wednesdayImage: UIImageView!
-    @IBOutlet weak var thursdayImage: UIImageView!
-    @IBOutlet weak var fridayImage: UIImageView!
-    @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var crnLabel: UILabel!
     @IBOutlet weak var instructorLabel: UILabel!
     @IBOutlet var offeringLabelsCollection: [UILabel]!
+    @IBOutlet weak var classDaysStack: UIStackView!
 }
 
 class CourseListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -25,19 +20,113 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
     // get selection from search, matches one key from below
     var selectedSearch: String!
     var selectedCategory: String!
+    var selectedSearches = [String:String]()
     
-    //all filter buttons
-    @IBOutlet var filterButtons: [UIButton]!
-    @IBOutlet var dayButtons: [UIButton]!
+    //button collections
+    @IBOutlet var allButtons: [UIButton]!
+    @IBOutlet var hiddenButtons: [UIButton]!
+    @IBOutlet weak var dayButton: UIButton!
+    @IBOutlet weak var daysStackView: UIStackView!
+    var daysActive = false
+    var daysCollapsed = true
     
-    @IBOutlet weak var dateButton: UIButton!
-    @IBOutlet weak var fridayButton: UIButton!
+    @IBOutlet weak var eitherButton: UIButton!
+    @IBOutlet weak var anyButton: UIButton!
+    var eitherDay = true
+    
+    //button actions
+    @IBAction func expandDays(_ sender: UIButton) {
+        daysCollapsed = !daysCollapsed
+        UIView.animate(withDuration: 0.25) {
+            for i in 2...14 {
+              let view = self.daysStackView.arrangedSubviews[i]
+                view.isHidden = self.daysCollapsed
+            }
+        }
+        if (daysCollapsed) {
+            if (daysActive) {
+                turnOnButton(button: dayButton)
+            }
+        } else {
+            turnOffButton(button: dayButton)
+        }
+    }
+    
+    func turnOffButton(button: UIButton) {
+        UIView.animate(withDuration: 0.25) {
+            button.backgroundColor = UIColor(named: "LightestRed")
+            button.setTitleColor(.white, for: .normal)
+        }
+    }
+    func turnOnButton(button: UIButton) {
+        UIView.animate(withDuration: 0.25) {
+            button.backgroundColor = UIColor.white
+            button.setTitleColor(UIColor(named: "Red"), for: .normal)
+        }
+    }
+    
+    @IBAction func selectEither(_ sender: UIButton) {
+        if (sender.backgroundColor == UIColor(named: "LighterBlue")) {
+            // currently off, turn it on
+            eitherDay = true
+            eitherButton.backgroundColor = UIColor(named: "Blue")
+            anyButton.backgroundColor = UIColor(named: "LighterBlue")
+            
+            dayBooleans.removeFirst(1)
+            dayBooleans = "E" + dayBooleans
+            selectedSearches["Days"] = dayBooleans
+            updateTable()
+        }
+    }
+    
+    @IBAction func selectOnly(_ sender: UIButton) {
+        if (sender.backgroundColor == UIColor(named: "LighterBlue")) {
+            // currently off, turn it on
+            eitherDay = false
+            anyButton.backgroundColor = UIColor(named: "Blue")
+            eitherButton.backgroundColor = UIColor(named: "LighterBlue")
+            
+            dayBooleans.removeFirst(1)
+            dayBooleans = "O" + dayBooleans
+            selectedSearches["Days"] = dayBooleans
+            updateTable()
+        }
+    }
+    
+    var dayBooleans = ""
+    
+    @IBAction func filterByFit(_ sender: UIButton) {
+        
+        if (sender.titleColor(for: .normal) == UIColor.white) {
+            turnOnButton(button: sender)
+        } else {
+            turnOffButton(button: sender)
+        }
+        
+        daysActive = false
+        dayBooleans = ""
+        if (eitherDay) {
+            dayBooleans.append("E ")
+        } else {
+            dayBooleans.append("O ")
+        }
+        for i in 0...5 {
+            if (hiddenButtons[i].backgroundColor == UIColor.white) {
+                daysActive = true
+                dayBooleans.append("true ")
+            } else {
+                dayBooleans.append("false ")
+            }
+        }
+        selectedSearches["Days"] = dayBooleans
+        updateTable()
+    }
     
     @IBOutlet weak var filterScrollView: UIScrollView!
     @IBOutlet weak var tableView: UITableView!
     
     var courses = try! Realm().objects(Course.self)
-    var offeringsCount = 0
+    var offerings = try! Realm().objects(Offering.self)
     
     var persistanceManager: PersistanceManager!
     
@@ -46,34 +135,27 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
         tableView.dataSource = self
         tableView.delegate = self
         
-        // set button styling
-        for button in filterButtons {
-            button.layer.cornerRadius = 4.0
-            button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 13.0)
+        for button in hiddenButtons {
+            button.isHidden = true
         }
-        for button in dayButtons {
-            button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 13.0)
-        }
-        
-        //nav bar font
-//        self.navigationItem.set
-        
-        dateButton.isEnabled = false
-        dateButton.roundedLeft()
-        fridayButton.roundedRight()
-        
+
+        selectedSearches[selectedCategory] = selectedSearch
         persistanceManager = PersistanceManager()
-        courses = persistanceManager.getCourses(selections: [selectedSearch:selectedCategory])
-        for course in courses {
-            offeringsCount += course.offerings.count
-        }
-        title = "\(offeringsCount) Results"
-        
+        updateTable()
+    }
+    
+    func updateTable() {
+        let results = persistanceManager.getCourses(selections: selectedSearches)
+
+        courses = results.courses
+        offerings = results.offerings
+
+        title = "\(offerings.count) Results"
         tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return courses.count + offeringsCount
+        return courses.count + offerings.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -93,59 +175,133 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
                           UIColor(red:0.18, green:0.80, blue:0.44, alpha:1.0),
                           UIColor(red:0.58, green:0.65, blue:0.65, alpha:1.0)]
             
+            // this is where we calculate the offerings for this course
+            let currentCourse = courses[course]
+            let offeringsForCourse = offerings.filter("courseID = %@", currentCourse.courseID)
+            let offeringsForCourseCount = offeringsForCourse.count
+            
             if (indexPath.row == count) {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "courseCell", for: indexPath) as! CourseCell
                 var departmentLabel = ""
-                if let department = courses[course].department?.acronym {
-                    departmentLabel = "\(department) \(courses[course].subjectNumber) - \(courses[course].credit) Credits"
+                if let department = currentCourse.department?.acronym {
+                    departmentLabel = "\(department) \(currentCourse.subjectNumber)"
                 }
                 cell.departmentLabel.text = departmentLabel
-                cell.courseNameLabel.text = courses[course].courseName
+                cell.courseNameLabel.text = currentCourse.courseName
                 for label in cell.courseLabelsCollection {
                     label.textColor = colors[labelColor]
                 }
                 return cell
-            } else if (indexPath.row <= courses[course].offerings.count + count) {
+            } else if (indexPath.row <= offeringsForCourseCount + count) {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "offeringCell", for: indexPath) as! OfferingCell
-                let offering = courses[course].offerings[indexPath.row-count-1]
-                cell.sectionNumberLabel.text = offering.sectionNumber
+                let offering = offeringsForCourse[indexPath.row-count-1]
+                
+//                for view in cell.classDaysStack.arrangedSubviews {
+//                    cell.classDaysStack.removeArrangedSubview(view)
+//                }
+
+                if (cell.crnLabel.text == "22222") { // 22222 is IB placeholder, means cell has not been set
+                    
+                    // delete stack
+//                    for view in cell.classDaysStack.arrangedSubviews {
+//                        cell.classDaysStack.removeArrangedSubview(view)
+//                    }
+                    
+                    // loop over each class day and add it to stack
+                    for day in offering.classDays {
+                        let imageViewOne = UIImageView()
+                        // add special aspect ratio constraint to make them all squares
+                        let aspectConstraint = NSLayoutConstraint(item: imageViewOne,
+                                                                  attribute: NSLayoutAttribute.height,
+                                                                  relatedBy: NSLayoutRelation.equal,
+                                                                  toItem: imageViewOne,
+                                                                  attribute: NSLayoutAttribute.width,
+                                                                  multiplier: 1,
+                                                                  constant: 0)
+                        NSLayoutConstraint.activate([aspectConstraint])
+                        let color = cell.crnLabel.textColor
+                        if (day.days.contains("M")) {
+                            imageViewOne.image = UIImage(named: "\(squareColor)Filled")
+                        } else {
+                            imageViewOne.image = UIImage (named: "\(squareColor)Outline")
+                        }
+                        
+                        let imageViewTwo = UIImageView()
+                        if (day.days.contains("T")) {
+                            imageViewTwo.image = UIImage (named: "\(squareColor)Filled")
+                        } else {
+                            imageViewTwo.image = UIImage (named: "\(squareColor)Outline")
+                        }
+                        
+                        let imageViewThree = UIImageView()
+                        if (day.days.contains("W")) {
+                            imageViewThree.image = UIImage (named: "\(squareColor)Filled")
+                        } else {
+                            imageViewThree.image = UIImage (named: "\(squareColor)Outline")
+                        }
+                        
+                        let imageViewFour = UIImageView()
+                        if (day.days.contains("R")) {
+                            imageViewFour.image = UIImage (named: "\(squareColor)Filled")
+                        } else {
+                            imageViewFour.image = UIImage (named: "\(squareColor)Outline")
+                        }
+                        
+                        let imageViewFive = UIImageView()
+                        if (day.days.contains("F")) {
+                            imageViewFive.image = UIImage (named: "\(squareColor)Filled")
+                        } else {
+                            imageViewFive.image = UIImage (named: "\(squareColor)Outline")
+                        }
+                        
+                        let subStackView = UIStackView()
+                        subStackView.axis = UILayoutConstraintAxis.horizontal
+                        subStackView.distribution = UIStackViewDistribution.fillEqually
+                        subStackView.alignment = UIStackViewAlignment.fill
+                        subStackView.spacing = 3.0
+                        let heightConstraint = NSLayoutConstraint(item: subStackView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 13)
+                        NSLayoutConstraint.activate([heightConstraint])
+                        
+                        subStackView.addArrangedSubview(imageViewOne)
+                        subStackView.addArrangedSubview(imageViewTwo)
+                        subStackView.addArrangedSubview(imageViewThree)
+                        subStackView.addArrangedSubview(imageViewFour)
+                        subStackView.addArrangedSubview(imageViewFive)
+                        
+                        let timeLabel = UILabel()
+                        timeLabel.text = day.startTime + " - " + day.endTime + "-" + String(indexPath.row)
+                        timeLabel.textColor = colors[labelColor]
+                        timeLabel.font = UIFont(name: "AvenirNext-Medium", size: 15)
+                        
+                        let stackView = UIStackView()
+                        stackView.axis = UILayoutConstraintAxis.horizontal
+                        stackView.distribution = UIStackViewDistribution.fill
+                        stackView.alignment = UIStackViewAlignment.fill
+                        stackView.spacing = 10.0
+                        
+                        stackView.addArrangedSubview(subStackView)
+                        stackView.addArrangedSubview(timeLabel)
+                        
+                        cell.classDaysStack.addArrangedSubview(stackView)
+                    }
+                }
+                
+                cell.sectionNumberLabel.text = offering.sectionNumber + "-" + String(indexPath.row)
                 cell.crnLabel.text = offering.crn?.name
-                cell.instructorLabel.text = offering.instructors[0].name
-                cell.timeLabel.text = "\(offering.classDays[0].startTime) - \(offering.classDays[0].endTime)"
+                var instructorText = ""
+                for instructor in offering.instructors {
+                    instructorText += "\(instructor.name); "
+                }
+                instructorText.removeLast(2)
+                cell.instructorLabel.text = instructorText
                 
                 for label in cell.offeringLabelsCollection {
                     label.textColor = colors[labelColor]
                 }
-                
-                if (offering.classDays[0].days[1]) {
-                    cell.mondayImage.image = UIImage (named: "\(squareColor)Filled")
-                } else {
-                    cell.mondayImage.image = UIImage (named: "\(squareColor)Outline")
-                }
-                if (offering.classDays[0].days[2]) {
-                    cell.tuesdayImage.image = UIImage (named: "\(squareColor)Filled")
-                } else {
-                    cell.tuesdayImage.image = UIImage (named: "\(squareColor)Outline")
-                }
-                if (offering.classDays[0].days[3]) {
-                    cell.wednesdayImage.image = UIImage (named: "\(squareColor)Filled")
-                } else {
-                    cell.wednesdayImage.image = UIImage (named: "\(squareColor)Outline")
-                }
-                if (offering.classDays[0].days[4]) {
-                    cell.thursdayImage.image = UIImage (named: "\(squareColor)Filled")
-                } else {
-                    cell.thursdayImage.image = UIImage (named: "\(squareColor)Outline")
-                }
-                if (offering.classDays[0].days[5]) {
-                    cell.fridayImage.image = UIImage (named: "\(squareColor)Filled")
-                } else {
-                    cell.fridayImage.image = UIImage (named: "\(squareColor)Outline")
-                }
-                
+
                 return cell
             }
-            count += courses[course].offerings.count + 1
+            count += offeringsForCourseCount + 1
             course += 1
         }
     }
@@ -154,15 +310,6 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
         performSegue(withIdentifier: "courseDetail", sender: self)
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 }
 
 extension UIButton {

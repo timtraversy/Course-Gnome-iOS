@@ -69,7 +69,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         super.viewWillAppear(animated)
         updateResults()
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SearchResultSegue" {
             let destinationViewController = segue.destination as? CourseListViewController
@@ -249,8 +249,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                 currentCount += 1
                 let cell = tableView.dequeueReusableCell(withIdentifier: "searchResult") as! SearchResultCell
                 cell.searchResultTitle?.attributedText = attributedText(withString: departments[indexPath.row - currentCount], boldString: text)
+                cell.tag = 0
                 return cell
-
             }
             currentCount += departments.count + 1
         }
@@ -264,6 +264,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                 currentCount += 1
                 let cell = tableView.dequeueReusableCell(withIdentifier: "searchResult") as! SearchResultCell
                 cell.searchResultTitle?.attributedText = attributedText(withString: crns[indexPath.row - currentCount], boldString: text)
+                cell.tag = 1
                 return cell
             }
             currentCount += crns.count + 1
@@ -278,6 +279,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                 currentCount += 1
                 let cell = tableView.dequeueReusableCell(withIdentifier: "searchResult") as! SearchResultCell
                 cell.searchResultTitle?.attributedText = attributedText(withString: statuses[indexPath.row - currentCount], boldString: text)
+                cell.tag = 2
                 return cell
             }
             currentCount += statuses.count + 1
@@ -292,6 +294,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                 currentCount += 1
                 let cell = tableView.dequeueReusableCell(withIdentifier: "searchResult") as! SearchResultCell
                 cell.searchResultTitle?.attributedText = attributedText(withString: instructors[indexPath.row - currentCount], boldString: text)
+                cell.tag = 3
                 return cell
             }
             currentCount += instructors.count + 1
@@ -306,6 +309,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                 currentCount += 1
                 let cell = tableView.dequeueReusableCell(withIdentifier: "searchResult") as! SearchResultCell
                 cell.searchResultTitle?.attributedText = attributedText(withString: names[indexPath.row - currentCount], boldString: text)
+                cell.tag = 4
                 return cell
             }
             currentCount += names.count + 1
@@ -320,6 +324,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                 currentCount += 1
                 let cell = tableView.dequeueReusableCell(withIdentifier: "searchResult") as! SearchResultCell
                 cell.searchResultTitle?.attributedText = attributedText(withString: numbers[indexPath.row - currentCount], boldString: text)
+                cell.tag = 5
                 return cell
             }
             currentCount += numbers.count + 1
@@ -334,6 +339,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                 currentCount += 1
                 let cell = tableView.dequeueReusableCell(withIdentifier: "searchResult") as! SearchResultCell
                 cell.searchResultTitle?.attributedText = attributedText(withString: attributes[indexPath.row - currentCount], boldString: text)
+                cell.tag = 6
                 return cell
             }
             currentCount += attributes.count + 1
@@ -352,36 +358,28 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         return attributedString
     }
     
-    let titleArray = ["Department", "CRN", "Instructor", "Status", "Attributes", "Course Name", "Subject Number"]
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (indexPath.row < savedSearches.count) {
             selectedSearch = savedSearches[indexPath.row].search
             selectedCategory = savedSearches[indexPath.row].searchCategory
             performSegue(withIdentifier: "SearchResultSegue", sender: self)
         } else {
-            let realm = try! Realm()
-            realm.beginWrite()
+            let cell = tableView.cellForRow(at: indexPath) as! SearchResultCell
+            selectedSearch = cell.searchResultTitle.text!
+            
+            let titleArray = ["Department", "CRN", "Status", "Instructor", "Course Name", "Subject Number", "Attributes"]
+            selectedCategory = titleArray[cell.tag]
+            
             let newSavedSearch = SavedSearch()
-            let newRow = indexPath.row - savedSearches.count
-            var countThroughArrays = 1
-            let allArrays = [departments, crns, instructors, statuses, attributes, names, numbers]
-            mainLoop: for (index, array) in allArrays.enumerated() {
-                for item in array {
-                    if (countThroughArrays == newRow) {
-                        selectedSearch = item
-                        selectedCategory = titleArray[index]
-                        newSavedSearch.search = item
-                        newSavedSearch.searchCategory = titleArray[index]
-                        break mainLoop
-                    }
-                    countThroughArrays += 1
-                }
-                if (!array.isEmpty) { countThroughArrays += 1 }
-            }
+            newSavedSearch.search = selectedSearch
+            newSavedSearch.searchCategory = selectedCategory
+            
+            let realm = try! Realm()
             newSavedSearch.id = (realm.objects(SavedSearch.self).max(ofProperty: "id") as Int? ?? 0) + 1
+            realm.beginWrite()
             realm.add(newSavedSearch)
             try! realm.commitWrite()
+
             performSegue(withIdentifier: "SearchResultSegue", sender: self)
         }
     }
@@ -393,12 +391,16 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
 
 extension SearchViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {    //delegate method
-        textField.frame.size.width -= cancelButtonSize
+        UIView.animate(withDuration: 0.25) {
+            textField.frame.size.width -= self.cancelButtonSize
+        }
     }
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {  //delegate method
         textField.resignFirstResponder()
-        textField.frame.size.width += cancelButtonSize
+        UIView.animate(withDuration: 0.25) {
+            textField.frame.size.width += self.cancelButtonSize
+        }
         return true
     }
     

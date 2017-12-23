@@ -74,51 +74,55 @@ class PullCourses {
                 var x = 0
                 let count = json.count
                 
+                // add statuses
+                let open = Status()
+                open.name = "Open"
+                realm.add(open)
+                let waitlist = Status()
+                waitlist.name = "Waitlist"
+                realm.add(waitlist)
+                let closed = Status()
+                closed.name = "Closed"
+                realm.add(closed)
+                
                 // loop over offerings
                 for (_, course) in json {
                     print("Count \(x)/\(count)")
-                    x += 1
                     let newCourse = Course()
+                    newCourse.courseID = x
+                    x += 1
                     
                     newCourse.courseName = course["courseName"].stringValue
                     newCourse.subjectNumber = course["subjectNumber"].stringValue
                     newCourse.credit = course["credit"].stringValue
-
-                    var found = false
-                    for department in realm.objects(Department.self) {
-                        if (department.acronym == course["subjectAcronym"].stringValue) {
-                            newCourse.department = department
-                            found = true
-                            break
-                        }
-                    }
-                    if (!found) {
-                        let newDept = Department()
-                        newDept.name = course["subjectName"].stringValue
-                        newDept.acronym = course["subjectAcronym"].stringValue
-                        realm.add(newDept)
-                        newCourse.department = newDept
+                    
+                    // get department
+                    let found = realm.objects(Department.self).filter("acronym = %@", course["subjectAcronym"].stringValue)
+                    if (found.count == 0) {
+                        let newDepartment = Department()
+                        newDepartment.name = course["subjectName"].stringValue
+                        newDepartment.acronym = course["subjectAcronym"].stringValue
+                        realm.add(newDepartment)
+                        newCourse.department = newDepartment
+                    } else {
+                        newCourse.department = found[0]
                     }
                     
                     for (_, offering) in course["offerings"] {
                         let newOffering = Offering()
+                        
+                        // copy parent values
+                        newOffering.courseID = newCourse.courseID
+                        newOffering.department = newCourse.department
+                        newOffering.subjectNumber = newCourse.subjectNumber
+                        newOffering.courseName = newCourse.courseName
+                        newOffering.credit = newCourse.credit
+                        
                         newOffering.courseName = offering["courseName"].stringValue
                         newOffering.subjectNumber = offering["subjectNumber"].stringValue
                         
-                        found = false
-                        for status in realm.objects(Status.self) {
-                            if (status.name == offering["status"].stringValue) {
-                                newOffering.status = status
-                                found = true
-                                break
-                            }
-                        }
-                        if (!found) {
-                            let newStatus = Status()
-                            newStatus.name = offering["status"].stringValue
-                            realm.add(newStatus)
-                            newOffering.status = newStatus
-                        }
+                        let status = realm.objects(Status.self).filter("name = %@", offering["status"].stringValue)
+                        newOffering.status = status[0]
                                             
                         let newCrn = CRN()
                         newCrn.name = offering["CRN"].stringValue
@@ -127,24 +131,7 @@ class PullCourses {
                         
                         newOffering.bulletinLink = offering["bulletinLink"].stringValue
                         newOffering.sectionNumber = offering["sectionNumber"].stringValue
-                        
-                        // add instructors
-                        for instructor in offering["instructor"] {
-                            found = false
-                            for savedInstructor in realm.objects(Instructor.self) {
-                                if (savedInstructor.name == instructor.1.stringValue) {
-                                    newOffering.instructors.append(savedInstructor)
-                                    found = true
-                                    break
-                                }
-                            }
-                            if (!found) {
-                                let newInstructor = Instructor()
-                                newInstructor.name = instructor.1.stringValue
-                                realm.add(newInstructor)
-                                newOffering.instructors.append(newInstructor)
-                            }
-                        }
+
                         
                         //loop over days within course
                         for (_,day):(String, JSON ) in offering["classDays"] {
@@ -152,14 +139,7 @@ class PullCourses {
                             newDay.location = day["location"].stringValue
                             
                             // days entered as string (ex: TW) so check for each one and enter boolean if there/not there
-                            let dayBools = day["days"].stringValue
-                            newDay.days.append(dayBools.contains("U") ? true : false)
-                            newDay.days.append(dayBools.contains("M") ? true : false)
-                            newDay.days.append(dayBools.contains("T") ? true : false)
-                            newDay.days.append(dayBools.contains("W") ? true : false)
-                            newDay.days.append(dayBools.contains("R") ? true : false)
-                            newDay.days.append(dayBools.contains("F") ? true : false)
-                            newDay.days.append(dayBools.contains("S") ? true : false)
+                            newDay.days = day["days"].stringValue
                             
                             let dateFormatterIn = DateFormatter()
                             dateFormatterIn.dateFormat = "HH:mm"
@@ -188,39 +168,32 @@ class PullCourses {
                         newOffering.oldCourseNumber = offering["oldCourseNumber"].stringValue
                         newOffering.findBooksLink = offering["findBooksLink"].stringValue
                         
-                        // add course attributes
+                        // add instrucotrs
                         for instructor in offering["instructor"] {
-                            found = false
-                            for savedInstructor in realm.objects(Instructor.self) {
-                                if (savedInstructor.name == instructor.1.stringValue) {
-                                    newOffering.instructors.append(savedInstructor)
-                                    found = true
-                                    break
-                                }
-                            }
-                            if (!found) {
+                            let found = realm.objects(Instructor.self).filter("name = %@", instructor.1.stringValue)
+                            if (found.count == 0) {
                                 let newInstructor = Instructor()
                                 newInstructor.name = instructor.1.stringValue
                                 realm.add(newInstructor)
                                 newOffering.instructors.append(newInstructor)
+                            } else {
+                                newOffering.instructors.append(found[0])
                             }
                         }
+                        
+                        // add attributes
                         for attribute in offering["courseAttributes"] {
-                            found = false
-                            for savedAttribute in realm.objects(CourseAttribute.self) {
-                                if (savedAttribute.name == attribute.1.stringValue) {
-                                    newOffering.courseAttributes.append(savedAttribute)
-                                    found = true
-                                    break
-                                }
-                            }
-                            if (!found) {
+                            let found = realm.objects(CourseAttribute.self).filter("name = %@", attribute.1.stringValue)
+                            if (found.count == 0) {
                                 let newAttribute = CourseAttribute()
                                 newAttribute.name = attribute.1.stringValue
                                 realm.add(newAttribute)
                                 newOffering.courseAttributes.append(newAttribute)
+                            } else {
+                                newOffering.courseAttributes.append(found[0])
                             }
                         }
+                        
                         newOffering.fee = offering["fee"].stringValue
                         realm.add(newOffering)
                         newCourse.offerings.append(newOffering)
