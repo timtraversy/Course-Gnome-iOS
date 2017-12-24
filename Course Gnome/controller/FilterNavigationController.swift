@@ -8,14 +8,14 @@
 
 import UIKit
 
-class SearchNavigationController: UINavigationController {
+class FilterNavigationController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         navigationBar.shadowImage = UIImage()
         navigationBar.isTranslucent = false
-        navigationBar.barTintColor = UIColor(named: "Red")
+        navigationBar.barTintColor = UIColor(named: "Blue")
         navigationBar.tintColor = UIColor.white
         
         navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white,

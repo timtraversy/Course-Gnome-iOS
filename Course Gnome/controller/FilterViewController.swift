@@ -7,13 +7,49 @@
 //
 
 import UIKit
+import SwiftRangeSlider
 
 class FilterViewController: UIViewController {
-
+    
+    @IBOutlet var buttonsToOutline: [UIButton]!
+    
+    @IBOutlet weak var openButton: UIButton!
+    @IBOutlet weak var waitlistButton: UIButton!
+    @IBOutlet weak var closedButton: UIButton!
+    
+    @IBOutlet weak var fitSwitch: UISwitch!
+    
+    @IBOutlet weak var rangeSlider: RangeSlider!
+    @IBOutlet weak var lowerTimeLabel: UILabel!
+    @IBOutlet weak var lowerTimeConstraint: NSLayoutConstraint!
+    @IBOutlet weak var upperTimeLabel: UILabel!
+    @IBOutlet weak var upperTimeConstraint: NSLayoutConstraint!
+    var step: CGFloat!
+    
+    @IBAction func timeSliderChanged(_ sender: RangeSlider) {
+        let lowerValue = CGFloat(rangeSlider.lowerValue)
+        lowerTimeConstraint.constant = step * lowerValue + 10
+        lowerTimeLabel.text = TimesArray().array[Int(lowerValue)]
+        let upperValue = CGFloat(rangeSlider.upperValue)
+        upperTimeConstraint.constant = (step * (57-upperValue) + 5)
+        upperTimeLabel.text = TimesArray().array[Int(upperValue)]
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        for button in buttonsToOutline {
+            button.layer.borderColor = UIColor(named: "Red")?.cgColor
+            button.layer.borderWidth = 1.0
+            button.layer.cornerRadius = 3.0
+        }
+        
+        fitSwitch.tintColor = UIColor.lightGray
+        fitSwitch.layer.cornerRadius = 16
+        fitSwitch.backgroundColor = UIColor.lightGray
+        
+        step = rangeSlider.bounds.size.width/70
 
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {

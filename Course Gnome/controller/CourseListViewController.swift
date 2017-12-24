@@ -52,6 +52,15 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
     
+    @IBAction func pushedOpenButton(_ sender: UIButton) {
+        if (selectedSearches["Status"] == "Open") {
+            selectedSearches.removeValue(forKey: "Status")
+        } else {
+            selectedSearches["Status"] = "Open"
+        }
+        updateTable()
+    }
+    
     func turnOffButton(button: UIButton) {
         UIView.animate(withDuration: 0.25) {
             button.backgroundColor = UIColor(named: "LightestRed")
@@ -120,7 +129,7 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
             }
         }
         selectedSearches["Days"] = dayBooleans
-//        updateTable()
+        updateTable()
     }
     
     @IBOutlet weak var filterScrollView: UIScrollView!
@@ -301,9 +310,11 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "courseDetail", sender: self)
     }
 
+    @IBAction func unwindToCourseList(segue: UIStoryboardSegue) {
+    }
+    
 }
 
 extension UIButton {

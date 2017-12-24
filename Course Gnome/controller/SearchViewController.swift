@@ -51,7 +51,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     var screenWidth: CGFloat =  0.0
     
     // outlets
-    @IBOutlet weak var tableView: SearchResults!
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBox: UITextField!
     @IBOutlet weak var topBar: UIView!
     

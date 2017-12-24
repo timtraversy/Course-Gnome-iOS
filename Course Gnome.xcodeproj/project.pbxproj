@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		27A100D781C66EFA45D73938 /* Pods_Course_Gnome.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBAAE2DA9EBC15F77AC328 /* Pods_Course_Gnome.framework */; };
+		EC4F85F31FEF55F000D795B9 /* FilterNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4F85F21FEF55F000D795B9 /* FilterNavigationController.swift */; };
+		EC4F85F51FEF95F500D795B9 /* TimesArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4F85F41FEF95F500D795B9 /* TimesArray.swift */; };
 		EC5926531FCCE81C00E73268 /* CourseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5926521FCCE81C00E73268 /* CourseListViewController.swift */; };
 		EC5A79541FC8A52900F38F34 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5A79531FC8A52900F38F34 /* TabBarController.swift */; };
 		EC5BAE141FEB61850056448F /* PersistanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5BAE131FEB61850056448F /* PersistanceManager.swift */; };
@@ -21,7 +23,6 @@
 		ECDC03D01FBBF93C00B97C7E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ECDC03CF1FBBF93C00B97C7E /* GoogleService-Info.plist */; };
 		ECF5BD5F1FC4CE99006988B9 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF5BD5E1FC4CE99006988B9 /* ProfileViewController.swift */; };
 		ECF5BD611FC4CED6006988B9 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF5BD601FC4CED6006988B9 /* SearchViewController.swift */; };
-		ECF5BD631FC4CEEE006988B9 /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF5BD621FC4CEEE006988B9 /* SearchResults.swift */; };
 		ECF5BD651FC4D202006988B9 /* SearchNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF5BD641FC4D202006988B9 /* SearchNavigationController.swift */; };
 		ECF73F9D1FA7D2A800F030FC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF73F9C1FA7D2A800F030FC /* AppDelegate.swift */; };
 		ECF73F9F1FA7D2A800F030FC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF73F9E1FA7D2A800F030FC /* ViewController.swift */; };
@@ -33,6 +34,8 @@
 		1AFBAAE2DA9EBC15F77AC328 /* Pods_Course_Gnome.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Course_Gnome.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A1BFBF6E93E5DEE43688DEC /* Pods-Course Gnome.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Course Gnome.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Course Gnome/Pods-Course Gnome.debug.xcconfig"; sourceTree = "<group>"; };
 		D1D0B79AF72E4DBF39B2A884 /* Pods-Course Gnome.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Course Gnome.release.xcconfig"; path = "Pods/Target Support Files/Pods-Course Gnome/Pods-Course Gnome.release.xcconfig"; sourceTree = "<group>"; };
+		EC4F85F21FEF55F000D795B9 /* FilterNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterNavigationController.swift; sourceTree = "<group>"; };
+		EC4F85F41FEF95F500D795B9 /* TimesArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimesArray.swift; sourceTree = "<group>"; };
 		EC5926521FCCE81C00E73268 /* CourseListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListViewController.swift; sourceTree = "<group>"; };
 		EC5A79531FC8A52900F38F34 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		EC5BAE131FEB61850056448F /* PersistanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistanceManager.swift; sourceTree = "<group>"; };
@@ -46,7 +49,6 @@
 		ECDC03CF1FBBF93C00B97C7E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ECF5BD5E1FC4CE99006988B9 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		ECF5BD601FC4CED6006988B9 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		ECF5BD621FC4CEEE006988B9 /* SearchResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResults.swift; sourceTree = "<group>"; };
 		ECF5BD641FC4D202006988B9 /* SearchNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNavigationController.swift; sourceTree = "<group>"; };
 		ECF73F991FA7D2A800F030FC /* Course Gnome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Course Gnome.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECF73F9C1FA7D2A800F030FC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -117,9 +119,9 @@
 			children = (
 				ECF73F9E1FA7D2A800F030FC /* ViewController.swift */,
 				ECF5BD601FC4CED6006988B9 /* SearchViewController.swift */,
-				ECF5BD621FC4CEEE006988B9 /* SearchResults.swift */,
 				ECF5BD5E1FC4CE99006988B9 /* ProfileViewController.swift */,
 				ECF5BD641FC4D202006988B9 /* SearchNavigationController.swift */,
+				EC4F85F21FEF55F000D795B9 /* FilterNavigationController.swift */,
 				EC5A79531FC8A52900F38F34 /* TabBarController.swift */,
 				EC5926521FCCE81C00E73268 /* CourseListViewController.swift */,
 				ECC8E56E1FCFAF9200E49DCE /* CalendarViewController.swift */,
@@ -143,6 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				ECCB1BA91FC54DCA00DB7EB9 /* PullCourses.swift */,
+				EC4F85F41FEF95F500D795B9 /* TimesArray.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -283,16 +286,22 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Course Gnome/Pods-Course Gnome-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire-SwiftyJSON/Alamofire_SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SearchTextField/SearchTextField.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftRangeSlider/SwiftRangeSlider.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire_SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SearchTextField.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftRangeSlider.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -331,6 +340,7 @@
 				EC5926531FCCE81C00E73268 /* CourseListViewController.swift in Sources */,
 				ECCB1BAE1FC553C200DB7EB9 /* Course.swift in Sources */,
 				EC5BAE141FEB61850056448F /* PersistanceManager.swift in Sources */,
+				EC4F85F31FEF55F000D795B9 /* FilterNavigationController.swift in Sources */,
 				ECB975161FECAB5B00989467 /* CourseDetailViewController.swift in Sources */,
 				EC5A79541FC8A52900F38F34 /* TabBarController.swift in Sources */,
 				ECF5BD611FC4CED6006988B9 /* SearchViewController.swift in Sources */,
@@ -338,7 +348,7 @@
 				ECF5BD651FC4D202006988B9 /* SearchNavigationController.swift in Sources */,
 				ECF73F9F1FA7D2A800F030FC /* ViewController.swift in Sources */,
 				ECBA71981FCDC95100B7364A /* SearchBox.swift in Sources */,
-				ECF5BD631FC4CEEE006988B9 /* SearchResults.swift in Sources */,
+				EC4F85F51FEF95F500D795B9 /* TimesArray.swift in Sources */,
 				ECF73F9D1FA7D2A800F030FC /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
