@@ -459,7 +459,7 @@
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="filterByFit:" destination="Nhc-c8-Lvw" eventType="touchUpInside" id="cZC-jh-gPR"/>
+                                                    <action selector="anyPressed:" destination="Nhc-c8-Lvw" eventType="touchUpInside" id="9od-S1-fnV"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jbv-Wt-AE4">
@@ -471,7 +471,7 @@
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="filterByFit:" destination="Nhc-c8-Lvw" eventType="touchUpInside" id="SPA-Ru-63J"/>
+                                                    <action selector="anyPressed:" destination="Nhc-c8-Lvw" eventType="touchUpInside" id="7q8-9q-qu9"/>
                                                 </connections>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DQv-Gw-7rk">
@@ -505,7 +505,8 @@
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="filterByFit:" destination="Nhc-c8-Lvw" eventType="touchUpInside" id="R6W-zL-bb2"/>
+                                                            <action selector="anyPressed:" destination="Nhc-c8-Lvw" eventType="touchUpInside" id="NUO-Z0-oN9"/>
+                                                            <action selector="dayPressed:" destination="Nhc-c8-Lvw" eventType="touchUpInside" id="S65-1T-FXv"/>
                                                         </connections>
                                                     </button>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yyZ-Bb-tlI">
@@ -524,7 +525,7 @@
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="filterByFit:" destination="Nhc-c8-Lvw" eventType="touchUpInside" id="mal-eZ-wfk"/>
+                                                            <action selector="anyPressed:" destination="Nhc-c8-Lvw" eventType="touchUpInside" id="tYo-Md-gj5"/>
                                                         </connections>
                                                     </button>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pUG-F3-1Ja">
@@ -543,7 +544,7 @@
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="filterByFit:" destination="Nhc-c8-Lvw" eventType="touchUpInside" id="SPX-n6-XrW"/>
+                                                            <action selector="anyPressed:" destination="Nhc-c8-Lvw" eventType="touchUpInside" id="4eZ-lc-qhF"/>
                                                         </connections>
                                                     </button>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="viM-uP-HKt">
@@ -562,7 +563,7 @@
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="filterByFit:" destination="Nhc-c8-Lvw" eventType="touchUpInside" id="KsY-Ib-09K"/>
+                                                            <action selector="anyPressed:" destination="Nhc-c8-Lvw" eventType="touchUpInside" id="VvH-89-tnY"/>
                                                         </connections>
                                                     </button>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bdv-bL-mUI">
@@ -581,7 +582,7 @@
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="filterByFit:" destination="Nhc-c8-Lvw" eventType="touchUpInside" id="WAb-mH-DPJ"/>
+                                                            <action selector="anyPressed:" destination="Nhc-c8-Lvw" eventType="touchUpInside" id="Qhb-ch-p7J"/>
                                                         </connections>
                                                     </button>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="brg-SZ-phP">

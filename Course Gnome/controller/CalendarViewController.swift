@@ -11,8 +11,7 @@ import UIKit
 private let reuseIdentifier = "Cell"
 
 class MondayCell: UICollectionViewCell {
-    @IBOutlet weak var cellLabel: UILabel!
-    
+    @IBOutlet weak var cellLabel: UILabel!    
 }
 
 class CalendarViewController: UICollectionViewController {

@@ -95,14 +95,15 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
     
     var dayBooleans = ""
     
-    @IBAction func filterByFit(_ sender: UIButton) {
-        
+    @IBAction func anyPressed(_ sender: UIButton) {
         if (sender.titleColor(for: .normal) == UIColor.white) {
             turnOnButton(button: sender)
         } else {
             turnOffButton(button: sender)
         }
-        
+    }
+    
+     @IBAction func dayPressed(_ sender: UIButton) {
         daysActive = false
         dayBooleans = ""
         if (eitherDay) {
@@ -119,7 +120,7 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
             }
         }
         selectedSearches["Days"] = dayBooleans
-        updateTable()
+//        updateTable()
     }
     
     @IBOutlet weak var filterScrollView: UIScrollView!
@@ -196,97 +197,90 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
                 let cell = tableView.dequeueReusableCell(withIdentifier: "offeringCell", for: indexPath) as! OfferingCell
                 let offering = offeringsForCourse[indexPath.row-count-1]
                 
-//                for view in cell.classDaysStack.arrangedSubviews {
-//                    cell.classDaysStack.removeArrangedSubview(view)
-//                }
-
-                if (cell.crnLabel.text == "22222") { // 22222 is IB placeholder, means cell has not been set
-                    
-                    // delete stack
-//                    for view in cell.classDaysStack.arrangedSubviews {
-//                        cell.classDaysStack.removeArrangedSubview(view)
-//                    }
-                    
-                    // loop over each class day and add it to stack
-                    for day in offering.classDays {
-                        let imageViewOne = UIImageView()
-                        // add special aspect ratio constraint to make them all squares
-                        let aspectConstraint = NSLayoutConstraint(item: imageViewOne,
-                                                                  attribute: NSLayoutAttribute.height,
-                                                                  relatedBy: NSLayoutRelation.equal,
-                                                                  toItem: imageViewOne,
-                                                                  attribute: NSLayoutAttribute.width,
-                                                                  multiplier: 1,
-                                                                  constant: 0)
-                        NSLayoutConstraint.activate([aspectConstraint])
-                        let color = cell.crnLabel.textColor
-                        if (day.days.contains("M")) {
-                            imageViewOne.image = UIImage(named: "\(squareColor)Filled")
-                        } else {
-                            imageViewOne.image = UIImage (named: "\(squareColor)Outline")
-                        }
-                        
-                        let imageViewTwo = UIImageView()
-                        if (day.days.contains("T")) {
-                            imageViewTwo.image = UIImage (named: "\(squareColor)Filled")
-                        } else {
-                            imageViewTwo.image = UIImage (named: "\(squareColor)Outline")
-                        }
-                        
-                        let imageViewThree = UIImageView()
-                        if (day.days.contains("W")) {
-                            imageViewThree.image = UIImage (named: "\(squareColor)Filled")
-                        } else {
-                            imageViewThree.image = UIImage (named: "\(squareColor)Outline")
-                        }
-                        
-                        let imageViewFour = UIImageView()
-                        if (day.days.contains("R")) {
-                            imageViewFour.image = UIImage (named: "\(squareColor)Filled")
-                        } else {
-                            imageViewFour.image = UIImage (named: "\(squareColor)Outline")
-                        }
-                        
-                        let imageViewFive = UIImageView()
-                        if (day.days.contains("F")) {
-                            imageViewFive.image = UIImage (named: "\(squareColor)Filled")
-                        } else {
-                            imageViewFive.image = UIImage (named: "\(squareColor)Outline")
-                        }
-                        
-                        let subStackView = UIStackView()
-                        subStackView.axis = UILayoutConstraintAxis.horizontal
-                        subStackView.distribution = UIStackViewDistribution.fillEqually
-                        subStackView.alignment = UIStackViewAlignment.fill
-                        subStackView.spacing = 3.0
-                        let heightConstraint = NSLayoutConstraint(item: subStackView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 13)
-                        NSLayoutConstraint.activate([heightConstraint])
-                        
-                        subStackView.addArrangedSubview(imageViewOne)
-                        subStackView.addArrangedSubview(imageViewTwo)
-                        subStackView.addArrangedSubview(imageViewThree)
-                        subStackView.addArrangedSubview(imageViewFour)
-                        subStackView.addArrangedSubview(imageViewFive)
-                        
-                        let timeLabel = UILabel()
-                        timeLabel.text = day.startTime + " - " + day.endTime + "-" + String(indexPath.row)
-                        timeLabel.textColor = colors[labelColor]
-                        timeLabel.font = UIFont(name: "AvenirNext-Medium", size: 15)
-                        
-                        let stackView = UIStackView()
-                        stackView.axis = UILayoutConstraintAxis.horizontal
-                        stackView.distribution = UIStackViewDistribution.fill
-                        stackView.alignment = UIStackViewAlignment.fill
-                        stackView.spacing = 10.0
-                        
-                        stackView.addArrangedSubview(subStackView)
-                        stackView.addArrangedSubview(timeLabel)
-                        
-                        cell.classDaysStack.addArrangedSubview(stackView)
-                    }
+                for view in cell.classDaysStack.arrangedSubviews {
+                    view.removeFromSuperview()
                 }
                 
-                cell.sectionNumberLabel.text = offering.sectionNumber + "-" + String(indexPath.row)
+                // loop over each class day and add it to stack
+                for day in offering.classDays {
+                    let imageViewOne = UIImageView()
+                    // add special aspect ratio constraint to make them all squares
+                    let aspectConstraint = NSLayoutConstraint(item: imageViewOne,
+                                                              attribute: NSLayoutAttribute.height,
+                                                              relatedBy: NSLayoutRelation.equal,
+                                                              toItem: imageViewOne,
+                                                              attribute: NSLayoutAttribute.width,
+                                                              multiplier: 1,
+                                                              constant: 0)
+                    NSLayoutConstraint.activate([aspectConstraint])
+
+                    if (day.days.contains("M")) {
+                        imageViewOne.image = UIImage(named: "\(squareColor)Filled")
+                    } else {
+                        imageViewOne.image = UIImage (named: "\(squareColor)Outline")
+                    }
+                    
+                    let imageViewTwo = UIImageView()
+                    if (day.days.contains("T")) {
+                        imageViewTwo.image = UIImage (named: "\(squareColor)Filled")
+                    } else {
+                        imageViewTwo.image = UIImage (named: "\(squareColor)Outline")
+                    }
+                    
+                    let imageViewThree = UIImageView()
+                    if (day.days.contains("W")) {
+                        imageViewThree.image = UIImage (named: "\(squareColor)Filled")
+                    } else {
+                        imageViewThree.image = UIImage (named: "\(squareColor)Outline")
+                    }
+                    
+                    let imageViewFour = UIImageView()
+                    if (day.days.contains("R")) {
+                        imageViewFour.image = UIImage (named: "\(squareColor)Filled")
+                    } else {
+                        imageViewFour.image = UIImage (named: "\(squareColor)Outline")
+                    }
+                    
+                    let imageViewFive = UIImageView()
+                    if (day.days.contains("F")) {
+                        imageViewFive.image = UIImage (named: "\(squareColor)Filled")
+                    } else {
+                        imageViewFive.image = UIImage (named: "\(squareColor)Outline")
+                    }
+                    
+                    let subStackView = UIStackView()
+                    subStackView.axis = UILayoutConstraintAxis.horizontal
+                    subStackView.distribution = UIStackViewDistribution.fillEqually
+                    subStackView.alignment = UIStackViewAlignment.fill
+                    subStackView.spacing = 3.0
+                    let heightConstraint = NSLayoutConstraint(item: subStackView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 13)
+                    NSLayoutConstraint.activate([heightConstraint])
+                    
+                    subStackView.addArrangedSubview(imageViewOne)
+                    subStackView.addArrangedSubview(imageViewTwo)
+                    subStackView.addArrangedSubview(imageViewThree)
+                    subStackView.addArrangedSubview(imageViewFour)
+                    subStackView.addArrangedSubview(imageViewFive)
+                    
+                    let timeLabel = UILabel()
+                    timeLabel.text = day.startTime + " - " + day.endTime
+                    timeLabel.textColor = colors[labelColor]
+                    timeLabel.font = UIFont(name: "AvenirNext-Medium", size: 15)
+                    
+                    let stackView = UIStackView()
+                    stackView.axis = UILayoutConstraintAxis.horizontal
+                    stackView.distribution = UIStackViewDistribution.fill
+                    stackView.alignment = UIStackViewAlignment.fill
+                    stackView.spacing = 10.0
+                    
+                    stackView.addArrangedSubview(subStackView)
+                    stackView.addArrangedSubview(timeLabel)
+                    
+                    cell.classDaysStack.addArrangedSubview(stackView)
+
+                }
+                
+                cell.sectionNumberLabel.text = offering.sectionNumber
                 cell.crnLabel.text = offering.crn?.name
                 var instructorText = ""
                 for instructor in offering.instructors {
