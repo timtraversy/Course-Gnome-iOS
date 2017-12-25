@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		27A100D781C66EFA45D73938 /* Pods_Course_Gnome.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBAAE2DA9EBC15F77AC328 /* Pods_Course_Gnome.framework */; };
 		EC4F85F31FEF55F000D795B9 /* FilterNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4F85F21FEF55F000D795B9 /* FilterNavigationController.swift */; };
-		EC4F85F51FEF95F500D795B9 /* TimesArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4F85F41FEF95F500D795B9 /* TimesArray.swift */; };
 		EC5926531FCCE81C00E73268 /* CourseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5926521FCCE81C00E73268 /* CourseListViewController.swift */; };
 		EC5A79541FC8A52900F38F34 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5A79531FC8A52900F38F34 /* TabBarController.swift */; };
 		EC5BAE141FEB61850056448F /* PersistanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5BAE131FEB61850056448F /* PersistanceManager.swift */; };
@@ -35,7 +34,6 @@
 		5A1BFBF6E93E5DEE43688DEC /* Pods-Course Gnome.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Course Gnome.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Course Gnome/Pods-Course Gnome.debug.xcconfig"; sourceTree = "<group>"; };
 		D1D0B79AF72E4DBF39B2A884 /* Pods-Course Gnome.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Course Gnome.release.xcconfig"; path = "Pods/Target Support Files/Pods-Course Gnome/Pods-Course Gnome.release.xcconfig"; sourceTree = "<group>"; };
 		EC4F85F21FEF55F000D795B9 /* FilterNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterNavigationController.swift; sourceTree = "<group>"; };
-		EC4F85F41FEF95F500D795B9 /* TimesArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimesArray.swift; sourceTree = "<group>"; };
 		EC5926521FCCE81C00E73268 /* CourseListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListViewController.swift; sourceTree = "<group>"; };
 		EC5A79531FC8A52900F38F34 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		EC5BAE131FEB61850056448F /* PersistanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistanceManager.swift; sourceTree = "<group>"; };
@@ -85,6 +83,13 @@
 				1AFBAAE2DA9EBC15F77AC328 /* Pods_Course_Gnome.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EC4F85F81FF0C0F900D795B9 /* SwiftRangeSlider */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SwiftRangeSlider;
 			sourceTree = "<group>";
 		};
 		EC5BAE121FEB61490056448F /* data */ = {
@@ -145,7 +150,6 @@
 			isa = PBXGroup;
 			children = (
 				ECCB1BA91FC54DCA00DB7EB9 /* PullCourses.swift */,
-				EC4F85F41FEF95F500D795B9 /* TimesArray.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -171,6 +175,7 @@
 		ECF73F9B1FA7D2A800F030FC /* Course Gnome */ = {
 			isa = PBXGroup;
 			children = (
+				EC4F85F81FF0C0F900D795B9 /* SwiftRangeSlider */,
 				EC5BAE121FEB61490056448F /* data */,
 				EC6A74CD1FC33FA50039840C /* app */,
 				EC6A74CC1FC33F970039840C /* controller */,
@@ -348,7 +353,6 @@
 				ECF5BD651FC4D202006988B9 /* SearchNavigationController.swift in Sources */,
 				ECF73F9F1FA7D2A800F030FC /* ViewController.swift in Sources */,
 				ECBA71981FCDC95100B7364A /* SearchBox.swift in Sources */,
-				EC4F85F51FEF95F500D795B9 /* TimesArray.swift in Sources */,
 				ECF73F9D1FA7D2A800F030FC /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

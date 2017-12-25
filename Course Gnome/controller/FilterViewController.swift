@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SearchTextField
 import SwiftRangeSlider
 
 class FilterViewController: UIViewController {
@@ -19,21 +20,11 @@ class FilterViewController: UIViewController {
     
     @IBOutlet weak var fitSwitch: UISwitch!
     
-    @IBOutlet weak var rangeSlider: RangeSlider!
-    @IBOutlet weak var lowerTimeLabel: UILabel!
-    @IBOutlet weak var lowerTimeConstraint: NSLayoutConstraint!
-    @IBOutlet weak var upperTimeLabel: UILabel!
-    @IBOutlet weak var upperTimeConstraint: NSLayoutConstraint!
-    var step: CGFloat!
+    @IBOutlet weak var timeSlider: RangeSlider!
     
-    @IBAction func timeSliderChanged(_ sender: RangeSlider) {
-        let lowerValue = CGFloat(rangeSlider.lowerValue)
-        lowerTimeConstraint.constant = step * lowerValue + 10
-        lowerTimeLabel.text = TimesArray().array[Int(lowerValue)]
-        let upperValue = CGFloat(rangeSlider.upperValue)
-        upperTimeConstraint.constant = (step * (57-upperValue) + 5)
-        upperTimeLabel.text = TimesArray().array[Int(upperValue)]
-    }
+    @IBOutlet weak var departmentField: SearchTextField!
+    @IBOutlet weak var instructorField: SearchTextField!
+    @IBOutlet weak var attributeField: SearchTextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,8 +38,24 @@ class FilterViewController: UIViewController {
         fitSwitch.tintColor = UIColor.lightGray
         fitSwitch.layer.cornerRadius = 16
         fitSwitch.backgroundColor = UIColor.lightGray
+                
+        let deptStrings = PersistanceManager().getCategory(type: PersistanceManager.category.Department)
+        departmentField.filterStrings(deptStrings)
+        departmentField.theme.font = UIFont(name: "AvenirNext-Regular", size: 13.0)!
+        departmentField.highlightAttributes = [NSAttributedStringKey.font: UIFont(name: "AvenirNext-DemiBold", size: 13.0)!]
+        departmentField.theme.bgColor = UIColor.white
         
-        step = rangeSlider.bounds.size.width/70
+        let instructorStrings = PersistanceManager().getCategory(type: PersistanceManager.category.Instructor)
+        instructorField.filterStrings(instructorStrings)
+        instructorField.theme.font = UIFont(name: "AvenirNext-Regular", size: 13.0)!
+        instructorField.highlightAttributes = [NSAttributedStringKey.font: UIFont(name: "AvenirNext-DemiBold", size: 13.0)!]
+        instructorField.theme.bgColor = UIColor.white
+        
+        let attributeStrings = PersistanceManager().getCategory(type: PersistanceManager.category.CourseAttribute)
+        attributeField.filterStrings(attributeStrings)
+        attributeField.theme.font = UIFont(name: "AvenirNext-Regular", size: 13.0)!
+        attributeField.highlightAttributes = [NSAttributedStringKey.font: UIFont(name: "AvenirNext-DemiBold", size: 13.0)!]
+        attributeField.theme.bgColor = UIColor.white
 
     }
 

@@ -10,6 +10,18 @@ import Foundation
 import RealmSwift
 
 class PersistanceManager {
+    
+    enum category {
+        case Department
+        case CRN
+        case Instructor
+        case Status
+        case CourseAttribute
+        case CourseName
+        case SubjectNumber
+        case Days
+    }
+    
     func getCourses (selections: [String:String]) -> (courses: Results<Course>, offerings: Results<Offering>){
         
         let realm = try! Realm()
@@ -88,6 +100,25 @@ class PersistanceManager {
 
         return (courses: courses, offerings: offerings)
         
+    }
+    
+    func getCategory(type: PersistanceManager.category) -> [String] {
+        let realm = try! Realm()
+        var array = [String]()
+        switch type {
+        case .Department:
+            let results = realm.objects(Department.self)
+            for result in results { array.append(result.name) }
+        case .Instructor:
+            let results = realm.objects(Instructor.self)
+            for result in results { array.append(result.name) }
+        case .CourseAttribute:
+            let results = realm.objects(CourseAttribute.self)
+            for result in results { array.append(result.name) }
+        default:
+            print("Shouldn't get here: PersistanceManager:119")
+        }
+        return array
     }
 }
 
