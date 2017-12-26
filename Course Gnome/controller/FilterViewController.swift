@@ -10,9 +10,24 @@ import UIKit
 import SearchTextField
 import SwiftRangeSlider
 
+class RedButton: UIButton {
+    override open var isSelected: Bool {
+        didSet {
+            UIView.animate(withDuration: 0.25) {
+                self.backgroundColor = self.isSelected ? UIColor(named: "Red") : UIColor.white
+            }
+        }
+    }
+}
+
 class FilterViewController: UIViewController {
     
     @IBOutlet var buttonsToOutline: [UIButton]!
+    
+    @IBOutlet var allSwitches: [RedButton]!
+    @IBOutlet var sortBySwitches: [RedButton]!
+    @IBOutlet var timeSwitches: [RedButton]!
+    @IBOutlet var creditSwitches: [RedButton]!
     
     @IBOutlet weak var openButton: UIButton!
     @IBOutlet weak var waitlistButton: UIButton!
@@ -26,13 +41,39 @@ class FilterViewController: UIViewController {
     @IBOutlet weak var instructorField: SearchTextField!
     @IBOutlet weak var attributeField: SearchTextField!
     
+    @IBAction func buttonSwitched(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+    }
+    
+    @IBAction func sortSwitchSelected(_ sender: UIButton) {
+        if (!sender.isSelected) {
+            for sortSwitch in sortBySwitches {
+                sortSwitch.isSelected = false
+            }
+            sender.isSelected = true
+        }
+    }
+    
+    @IBAction func timeSwitchSelected(_ sender: RedButton) {
+        if (!sender.isSelected) {
+            for timeSwitch in timeSwitches {
+                timeSwitch.isSelected = false
+            }
+            sender.isSelected = true
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         for button in buttonsToOutline {
             button.layer.borderColor = UIColor(named: "Red")?.cgColor
             button.layer.borderWidth = 1.0
             button.layer.cornerRadius = 3.0
+        }
+        
+        for sortSwitch in allSwitches {
+            sortSwitch.setTitleColor(UIColor(named: "Red"), for: UIControlState.normal)
+            sortSwitch.setTitleColor(UIColor.white, for: UIControlState.selected)
         }
         
         fitSwitch.tintColor = UIColor.lightGray
@@ -74,5 +115,4 @@ class FilterViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
 }
