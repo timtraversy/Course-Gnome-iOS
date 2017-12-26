@@ -36,13 +36,24 @@ class PersistanceManager {
             case "Instructor" :
                 offerings = offerings.filter("ANY instructors.name = %@", term)
             case "Status" :
-                offerings = offerings.filter("status.name = %@", term)
+                let statusArray = term.components(separatedBy: " ")
+                for (index, status) in statusArray.enumerated() {
+                    if (status.isEmpty) { break }
+                    if (index == 0) {
+                        offerings = offerings.filter("status.name = %@", status)
+                        print ("Count2: \(offerings.count)")
+
+                    } else {
+                        offerings = offerings.filter("OR status.name = %@", status)
+                    }
+                }
             case "Attributes" :
                 offerings = offerings.filter("ANY courseAttributes.name = %@", term)
             case "Course Name" :
                 offerings = offerings.filter("courseName = %@", term)
             case "Subject Number" :
                 offerings = offerings.filter("subjectNumber = %@", term)
+//            case "Fits" :
             case "Days" :
                 //term = E/O-M-T-W-R-F
                 let daysArray = term.components(separatedBy: " ")
@@ -91,12 +102,13 @@ class PersistanceManager {
                 }
                 
             default :
-                print ("No category found!")
+                print ("Don't need to filter by that here")
             }
         }
         
         var courses = realm.objects(Course.self).filter("ANY offerings IN %@", offerings)
-        courses = courses.sorted(byKeyPath: "subjectNumber")
+        
+        courses = courses.sorted(byKeyPath: selections["Sort By"]!)
 
         return (courses: courses, offerings: offerings)
         

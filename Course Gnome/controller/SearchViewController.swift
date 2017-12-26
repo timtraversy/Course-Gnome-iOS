@@ -33,7 +33,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     var departments = [String]()
     var crns = [String]()
     var instructors = [String]()
-    var statuses = [String]()
+    //var statuses = [String]()
     var attributes = [String]()
     var names = [String]()
     var numbers = [String]()
@@ -100,7 +100,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     func deleteAllResults() {
         departments.removeAll()
         crns.removeAll()
-        statuses.removeAll()
+//        statuses.removeAll()
         instructors.removeAll()
         names.removeAll()
         numbers.removeAll()
@@ -145,14 +145,14 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                         totalCount += 1
                         if (totalCount == maxResults) { break mainRun }
                     }
-                    for result in realm.objects(Status.self).filter(predicate) {
+                    /*for result in realm.objects(Status.self).filter(predicate) {
                         if (!realm.objects(SavedSearch.self).filter("search = %@", result.name).isEmpty) {
                             continue
                         }
                         self.statuses.append(result.name)
                         totalCount += 1
                         if (totalCount == maxResults) { break mainRun }
-                    }
+                    }*/
                     for result in realm.objects(Instructor.self).filter(predicate) {
                         if (!realm.objects(SavedSearch.self).filter("search = %@", result.name).isEmpty) {
                             continue
@@ -219,12 +219,13 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         var categoryTitlesCount = 0
         if (!departments.isEmpty) { categoryTitlesCount += 1 }
         if (!crns.isEmpty) { categoryTitlesCount += 1 }
-        if (!statuses.isEmpty) { categoryTitlesCount += 1 }
+        //if (!statuses.isEmpty) { categoryTitlesCount += 1 }
         if (!instructors.isEmpty) { categoryTitlesCount += 1 }
         if (!names.isEmpty) { categoryTitlesCount += 1 }
         if (!numbers.isEmpty) { categoryTitlesCount += 1 }
         if (!attributes.isEmpty) { categoryTitlesCount += 1 }
-        return (categoryTitlesCount+savedSearches.count+departments.count+crns.count+statuses.count+attributes.count+instructors.count+names.count+numbers.count)
+        return (categoryTitlesCount+savedSearches.count+departments.count+crns.count+attributes.count+instructors.count+names.count+numbers.count)
+        // statuses.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -269,7 +270,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
             }
             currentCount += crns.count + 1
         }
-        if (!statuses.isEmpty) {
+        /*if (!statuses.isEmpty) {
             if (indexPath.row == currentCount) {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell") as! CategoryCell
                 cell.categoryTitle?.text = "STATUS"
@@ -283,7 +284,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                 return cell
             }
             currentCount += statuses.count + 1
-        }
+        }*/
         if (!instructors.isEmpty) {
             if (indexPath.row == currentCount) {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell") as! CategoryCell
