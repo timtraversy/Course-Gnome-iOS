@@ -52,8 +52,8 @@ class CourseAttribute: Object {
 class ClassDay: Object {
     @objc dynamic var days : String = ""
     @objc dynamic var location: String = ""
-    @objc dynamic var startTime: String = ""
-    @objc dynamic var endTime: String = ""
+    @objc dynamic var startTime = Date()
+    @objc dynamic var endTime = Date()
 }
 
 class LastRevised: Object {

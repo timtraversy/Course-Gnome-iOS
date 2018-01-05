@@ -9,6 +9,40 @@
 import Foundation
 import RealmSwift
 
+struct Days {
+    var monday = false
+    var tuesday = false
+    var wednesday = false
+    var thursday = false
+    var friday = false
+    var either = true
+}
+
+struct StatusList {
+    var open = false
+    var closed = false
+    var waitlist = false
+}
+
+class SelectionObject {
+    
+    enum sortBy: String {
+        case subjectNumber = "subjectNumber"
+        case department = "department.name"
+    }
+
+    var sortBy = SelectionObject.sortBy.subjectNumber
+    var department: String?
+    var crn: String?
+    var instructor: String?
+    var status = StatusList()
+    var courseAttribute: String?
+    var courseName: String?
+    var subjectNumber: String?
+    var days = Days()
+    
+}
+
 class PersistanceManager {
     
     enum category {
@@ -22,96 +56,80 @@ class PersistanceManager {
         case Days
     }
     
-    func getCourses (selections: [String:String]) -> (courses: Results<Course>, offerings: Results<Offering>){
+    func getCourses (selections: SelectionObject) -> (courses: Results<Course>, offerings: Results<Offering>){
         
         let realm = try! Realm()
         var offerings = realm.objects(Offering.self)
         
-        for (category, term) in selections {
-            switch category {
-            case "Department" :
-                offerings = offerings.filter("department.name = %@", term)
-            case "CRN" :
-                offerings = offerings.filter("crn.name = %@", term)
-            case "Instructor" :
-                offerings = offerings.filter("ANY instructors.name = %@", term)
-            case "Status" :
-                let statusArray = term.components(separatedBy: " ")
-                for (index, status) in statusArray.enumerated() {
-                    if (status.isEmpty) { break }
-                    if (index == 0) {
-                        offerings = offerings.filter("status.name = %@", status)
-                        print ("Count2: \(offerings.count)")
-
-                    } else {
-                        offerings = offerings.filter("OR status.name = %@", status)
-                    }
-                }
-            case "Attributes" :
-                offerings = offerings.filter("ANY courseAttributes.name = %@", term)
-            case "Course Name" :
-                offerings = offerings.filter("courseName = %@", term)
-            case "Subject Number" :
-                offerings = offerings.filter("subjectNumber = %@", term)
-//            case "Fits" :
-            case "Days" :
-                //term = E/O-M-T-W-R-F
-                let daysArray = term.components(separatedBy: " ")
-                var eitherOnly = ""
-                if (daysArray[0] == "O") {
-                    eitherOnly = "AND"
-                } else {
-                    eitherOnly = "OR"
-                }
-                var predicateString = ""
-                
-                if (daysArray[1] == "true") {
-                    predicateString = "ANY classDays.days contains 'M'"
-                }
-                if (daysArray[2] == "true") {
-                    if (predicateString.isEmpty) {
-                        predicateString = "ANY classDays.days contains 'T'"
-                    } else {
-                        predicateString += " \(eitherOnly) ANY classDays.days contains 'T'"
-                    }
-                }
-                if (daysArray[3] == "true") {
-                    if (predicateString.isEmpty) {
-                        predicateString = "ANY classDays.days contains 'W'"
-                    } else {
-                        predicateString += " \(eitherOnly) ANY classDays.days contains 'W'"
-                    }
-                }
-                if (daysArray[4] == "true") {
-                    if (predicateString.isEmpty) {
-                        predicateString = "ANY classDays.days contains 'R'"
-                    } else {
-                        predicateString += " \(eitherOnly) ANY classDays.days contains 'R'"
-                    }
-                }
-                if (daysArray[5] == "true") {
-                    if (predicateString.isEmpty) {
-                        predicateString = "ANY classDays.days contains 'F'"
-                    } else {
-                        predicateString += " \(eitherOnly) ANY classDays.days contains 'F'"
-                    }
-                }
-                
-                if (!predicateString.isEmpty) {
-                    offerings = offerings.filter(predicateString)
-                }
-                
-            default :
-                print ("Don't need to filter by that here")
+        if let term = selections.department {
+            print(term)
+            offerings = offerings.filter("department.name = %@", term)
+        }
+        if let term = selections.crn { offerings = offerings.filter("crn = %@", term) }
+        if let term = selections.instructor { offerings = offerings.filter("ANY instructors.name = %@", term) }
+        
+        let statuses = selections.status
+        var first = true
+        if (statuses.open) {
+            offerings = offerings.filter("status.name = 'Open'")
+            first = false
+        }
+        if (statuses.closed) {
+            if (first) {
+                offerings = offerings.filter("status.name = 'Closed'")
+                first = false
+            } else {
+                offerings = offerings.filter("OR status.name = 'Closed'")
             }
+        }
+        if (statuses.waitlist) {
+            if (first) {
+                offerings = offerings.filter("status.name = 'Waitlist'")
+            } else {
+                offerings = offerings.filter("OR status.name = 'Waitlist'")
+            }
+        }
+        
+        if let term = selections.courseAttribute { offerings = offerings.filter("ANY courseAttributes.name = %@", term) }
+        if let term = selections.courseName { offerings = offerings.filter("courseName = %@", term) }
+        if let term = selections.subjectNumber { offerings = offerings.filter("subjectNumber = %@", term) }
+        
+        var predicateString = ""
+        let days = selections.days
+        var eitherAny = ""
+        if (days.either) {
+            eitherAny = "OR"
+        } else {
+            eitherAny = "AND"
+        }
+        if (days.monday) {
+            predicateString = "ANY classDays.days contains 'M'"
+        }
+        if (days.tuesday) {
+            if (predicateString.isEmpty) { predicateString += "ANY classDays.days contains 'T'" }
+            else { predicateString += " \(eitherAny) ANY classDays.days contains 'T'" }
+        }
+        if (days.wednesday) {
+            if (predicateString.isEmpty) { predicateString += "ANY classDays.days contains 'W'" }
+            else { predicateString += " \(eitherAny) ANY classDays.days contains 'W'" }
+        }
+        if (days.thursday) {
+            if (predicateString.isEmpty) { predicateString += "ANY classDays.days contains 'R'" }
+            else { predicateString += " \(eitherAny) ANY classDays.days contains 'R'" }
+        }
+        if (days.friday) {
+            if (predicateString.isEmpty) { predicateString += "ANY classDays.days contains 'F'" }
+            else { predicateString += " \(eitherAny) ANY classDays.days contains 'F'" }
+        }
+        
+        if (!predicateString.isEmpty) {
+            offerings = offerings.filter(predicateString)
         }
         
         var courses = realm.objects(Course.self).filter("ANY offerings IN %@", offerings)
         
-        courses = courses.sorted(byKeyPath: selections["Sort By"]!)
-
+        courses = courses.sorted(byKeyPath: String(describing: selections.sortBy.rawValue))
         return (courses: courses, offerings: offerings)
-        
     }
     
     func getCategory(type: PersistanceManager.category) -> [String] {

@@ -150,13 +150,15 @@ class PullCourses {
                                 // can't parse date, date probably empty
                                 continue
                             }
-                            newDay.startTime = dateFormatterOut.string(from: startDateIn)
+                            newDay.startTime = startDateIn
+//                            newDay.startTime = dateFormatterOut.string(from: startDateIn)
                             let endString = day["endTime"].stringValue
                             guard let endDateIn = dateFormatterIn.date(from: endString) else {
                                 // can't parse date, date probably empty
                                 continue
                             }
-                            newDay.endTime = dateFormatterOut.string(from: endDateIn)
+                            newDay.endTime = endDateIn
+//                            newDay.endTime = dateFormatterOut.string(from: endDateIn)
                             
                             realm.add(newDay)
                             newOffering.classDays.append(newDay)

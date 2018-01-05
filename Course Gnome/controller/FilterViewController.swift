@@ -22,7 +22,7 @@ class RedButton: UIButton {
 
 class FilterViewController: UIViewController {
     
-    var selectedSearches: [String:String]!
+    var selections: SelectionObject!
     
     @IBOutlet var buttonsToOutline: [UIButton]!
     
@@ -52,12 +52,45 @@ class FilterViewController: UIViewController {
         sender.isSelected = !sender.isSelected
     }
     
-    @IBAction func sortSwitchSelected(_ sender: UIButton) {
+    @IBAction func sortByNumberPressed(_ sender: UIButton) {
         if (!sender.isSelected) {
-            for sortSwitch in sortBySwitches {
-                sortSwitch.isSelected = false
-            }
-            sender.isSelected = true
+            sortBySwitches[0].isSelected = true
+            sortBySwitches[1].isSelected = false
+            selections.sortBy = SelectionObject.sortBy.subjectNumber
+        }
+    }
+    
+    @IBAction func sortByDepartmentPressed(_ sender: UIButton) {
+        if (!sender.isSelected) {
+            sortBySwitches[1].isSelected = true
+            sortBySwitches[0].isSelected = false
+            selections.sortBy = SelectionObject.sortBy.department
+        }
+    }
+    
+    @IBAction func openStatusPressed(_ sender: RedButton) {
+        selections.status.open = !selections.status.open
+    }
+    
+    @IBAction func waitlistStatusPressed(_ sender: RedButton) {
+        selections.status.waitlist = !selections.status.waitlist
+    }
+    
+    @IBAction func closedStatusPressed(_ sender: RedButton) {
+        selections.status.closed = !selections.status.closed
+    }
+    
+    @IBAction func dayButtonPressed(_ sender: RedButton) {
+        if (sender.titleLabel?.text == "M") {
+            selections.days.monday = !selections.days.monday
+        } else if (sender.titleLabel?.text == "T") {
+            selections.days.tuesday = !selections.days.tuesday
+        } else if (sender.titleLabel?.text == "W") {
+            selections.days.wednesday = !selections.days.wednesday
+        } else if (sender.titleLabel?.text == "R") {
+            selections.days.thursday = !selections.days.thursday
+        } else if (sender.titleLabel?.text == "F") {
+            selections.days.friday = !selections.days.friday
         }
     }
     
@@ -67,60 +100,72 @@ class FilterViewController: UIViewController {
                 timeSwitch.isSelected = false
             }
             sender.isSelected = true
+            selections.days.either = !selections.days.either
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // load current filters
-        // load sort
-//        for sortSwitch in sortBySwitches {
-//            sortSwitch.isSelected = false
-//        }
-        if (selectedSearches["Sort By"] == "subjectNumber") {
+        // load current filters //////////
+        
+        if (selections.sortBy == SelectionObject.sortBy.subjectNumber) {
             sortBySwitches[0].isSelected = true
         } else {
             sortBySwitches[1].isSelected = true
         }
         
         // load status
-        if (selectedSearches["Status"]?.contains("Open")) ?? false {
+        if (selections.status.open) {
             openButton.isSelected = true
         }
-        if (selectedSearches["Status"]?.contains("Waitlist")) ?? false  {
+        if (selections.status.waitlist) {
             waitlistButton.isSelected = true
         }
-        if (selectedSearches["Status"]?.contains("Closed")) ?? false {
+        if (selections.status.closed) {
             closedButton.isSelected = true
         }
         
         //load days
-        let daysArray = selectedSearches["Days"]!.components(separatedBy: " ")
         for timeSwitch in timeSwitches {
             timeSwitch.isSelected = false
         }
-        if (daysArray[0] == "O") {
-            timeSwitches[1].isSelected = true
-        } else {
+        if (selections.days.either) {
             timeSwitches[0].isSelected = true
+        } else {
+            timeSwitches[1].isSelected = true
         }
         
-        if (daysArray[1] == "true") {
+        if (selections.days.monday) {
             dayButton[0].isSelected = true
         }
-        if (daysArray[2] == "true") {
+        if (selections.days.tuesday) {
             dayButton[1].isSelected = true
         }
-        if (daysArray[3] == "true") {
+        if (selections.days.wednesday) {
             dayButton[2].isSelected = true
         }
-        if (daysArray[4] == "true") {
+        if (selections.days.thursday) {
             dayButton[3].isSelected = true
         }
-        if (daysArray[5] == "true") {
+        if (selections.days.friday) {
             dayButton[4].isSelected = true
         }
+        
+        //load times
+        timeSlider.lowerValue = 20;
+        timeSlider.upperValue = 50;
+        
+        //load department
+        departmentField.text = selections.department
+        
+        //load instructor
+        instructorField.text = selections.instructor
+        
+        //load attribute
+        attributeField.text = selections.courseAttribute
+        
+        //// done loading filters ////////
         
         for button in buttonsToOutline {
             button.layer.borderColor = UIColor(named: "Red")?.cgColor
@@ -136,7 +181,7 @@ class FilterViewController: UIViewController {
         fitSwitch.tintColor = UIColor.lightGray
         fitSwitch.layer.cornerRadius = 16
         fitSwitch.backgroundColor = UIColor.lightGray
-                
+        
         let deptStrings = PersistanceManager().getCategory(type: PersistanceManager.category.Department)
         departmentField.filterStrings(deptStrings)
         
@@ -152,41 +197,40 @@ class FilterViewController: UIViewController {
             field.theme.bgColor = UIColor.white
         }
     }
+    
+    // fix rangeslider layout
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        timeSlider.layoutIfNeeded()
+        timeSlider.updateLayerFramesAndPositions()
+    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // if cancel, do nothing
         if (segue.identifier == "CancelSegue") { return }
-        if (sortBySwitches[0].isSelected) {
-            selectedSearches["Sort By"] = "subjectNumber"
-        } else  {
-            selectedSearches["Sort By"] = "department.name"
-        }
-        selectedSearches["Status"] = ""
-        if (openButton.isSelected) {
-            selectedSearches["Status"]?.append("Open ")
-        }
-        if (waitlistButton.isSelected) {
-            selectedSearches["Status"]?.append("Waitlist ")
-        }
-        if (closedButton.isSelected) {
-            selectedSearches["Status"]?.append("Closed ")
-        }
-        selectedSearches["Days"] = ""
-        var dayBooleans = ""
-        if (timeSwitches[0].isSelected) {
-            dayBooleans.append("E ")
-        } else {
-            dayBooleans.append("O ")
-        }
-        for button in dayButton {
-            if (button.isSelected) {
-                dayBooleans.append("true ")
+        if let department = departmentField.text {
+            if (department.isEmpty) {
+                selections.department = nil
             } else {
-                dayBooleans.append("false ")
+                selections.department = department
             }
         }
-        selectedSearches["Days"] = dayBooleans
-        let timesArray = ["8:00 AM","8:15 AM","8:30 AM","8:45 AM","9:00 AM","9:15 AM","9:30 AM","9:45 AM","10:00 AM","10:15 AM","10:30 AM","10:45 AM","11:00 AM","11:15 AM","11:30 AM","11:45 AM","12:00 PM","12:15 PM","12:30 PM","12:45 PM","1:00 PM","1:15 PM","1:30 PM","1:45 PM","2:00 PM","2:15 PM","2:30 PM","2:45 PM","3:00 PM","3:15 PM","3:30 PM","3:45 PM","4:00 PM","4:15 PM","4:30 PM","4:45 PM","5:00 PM","5:15 PM","5:30 PM","5:45 PM","6:00 PM","6:15 PM","6:30 PM","6:45 PM","7:00 PM","7:15 PM","7:30 PM","7:45 PM","8:00 PM","8:15 PM","8:30 PM","8:45 PM","9:00 PM","9:15 PM","9:30 PM","9:45 PM","10:00 PM"]
-//        let
+        if let instructor = instructorField.text {
+            if (instructor.isEmpty) {
+                selections.instructor = nil
+            } else {
+                selections.instructor = instructor
+            }
+        }
+        if let attribute = attributeField.text {
+            if (attribute.isEmpty) {
+                selections.courseAttribute = nil
+            } else {
+                selections.courseAttribute = attribute
+            }
+        }
+        //otherwise, courseList will just take the selection object
     }
 
 }

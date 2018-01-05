@@ -368,7 +368,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
             let cell = tableView.cellForRow(at: indexPath) as! SearchResultCell
             selectedSearch = cell.searchResultTitle.text!
             
-            let titleArray = ["Department", "CRN", "Status", "Instructor", "Course Name", "Subject Number", "Attributes"]
+            let titleArray = ["Department", "CRN", "Status", "Instructor", "Course Name", "Subject Number", "Attribute"]
             selectedCategory = titleArray[cell.tag]
             
             let newSavedSearch = SavedSearch()

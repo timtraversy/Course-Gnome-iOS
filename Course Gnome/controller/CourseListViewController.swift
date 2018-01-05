@@ -20,8 +20,7 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
     // get selection from search, matches one key from below
     var selectedSearch: String!
     var selectedCategory: String!
-    var selectedSearches = [String:String]()
-
+    var selections = SelectionObject()
     
     //button collections
     @IBOutlet weak var openButton: UIButton!
@@ -58,13 +57,10 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
     @IBAction func pushedOpenButton(_ sender: UIButton) {
         if (sender.titleColor(for: .normal) == UIColor.white) {
             turnOnButton(button: sender)
-            var string = selectedSearches["Status"]!
-            string.append("Open ")
-            selectedSearches["Status"] = string
+            selections.status.open = true
         } else {
             turnOffButton(button: sender)
-            let string = selectedSearches["Status"]?.replacingOccurrences(of: "Open ", with: "")
-            selectedSearches["Status"] = string
+            selections.status.open = true
         }
         updateTable()
     }
@@ -89,10 +85,7 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
             eitherButton.backgroundColor = UIColor(named: "Blue")
             anyButton.backgroundColor = UIColor(named: "LighterBlue")
             
-            var string = selectedSearches["Days"]!
-            string.removeFirst(1)
-            string = "E" + string
-            selectedSearches["Days"] = string
+            selections.days.either = true
             updateTable()
         }
     }
@@ -104,10 +97,7 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
             anyButton.backgroundColor = UIColor(named: "Blue")
             eitherButton.backgroundColor = UIColor(named: "LighterBlue")
             
-            var string = selectedSearches["Days"]!
-            string.removeFirst(1)
-            string = "O" + string
-            selectedSearches["Days"] = string
+            selections.days.either = false
             updateTable()
         }
     }
@@ -120,24 +110,24 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
     
-     @IBAction func dayPressed(_ sender: UIButton) {
-        daysActive = false
-        var dayBooleans = ""
-        if (eitherDay) {
-            dayBooleans.append("E ")
-        } else {
-            dayBooleans.append("O ")
-        }
-        for i in 0...5 {
-            if (hiddenButtons[i].backgroundColor == UIColor.white) {
-                daysActive = true
-                dayBooleans.append("true ")
-            } else {
-                dayBooleans.append("false ")
-            }
-        }
-        selectedSearches["Days"] = dayBooleans
-        updateTable()
+    @IBAction func mondayPressed(_ sender: UIButton) {
+        selections.days.monday = !selections.days.monday
+    }
+    
+    @IBAction func tuesdayButton(_ sender: UIButton) {
+        selections.days.tuesday = !selections.days.tuesday
+    }
+    
+    @IBAction func wednesdayPressed(_ sender: UIButton) {
+        selections.days.wednesday = !selections.days.wednesday
+    }
+    
+    @IBAction func thursdayPressed(_ sender: UIButton) {
+        selections.days.thursday = !selections.days.thursday
+    }
+    
+    @IBAction func fridayPressed(_ sender: UIButton) {
+        selections.days.friday = !selections.days.friday
     }
     
     @IBOutlet weak var filterScrollView: UIScrollView!
@@ -157,31 +147,71 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
             button.isHidden = true
         }
 
-        selectedSearches[selectedCategory] = selectedSearch
-        selectedSearches["Sort By"] = "subjectNumber"
-        selectedSearches["Days"] = "E false false false false false"
-        selectedSearches["Status"] = ""
+        if (selectedCategory == "Department") {
+            selections.department = selectedSearch
+        } else if (selectedCategory == "CRN") {
+            selections.crn = selectedSearch
+        } else if (selectedCategory == "Instructor") {
+            selections.instructor = selectedSearch
+        } else if (selectedCategory == "Course Name") {
+            selections.courseName = selectedSearch
+        } else if (selectedCategory == "Subject Number") {
+            selections.subjectNumber = selectedSearch
+        } else if (selectedCategory == "Attribute") {
+            selections.courseAttribute = selectedSearch
+        }
         persistanceManager = PersistanceManager()
         updateTable()
     }
     
     func updateTable() {
-        let results = persistanceManager.getCourses(selections: selectedSearches)
-
+        let results = persistanceManager.getCourses(selections: selections)
         courses = results.courses
         offerings = results.offerings
-
         title = "\(offerings.count) Results"
         tableView.reloadData()
+        if (courses.count + offerings.count > 0) {
+            tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableViewScrollPosition.top, animated: true)
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return courses.count + offerings.count
     }
     
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        var count = 0
+        var course = 0
+        
+        while (true) {
+            let currentCourse = courses[course]
+            let offeringsForCourseCount = currentCourse.offerings.count
+            if (indexPath.row == count) {
+                return false
+            } else if (indexPath.row <= offeringsForCourseCount + count) {
+                return true
+            }
+            count += offeringsForCourseCount + 1
+            course += 1
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let deleteAction = UITableViewRowAction(style: .normal, title: "Add") { (action, indexpath) in
+            print(indexpath)
+            print(action)
+        }
+        deleteAction.backgroundColor = UIColor(named: "Red")
+        return [deleteAction]
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var count = 0
         var course = 0
+        
+        let dateFormatterOut = DateFormatter()
+        dateFormatterOut.dateFormat = "h:mm"
+
         while (true) {
             
             let squareColor = course%9 + 1
@@ -198,7 +228,7 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
             
             // this is where we calculate the offerings for this course
             let currentCourse = courses[course]
-            let offeringsForCourse = offerings.filter("courseID = %@", currentCourse.courseID)
+            let offeringsForCourse = currentCourse.offerings
             let offeringsForCourseCount = offeringsForCourse.count
             
             if (indexPath.row == count) {
@@ -283,7 +313,7 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
                     subStackView.addArrangedSubview(imageViewFive)
                     
                     let timeLabel = UILabel()
-                    timeLabel.text = day.startTime + " - " + day.endTime
+                    timeLabel.text = dateFormatterOut.string(from: day.startTime) + " - " + dateFormatterOut.string(from: day.endTime)
                     timeLabel.textColor = colors[labelColor]
                     timeLabel.font = UIFont(name: "AvenirNext-Medium", size: 15)
                     
@@ -326,7 +356,7 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let navViewController = segue.destination as? SearchNavigationController
         let filterViewController = navViewController?.viewControllers.first as! FilterViewController
-        filterViewController.selectedSearches = selectedSearches
+        filterViewController.selections = selections
     }
 
     @IBAction func unwindToCourseList(segue: UIStoryboardSegue) {
@@ -336,40 +366,39 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
         filterScrollView.setContentOffset(CGPoint(x: 0,y:0), animated: true)
         // load button states
         if let origin = segue.source as? FilterViewController {
-            selectedSearches = origin.selectedSearches
+            selections = origin.selections
         }
-        if (selectedSearches["Status"]?.contains("Open")) ?? false {
+        if (selections.status.open) {
             turnOnButton(button: openButton)
         } else {
             turnOffButton(button: openButton)
         }
-        let daysArray = selectedSearches["Days"]!.components(separatedBy: " ")
-        if (daysArray[0] == "O") {
-            selectOnly(anyButton)
-        } else {
+        if (selections.days.either) {
             selectOnly(eitherButton)
+        } else {
+            selectOnly(anyButton)
         }
         for i in 0...4 {
             turnOffButton(button: hiddenButtons[i])
         }
         daysActive = false
-        if (daysArray[1] == "true") {
-           turnOnButton(button: hiddenButtons[0])
+        if (selections.days.monday) {
+            turnOnButton(button: hiddenButtons[0])
             daysActive = true
         }
-        if (daysArray[2] == "true") {
+        if (selections.days.tuesday) {
             turnOnButton(button: hiddenButtons[1])
             daysActive = true
         }
-        if (daysArray[3] == "true") {
+        if (selections.days.wednesday) {
             turnOnButton(button: hiddenButtons[2])
             daysActive = true
         }
-        if (daysArray[4] == "true") {
+        if (selections.days.thursday) {
             turnOnButton(button: hiddenButtons[3])
             daysActive = true
         }
-        if (daysArray[5] == "true") {
+        if (selections.days.friday) {
             turnOnButton(button: hiddenButtons[4])
             daysActive = true
         }
