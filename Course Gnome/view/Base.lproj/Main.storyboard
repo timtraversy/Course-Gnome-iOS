@@ -1257,6 +1257,9 @@
                                                         <color key="textColor" name="Red"/>
                                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits" autocorrectionType="yes"/>
+                                                        <connections>
+                                                            <action selector="departmentChanged:" destination="ril-Jg-sKv" eventType="editingDidEnd" id="NJO-Qi-fWs"/>
+                                                        </connections>
                                                     </textField>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="98u-dF-GC8">
                                                         <rect key="frame" x="20" y="37" width="280" height="1"/>
@@ -1409,16 +1412,16 @@
                                                                 <real key="value" value="0.0"/>
                                                             </userDefinedRuntimeAttribute>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="maximumValue">
-                                                                <real key="value" value="56"/>
+                                                                <real key="value" value="9000"/>
                                                             </userDefinedRuntimeAttribute>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="lowerValue">
                                                                 <real key="value" value="0.0"/>
                                                             </userDefinedRuntimeAttribute>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="upperValue">
-                                                                <real key="value" value="56"/>
+                                                                <real key="value" value="9000"/>
                                                             </userDefinedRuntimeAttribute>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="stepValue">
-                                                                <real key="value" value="1"/>
+                                                                <real key="value" value="200"/>
                                                             </userDefinedRuntimeAttribute>
                                                             <userDefinedRuntimeAttribute type="color" keyPath="trackTintColor">
                                                                 <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1427,32 +1430,25 @@
                                                                 <color key="value" name="Red"/>
                                                             </userDefinedRuntimeAttribute>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="minimumDistance">
-                                                                <real key="value" value="16"/>
+                                                                <real key="value" value="8"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="labelFontSize">
+                                                                <real key="value" value="13"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="labelColor">
+                                                                <color key="value" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="subjectNumberChanged:" destination="ril-Jg-sKv" eventType="valueChanged" id="18I-Vm-How"/>
+                                                        </connections>
                                                     </view>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zLa-RK-Gpr">
-                                                        <rect key="frame" x="10" y="7" width="32.5" height="19.5"/>
-                                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
-                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CHu-vd-c4F">
-                                                        <rect key="frame" x="282.5" y="7" width="32.5" height="19.5"/>
-                                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
-                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="82F-u5-z4m" secondAttribute="trailing" constant="20" id="57q-pS-L1Y"/>
-                                                    <constraint firstItem="zLa-RK-Gpr" firstAttribute="leading" secondItem="HHK-QJ-GHR" secondAttribute="leading" constant="10" id="7qM-JK-6RU"/>
-                                                    <constraint firstAttribute="trailing" secondItem="CHu-vd-c4F" secondAttribute="trailing" constant="5" id="9lC-LT-oA9"/>
                                                     <constraint firstItem="82F-u5-z4m" firstAttribute="top" secondItem="HHK-QJ-GHR" secondAttribute="top" constant="25" id="H0Z-EY-6f2"/>
-                                                    <constraint firstItem="CHu-vd-c4F" firstAttribute="top" secondItem="HHK-QJ-GHR" secondAttribute="top" constant="7" id="IYc-mU-7gM"/>
                                                     <constraint firstItem="82F-u5-z4m" firstAttribute="leading" secondItem="HHK-QJ-GHR" secondAttribute="leading" constant="20" id="acT-CT-h5W"/>
-                                                    <constraint firstItem="zLa-RK-Gpr" firstAttribute="top" secondItem="HHK-QJ-GHR" secondAttribute="top" constant="7" id="jRg-6d-bla"/>
                                                     <constraint firstAttribute="height" constant="70" id="vdD-yn-ka1"/>
                                                 </constraints>
                                                 <viewLayoutGuide key="safeArea" id="nI5-TT-4Hn"/>
@@ -1604,6 +1600,7 @@
                         <outlet property="fitSwitch" destination="Vgg-QI-lyE" id="6tb-lf-Dvu"/>
                         <outlet property="instructorField" destination="1Hm-lb-JzR" id="smr-06-CV3"/>
                         <outlet property="openButton" destination="dPp-xm-KaE" id="KXD-6L-2FO"/>
+                        <outlet property="subjectNumberSlider" destination="82F-u5-z4m" id="cnn-B4-mdH"/>
                         <outlet property="timeSlider" destination="EEz-gM-d8f" id="QYo-73-KzU"/>
                         <outlet property="waitlistButton" destination="24k-i9-Oln" id="3pZ-56-jzo"/>
                         <outletCollection property="buttonsToOutline" destination="JoH-jB-cZB" collectionClass="NSMutableArray" id="TEg-X3-xSk"/>

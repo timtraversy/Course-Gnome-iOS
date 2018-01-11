@@ -108,6 +108,7 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
         } else {
             turnOffButton(button: sender)
         }
+        updateTable()
     }
     
     @IBAction func mondayPressed(_ sender: UIButton) {
@@ -232,11 +233,10 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
             let offeringsForCourseCount = offeringsForCourse.count
             
             if (indexPath.row == count) {
-                print("Current1: \(currentCourse.courseName)")
                 let cell = tableView.dequeueReusableCell(withIdentifier: "courseCell", for: indexPath) as! CourseCell
                 var departmentLabel = ""
                 if let department = currentCourse.department?.acronym {
-                    departmentLabel = "\(department) \(currentCourse.subjectNumber)"
+                    departmentLabel = "\(department) \(currentCourse.subjectNumber!.string)"
                 }
                 cell.departmentLabel.text = departmentLabel
                 cell.courseNameLabel.text = currentCourse.courseName
@@ -245,11 +245,8 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
                 }
                 return cell
             } else if (indexPath.row <= offeringsForCourseCount + count) {
-                print("Current2: \(currentCourse.courseName)")
-
                 let cell = tableView.dequeueReusableCell(withIdentifier: "offeringCell", for: indexPath) as! OfferingCell
                 let offering = offeringsForCourse[indexPath.row-count-1]
-                print("Offering: \(offering.courseName)")
                 for view in cell.classDaysStack.arrangedSubviews {
                     view.removeFromSuperview()
                 }

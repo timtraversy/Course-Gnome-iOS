@@ -27,7 +27,7 @@ struct StatusList {
 class SelectionObject {
     
     enum sortBy: String {
-        case subjectNumber = "subjectNumber"
+        case subjectNumber = "subjectNumber.string"
         case department = "department.name"
     }
 
@@ -42,6 +42,8 @@ class SelectionObject {
     var days = Days()
     var startTime = 480
     var endTime = 1320
+    var lowerNumber = 0
+    var upperNumber = 9000
     
 }
 
@@ -134,15 +136,14 @@ class PersistanceManager {
             offerings = offerings.filter("NOT (ANY classDays.endTime.value > %@)", selections.endTime)
         }
         
-        for offer in offerings {
-            print("Offer Name: \(offer.courseName) Status: \(offer.status!.name)")
+        if selections.lowerNumber > 0 {
+            offerings = offerings.filter("subjectNumber.integer > %@", selections.lowerNumber)
         }
-//
+        if selections.upperNumber < 9000 {
+            offerings = offerings.filter("subjectNumber.integer < %@", selections.upperNumber)
+        }
+
         var courses = realm.objects(Course.self).filter("ANY offerings IN %@", offerings)
-        
-//        for course in courses {
-//            print("Course Name: \(course.courseName)")
-//        }
         
         courses = courses.sorted(byKeyPath: String(describing: selections.sortBy.rawValue))
         return (courses: courses, offerings: offerings)

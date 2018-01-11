@@ -90,7 +90,14 @@ class PullCourses {
                     index += 1
                     
                     newCourse.courseName = course["courseName"].stringValue
-                    newCourse.subjectNumber = course["subjectNumber"].stringValue
+                    
+                    //keep string of subject number and value for comparison
+                    if (!course["subjectNumber"].stringValue.isEmpty) {
+                        newCourse.subjectNumber = SubjectNumber()
+                        newCourse.subjectNumber?.string = course["subjectNumber"].stringValue
+                        let justNumbers = newCourse.subjectNumber?.string.trimmingCharacters(in: CharacterSet(charactersIn: "01234567890.").inverted)
+                        newCourse.subjectNumber?.integer = Int(justNumbers!)!
+                    }
                     newCourse.credit = course["credit"].stringValue
                     
                     // get department
@@ -116,12 +123,6 @@ class PullCourses {
                         newOffering.credit = newCourse.credit
                         
                         newOffering.courseName = offering["courseName"].stringValue
-                        newOffering.subjectNumber = offering["subjectNumber"].stringValue
-                        
-                        if (newOffering.courseName == "Introduction to Programming with Java") {
-                            let kk = 2
-                            print (offering["status"].stringValue)
-                        }
                         
                         switch (offering["status"].stringValue) {
                             case "Open": newOffering.status = open
@@ -160,8 +161,6 @@ class PullCourses {
                                 newDay.startTime = SimpleTime()
                                 newDay.startTime!.string = dateFormatterOut.string(from: date)
                                 newDay.startTime!.value = Int(splitTime[0])!*60 + Int(splitTime[1])!
-                            } else {
-                                print (newCourse.courseName + " " + String(describing: newOffering.crn))
                             }
                             
                             let givenEndTime = day["endTime"].stringValue
@@ -171,8 +170,6 @@ class PullCourses {
                                 newDay.endTime = SimpleTime()
                                 newDay.endTime!.string = dateFormatterOut.string(from: date)
                                 newDay.endTime!.value = Int(splitTime[0])!*60 + Int(splitTime[1])!
-                            } else {
-                                print (newCourse.courseName + " " + String(describing: newOffering.crn))
                             }
 
                             realm.add(newDay)

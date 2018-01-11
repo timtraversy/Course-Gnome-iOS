@@ -181,10 +181,10 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                     }
                 }
                 for result in realm.objects(Course.self).filter("subjectNumber beginswith '\(self.text)'") {
-                    if (!realm.objects(SavedSearch.self).filter("search = %@", result.subjectNumber).isEmpty) {
+                    if (!realm.objects(SavedSearch.self).filter("search = %@", result.subjectNumber!.string).isEmpty) {
                         continue
                     }
-                    self.numbers.append(result.subjectNumber)
+                    self.numbers.append(result.subjectNumber!.string)
                     totalCount += 1
                     if (totalCount == maxResults) { break mainRun }
                 }

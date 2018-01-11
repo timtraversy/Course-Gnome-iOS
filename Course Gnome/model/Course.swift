@@ -3,10 +3,15 @@ import RealmSwift
 
 class Course: Object {
     @objc dynamic var department: Department? = nil
-    @objc dynamic var subjectNumber: String = ""
+    @objc dynamic var subjectNumber: SubjectNumber? = nil
     @objc dynamic var courseName: String = ""
     @objc dynamic var credit: String = ""
     let offerings = List<Offering>()
+}
+
+class SubjectNumber: Object {
+    @objc dynamic var string: String = ""
+    @objc dynamic var integer: Int = 0
 }
 
 class Offering: Course {

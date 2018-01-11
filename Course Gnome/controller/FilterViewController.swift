@@ -46,6 +46,8 @@ class FilterViewController: UIViewController {
     @IBOutlet weak var instructorField: SearchTextField!
     @IBOutlet weak var attributeField: SearchTextField!
     
+    @IBOutlet weak var subjectNumberSlider: RangeSlider!
+    
     @IBOutlet var autoCompleteFields: [SearchTextField]!
     
     @IBAction func buttonSwitched(_ sender: UIButton) {
@@ -106,9 +108,16 @@ class FilterViewController: UIViewController {
     
     @IBAction func timeChanged(_ sender: RangeSlider) {
         selections.startTime = DateManager().getTimeValue(value: sender.lowerValue)
-//        print(selections.startTime)
         selections.endTime = DateManager().getTimeValue(value: sender.upperValue)
-//        print(selections.endTime)
+    }
+    
+    @IBAction func subjectNumberChanged(_ sender: RangeSlider) {
+        selections.lowerNumber = Int(sender.lowerValue)
+        selections.upperNumber = Int(sender.upperValue)
+    }
+    
+    @IBAction func departmentChanged(_ sender: SearchTextField) {
+//        print(sender.text)
     }
     
     override func viewDidLoad() {
@@ -172,6 +181,10 @@ class FilterViewController: UIViewController {
         //load attribute
         attributeField.text = selections.courseAttribute
         
+        // load subjectNumber
+        subjectNumberSlider.lowerValue = Double(selections.lowerNumber)
+        subjectNumberSlider.upperValue = Double(selections.upperNumber)
+        
         //// done loading filters ////////
         
         for button in buttonsToOutline {
@@ -189,14 +202,7 @@ class FilterViewController: UIViewController {
         fitSwitch.layer.cornerRadius = 16
         fitSwitch.backgroundColor = UIColor.lightGray
         
-        let deptStrings = PersistanceManager().getCategory(type: PersistanceManager.category.Department)
-        departmentField.filterStrings(deptStrings)
-        
-        let instructorStrings = PersistanceManager().getCategory(type: PersistanceManager.category.Instructor)
-        instructorField.filterStrings(instructorStrings)
-        
-        let attributeStrings = PersistanceManager().getCategory(type: PersistanceManager.category.CourseAttribute)
-        attributeField.filterStrings(attributeStrings)
+        refreshAutocompletes()
         
         for field in autoCompleteFields {
             field.theme.font = UIFont(name: "AvenirNext-Regular", size: 13.0)!
@@ -205,12 +211,26 @@ class FilterViewController: UIViewController {
         }
     }
     
+    func refreshAutocompletes() {
+        let deptStrings = PersistanceManager().getCategory(type: PersistanceManager.category.Department)
+        departmentField.filterStrings(deptStrings)
+        
+        let instructorStrings = PersistanceManager().getCategory(type: PersistanceManager.category.Instructor)
+        instructorField.filterStrings(instructorStrings)
+        
+        let attributeStrings = PersistanceManager().getCategory(type: PersistanceManager.category.CourseAttribute)
+        attributeField.filterStrings(attributeStrings)
+    }
+    
     // fix rangeslider layout
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         timeSlider.layoutIfNeeded()
         timeSlider.updateLayerFramesAndPositions()
+        
+        subjectNumberSlider.layoutIfNeeded()
+        subjectNumberSlider.updateLayerFramesAndPositions()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
