@@ -116,6 +116,23 @@ class FilterViewController: UIViewController {
         selections.upperNumber = Int(sender.upperValue)
     }
     
+    @IBAction func creditChanged(_ sender: RedButton) {
+        selections.credit.removeAll()
+        for credit in creditSwitches {
+            if credit.isSelected {
+                if (credit.tag == 5) {
+                    selections.credit.append(5)
+                    selections.credit.append(6)
+                    selections.credit.append(7)
+                    selections.credit.append(8)
+                    selections.credit.append(9)
+                } else {
+                    selections.credit.append(credit.tag)
+                }
+            }
+        }
+    }
+    
     @IBAction func departmentChanged(_ sender: SearchTextField) {
 //        print(sender.text)
     }
@@ -184,6 +201,14 @@ class FilterViewController: UIViewController {
         // load subjectNumber
         subjectNumberSlider.lowerValue = Double(selections.lowerNumber)
         subjectNumberSlider.upperValue = Double(selections.upperNumber)
+        
+        // load credit
+        if (selections.credit.contains(0)) { creditSwitches[0].isSelected = true }
+        if (selections.credit.contains(1)) { creditSwitches[1].isSelected = true }
+        if (selections.credit.contains(2)) { creditSwitches[2].isSelected = true }
+        if (selections.credit.contains(3)) { creditSwitches[3].isSelected = true }
+        if (selections.credit.contains(4)) { creditSwitches[4].isSelected = true }
+        if (selections.credit.contains(5)) { creditSwitches[5].isSelected = true }
         
         //// done loading filters ////////
         

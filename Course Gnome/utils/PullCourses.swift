@@ -98,7 +98,7 @@ class PullCourses {
                         let justNumbers = newCourse.subjectNumber?.string.trimmingCharacters(in: CharacterSet(charactersIn: "01234567890.").inverted)
                         newCourse.subjectNumber?.integer = Int(justNumbers!)!
                     }
-                    newCourse.credit = course["credit"].stringValue
+                    newCourse.credit = Int(course["credit"].stringValue)!
                     
                     // get department
                     let found = realm.objects(Department.self).filter("acronym = %@", course["subjectAcronym"].stringValue)

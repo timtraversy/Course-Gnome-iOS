@@ -44,6 +44,7 @@ class SelectionObject {
     var endTime = 1320
     var lowerNumber = 0
     var upperNumber = 9000
+    var credit = [Int]()
     
 }
 
@@ -141,6 +142,20 @@ class PersistanceManager {
         }
         if selections.upperNumber < 9000 {
             offerings = offerings.filter("subjectNumber.integer < %@", selections.upperNumber)
+        }
+        
+        if (!selections.credit.isEmpty) {
+            var predicateString = ""
+            var first = true
+            for credit in selections.credit {
+                if (first) {
+                    predicateString += "credit = \(credit)"
+                    first = false
+                } else {
+                    predicateString += " OR credit = \(credit)"
+                }
+                offerings = offerings.filter(predicateString)
+            }
         }
 
         var courses = realm.objects(Course.self).filter("ANY offerings IN %@", offerings)

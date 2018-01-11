@@ -5,7 +5,7 @@ class Course: Object {
     @objc dynamic var department: Department? = nil
     @objc dynamic var subjectNumber: SubjectNumber? = nil
     @objc dynamic var courseName: String = ""
-    @objc dynamic var credit: String = ""
+    @objc dynamic var credit: Int = 0
     let offerings = List<Offering>()
 }
 

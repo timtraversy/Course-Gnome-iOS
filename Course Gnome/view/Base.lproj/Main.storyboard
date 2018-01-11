@@ -1475,20 +1475,20 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Fm8-Vy-bc7" userLabel="SubSort">
                                                 <rect key="frame" x="0.0" y="792" width="320" height="50"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mdW-Q5-pFf" customClass="RedButton" customModule="Course_Gnome" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="45.5" height="50"/>
-                                                        <color key="backgroundColor" name="Red"/>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mdW-Q5-pFf" customClass="RedButton" customModule="Course_Gnome" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="53.5" height="50"/>
                                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
                                                         <color key="tintColor" white="1" alpha="0.0048782277000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <state key="normal" title="0">
-                                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <color key="titleColor" name="Red"/>
                                                         </state>
                                                         <connections>
                                                             <action selector="buttonSwitched:" destination="ril-Jg-sKv" eventType="touchUpInside" id="bto-M8-rox"/>
+                                                            <action selector="creditChanged:" destination="ril-Jg-sKv" eventType="touchUpInside" id="wmE-iJ-dRL"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ADG-QW-JIX" customClass="RedButton" customModule="Course_Gnome" customModuleProvider="target">
-                                                        <rect key="frame" x="45.5" y="0.0" width="46" height="50"/>
+                                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ADG-QW-JIX" customClass="RedButton" customModule="Course_Gnome" customModuleProvider="target">
+                                                        <rect key="frame" x="53.5" y="0.0" width="53" height="50"/>
                                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
                                                         <color key="tintColor" white="1" alpha="0.0048782277000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <state key="normal" title="1">
@@ -1496,10 +1496,11 @@
                                                         </state>
                                                         <connections>
                                                             <action selector="buttonSwitched:" destination="ril-Jg-sKv" eventType="touchUpInside" id="snj-Ww-8pS"/>
+                                                            <action selector="creditChanged:" destination="ril-Jg-sKv" eventType="touchUpInside" id="Z2D-q7-Z3X"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="drE-1j-Tgv" customClass="RedButton" customModule="Course_Gnome" customModuleProvider="target">
-                                                        <rect key="frame" x="91.5" y="0.0" width="45.5" height="50"/>
+                                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="drE-1j-Tgv" customClass="RedButton" customModule="Course_Gnome" customModuleProvider="target">
+                                                        <rect key="frame" x="106.5" y="0.0" width="53.5" height="50"/>
                                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
                                                         <color key="tintColor" white="1" alpha="0.0048782277000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <state key="normal" title="2">
@@ -1507,10 +1508,11 @@
                                                         </state>
                                                         <connections>
                                                             <action selector="buttonSwitched:" destination="ril-Jg-sKv" eventType="touchUpInside" id="BDh-Hm-TQl"/>
+                                                            <action selector="creditChanged:" destination="ril-Jg-sKv" eventType="touchUpInside" id="ikv-WW-kht"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="flg-dc-u7j" customClass="RedButton" customModule="Course_Gnome" customModuleProvider="target">
-                                                        <rect key="frame" x="137" y="0.0" width="46" height="50"/>
+                                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="flg-dc-u7j" customClass="RedButton" customModule="Course_Gnome" customModuleProvider="target">
+                                                        <rect key="frame" x="160" y="0.0" width="53.5" height="50"/>
                                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
                                                         <color key="tintColor" white="1" alpha="0.0048782277000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <state key="normal" title="3">
@@ -1518,10 +1520,11 @@
                                                         </state>
                                                         <connections>
                                                             <action selector="buttonSwitched:" destination="ril-Jg-sKv" eventType="touchUpInside" id="jcg-4K-kf9"/>
+                                                            <action selector="creditChanged:" destination="ril-Jg-sKv" eventType="touchUpInside" id="UhN-h8-WmE"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K8U-hP-23W" customClass="RedButton" customModule="Course_Gnome" customModuleProvider="target">
-                                                        <rect key="frame" x="183" y="0.0" width="45.5" height="50"/>
+                                                    <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K8U-hP-23W" customClass="RedButton" customModule="Course_Gnome" customModuleProvider="target">
+                                                        <rect key="frame" x="213.5" y="0.0" width="53" height="50"/>
                                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
                                                         <color key="tintColor" white="1" alpha="0.0048782277000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <state key="normal" title="4">
@@ -1529,28 +1532,19 @@
                                                         </state>
                                                         <connections>
                                                             <action selector="buttonSwitched:" destination="ril-Jg-sKv" eventType="touchUpInside" id="b4u-bb-8Jj"/>
+                                                            <action selector="creditChanged:" destination="ril-Jg-sKv" eventType="touchUpInside" id="jlC-dT-56a"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1WQ-k9-X8K" customClass="RedButton" customModule="Course_Gnome" customModuleProvider="target">
-                                                        <rect key="frame" x="228.5" y="0.0" width="46" height="50"/>
+                                                    <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1WQ-k9-X8K" customClass="RedButton" customModule="Course_Gnome" customModuleProvider="target">
+                                                        <rect key="frame" x="266.5" y="0.0" width="53.5" height="50"/>
                                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
                                                         <color key="tintColor" white="1" alpha="0.0048782277000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <state key="normal" title="5">
+                                                        <state key="normal" title="5+">
                                                             <color key="titleColor" name="Red"/>
                                                         </state>
                                                         <connections>
                                                             <action selector="buttonSwitched:" destination="ril-Jg-sKv" eventType="touchUpInside" id="stq-21-mSt"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X4l-my-Luc" customClass="RedButton" customModule="Course_Gnome" customModuleProvider="target">
-                                                        <rect key="frame" x="274.5" y="0.0" width="45.5" height="50"/>
-                                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
-                                                        <color key="tintColor" white="1" alpha="0.0048782277000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <state key="normal" title="6">
-                                                            <color key="titleColor" name="Red"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="buttonSwitched:" destination="ril-Jg-sKv" eventType="touchUpInside" id="ytW-da-MdI"/>
+                                                            <action selector="creditChanged:" destination="ril-Jg-sKv" eventType="touchUpInside" id="oy8-k4-hkx"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -1624,7 +1618,6 @@
                         <outletCollection property="allSwitches" destination="flg-dc-u7j" collectionClass="NSMutableArray" id="Jzh-oy-WT2"/>
                         <outletCollection property="allSwitches" destination="K8U-hP-23W" collectionClass="NSMutableArray" id="3to-CW-VgJ"/>
                         <outletCollection property="allSwitches" destination="1WQ-k9-X8K" collectionClass="NSMutableArray" id="rr5-oM-Xte"/>
-                        <outletCollection property="allSwitches" destination="X4l-my-Luc" collectionClass="NSMutableArray" id="ds0-C4-Sld"/>
                         <outletCollection property="timeSwitches" destination="Bov-up-NwI" collectionClass="NSMutableArray" id="TAa-QA-ePl"/>
                         <outletCollection property="creditSwitches" destination="mdW-Q5-pFf" collectionClass="NSMutableArray" id="pKZ-3H-eAD"/>
                         <outletCollection property="creditSwitches" destination="ADG-QW-JIX" collectionClass="NSMutableArray" id="8a6-jT-t2V"/>
@@ -1632,7 +1625,6 @@
                         <outletCollection property="creditSwitches" destination="flg-dc-u7j" collectionClass="NSMutableArray" id="3e6-Cz-HfA"/>
                         <outletCollection property="creditSwitches" destination="K8U-hP-23W" collectionClass="NSMutableArray" id="S9k-T1-5oa"/>
                         <outletCollection property="creditSwitches" destination="1WQ-k9-X8K" collectionClass="NSMutableArray" id="1Nu-Ea-Zco"/>
-                        <outletCollection property="creditSwitches" destination="X4l-my-Luc" collectionClass="NSMutableArray" id="odN-pw-AkS"/>
                         <outletCollection property="autoCompleteFields" destination="o0d-6h-hJG" collectionClass="NSMutableArray" id="6Ta-XI-6cC"/>
                         <outletCollection property="autoCompleteFields" destination="1Hm-lb-JzR" collectionClass="NSMutableArray" id="Hbi-vh-San"/>
                         <outletCollection property="autoCompleteFields" destination="EzT-AV-5Wo" collectionClass="NSMutableArray" id="bmc-fk-vP2"/>
@@ -1764,6 +1756,9 @@
         </namedColor>
         <namedColor name="LighterBlue">
             <color red="0.66699999570846558" green="0.77300000190734863" blue="0.85900002717971802" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Red">
+            <color red="0.80400002002716064" green="0.17299999296665192" blue="0.14100000262260437" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Red">
             <color red="0.80400002002716064" green="0.17299999296665192" blue="0.14100000262260437" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
