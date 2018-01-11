@@ -249,7 +249,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="savedSearchResult" rowHeight="39" id="tbk-a5-9Kh" userLabel="savedSearchResult" customClass="SavedSearchResultCell" customModule="Course_Gnome" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="savedSearchResult" rowHeight="39" id="tbk-a5-9Kh" userLabel="savedSearchResult" customClass="SavedSearchResultCell" customModule="Course_Gnome" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="39"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tbk-a5-9Kh" id="cZw-Lx-W04">
@@ -304,7 +304,7 @@
                                             <outlet property="searchResultTitle" destination="C3m-nl-BAc" id="Ekf-jY-5WM"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="categoryCell" id="3UX-BJ-fmS" customClass="CategoryCell" customModule="Course_Gnome" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="categoryCell" id="3UX-BJ-fmS" customClass="CategoryCell" customModule="Course_Gnome" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="67" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3UX-BJ-fmS" id="dQU-L1-yb8">
@@ -329,7 +329,7 @@
                                             <outlet property="categoryTitle" destination="MNK-gf-HIr" id="Tov-tb-1uv"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="searchResult" id="1qN-nC-7hy" customClass="SearchResultCell" customModule="Course_Gnome" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="searchResult" id="1qN-nC-7hy" customClass="SearchResultCell" customModule="Course_Gnome" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="111" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1qN-nC-7hy" id="mAO-uj-cSt">
@@ -1217,6 +1217,9 @@
                                                                 <real key="value" value="13"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="timeChanged:" destination="ril-Jg-sKv" eventType="valueChanged" id="u7b-F1-bx2"/>
+                                                        </connections>
                                                     </view>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1764,9 +1767,6 @@
         </namedColor>
         <namedColor name="LighterBlue">
             <color red="0.66699999570846558" green="0.77300000190734863" blue="0.85900002717971802" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="Red">
-            <color red="0.80400002002716064" green="0.17299999296665192" blue="0.14100000262260437" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Red">
             <color red="0.80400002002716064" green="0.17299999296665192" blue="0.14100000262260437" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

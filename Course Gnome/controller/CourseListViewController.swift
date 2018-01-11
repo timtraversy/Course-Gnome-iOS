@@ -60,7 +60,7 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
             selections.status.open = true
         } else {
             turnOffButton(button: sender)
-            selections.status.open = true
+            selections.status.open = false
         }
         updateTable()
     }
@@ -198,8 +198,8 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let deleteAction = UITableViewRowAction(style: .normal, title: "Add") { (action, indexpath) in
-            print(indexpath)
-            print(action)
+//            print(indexpath)
+//            print(action)
         }
         deleteAction.backgroundColor = UIColor(named: "Red")
         return [deleteAction]
@@ -232,6 +232,7 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
             let offeringsForCourseCount = offeringsForCourse.count
             
             if (indexPath.row == count) {
+                print("Current1: \(currentCourse.courseName)")
                 let cell = tableView.dequeueReusableCell(withIdentifier: "courseCell", for: indexPath) as! CourseCell
                 var departmentLabel = ""
                 if let department = currentCourse.department?.acronym {
@@ -244,9 +245,11 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
                 }
                 return cell
             } else if (indexPath.row <= offeringsForCourseCount + count) {
+                print("Current2: \(currentCourse.courseName)")
+
                 let cell = tableView.dequeueReusableCell(withIdentifier: "offeringCell", for: indexPath) as! OfferingCell
                 let offering = offeringsForCourse[indexPath.row-count-1]
-                
+                print("Offering: \(offering.courseName)")
                 for view in cell.classDaysStack.arrangedSubviews {
                     view.removeFromSuperview()
                 }
@@ -313,9 +316,13 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
                     subStackView.addArrangedSubview(imageViewFive)
                     
                     let timeLabel = UILabel()
-                    timeLabel.text = dateFormatterOut.string(from: day.startTime) + " - " + dateFormatterOut.string(from: day.endTime)
-                    timeLabel.textColor = colors[labelColor]
-                    timeLabel.font = UIFont(name: "AvenirNext-Medium", size: 15)
+                    if let startTime = day.startTime?.string {
+                        if let endTime = day.endTime?.string {
+                            timeLabel.text = startTime + " - " + endTime
+                            timeLabel.textColor = colors[labelColor]
+                            timeLabel.font = UIFont(name: "AvenirNext-Medium", size: 15)
+                        }
+                    }
                     
                     let stackView = UIStackView()
                     stackView.axis = UILayoutConstraintAxis.horizontal
@@ -374,7 +381,7 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
             turnOffButton(button: openButton)
         }
         if (selections.days.either) {
-            selectOnly(eitherButton)
+            selectEither(eitherButton)
         } else {
             selectOnly(anyButton)
         }

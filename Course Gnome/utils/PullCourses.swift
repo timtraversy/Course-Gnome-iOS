@@ -65,13 +65,10 @@ class PullCourses {
                 realm.deleteAll()
                 
                 //add updateTime
-                let revisedTime = LastRevised()
-                revisedTime.lastRevised = databaseUpdateTime
-                realm.add(revisedTime)
                 
                 let json = JSON(response.result.value!)
                 
-                var x = 0
+                var index = 0
                 let count = json.count
                 
                 // add statuses
@@ -87,10 +84,10 @@ class PullCourses {
                 
                 // loop over offerings
                 for (_, course) in json {
-                    print("Count \(x)/\(count)")
+                    print("Count \(index)/\(count)")
                     let newCourse = Course()
-                    newCourse.courseID = x
-                    x += 1
+//                    newCourse.courseID = index
+                    index += 1
                     
                     newCourse.courseName = course["courseName"].stringValue
                     newCourse.subjectNumber = course["subjectNumber"].stringValue
@@ -112,7 +109,7 @@ class PullCourses {
                         let newOffering = Offering()
                         
                         // copy parent values
-                        newOffering.courseID = newCourse.courseID
+//                        newOffering.courseID = newCourse.courseID
                         newOffering.department = newCourse.department
                         newOffering.subjectNumber = newCourse.subjectNumber
                         newOffering.courseName = newCourse.courseName
@@ -121,8 +118,17 @@ class PullCourses {
                         newOffering.courseName = offering["courseName"].stringValue
                         newOffering.subjectNumber = offering["subjectNumber"].stringValue
                         
-                        let status = realm.objects(Status.self).filter("name = %@", offering["status"].stringValue)
-                        newOffering.status = status[0]
+                        if (newOffering.courseName == "Introduction to Programming with Java") {
+                            let kk = 2
+                            print (offering["status"].stringValue)
+                        }
+                        
+                        switch (offering["status"].stringValue) {
+                            case "Open": newOffering.status = open
+                            case "Waitlist": newOffering.status = waitlist
+                            case "Closed": newOffering.status = closed
+                            default: newOffering.status = nil
+                        }
                                             
                         let newCrn = CRN()
                         newCrn.name = offering["CRN"].stringValue
@@ -141,25 +147,34 @@ class PullCourses {
                             // days entered as string (ex: TW) so check for each one and enter boolean if there/not there
                             newDay.days = day["days"].stringValue
                             
+                            // time are saved as Simple Times, with value (hours*60 + minutes) for comparison
                             let dateFormatterIn = DateFormatter()
                             dateFormatterIn.dateFormat = "HH:mm"
                             let dateFormatterOut = DateFormatter()
                             dateFormatterOut.dateFormat = "h:mm"
-                            let startString = day["startTime"].stringValue
-                            guard let startDateIn = dateFormatterIn.date(from: startString) else {
-                                // can't parse date, date probably empty
-                                continue
-                            }
-                            newDay.startTime = startDateIn
-//                            newDay.startTime = dateFormatterOut.string(from: startDateIn)
-                            let endString = day["endTime"].stringValue
-                            guard let endDateIn = dateFormatterIn.date(from: endString) else {
-                                // can't parse date, date probably empty
-                                continue
-                            }
-                            newDay.endTime = endDateIn
-//                            newDay.endTime = dateFormatterOut.string(from: endDateIn)
                             
+                            let givenStartTime = day["startTime"].stringValue
+                            if (!givenStartTime.isEmpty) {
+                                let splitTime = givenStartTime.split(separator: ":")
+                                let date = dateFormatterIn.date(from: givenStartTime)!
+                                newDay.startTime = SimpleTime()
+                                newDay.startTime!.string = dateFormatterOut.string(from: date)
+                                newDay.startTime!.value = Int(splitTime[0])!*60 + Int(splitTime[1])!
+                            } else {
+                                print (newCourse.courseName + " " + String(describing: newOffering.crn))
+                            }
+                            
+                            let givenEndTime = day["endTime"].stringValue
+                            if (!givenEndTime.isEmpty) {
+                                let splitTime = givenEndTime.split(separator: ":")
+                                let date = dateFormatterIn.date(from: givenEndTime)!
+                                newDay.endTime = SimpleTime()
+                                newDay.endTime!.string = dateFormatterOut.string(from: date)
+                                newDay.endTime!.value = Int(splitTime[0])!*60 + Int(splitTime[1])!
+                            } else {
+                                print (newCourse.courseName + " " + String(describing: newOffering.crn))
+                            }
+
                             realm.add(newDay)
                             newOffering.classDays.append(newDay)
                         }
@@ -202,7 +217,13 @@ class PullCourses {
                     }
                     realm.add(newCourse)
                 }
+                
+                let revisedTime = LastRevised()
+                revisedTime.lastRevised = databaseUpdateTime
+                realm.add(revisedTime)
+                
                 try! realm.commitWrite()
+                
                 self.delegate?.coursesPulled(updateTime: databaseUpdateTime)
         }
     }

@@ -13,6 +13,7 @@
 		EC5926531FCCE81C00E73268 /* CourseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5926521FCCE81C00E73268 /* CourseListViewController.swift */; };
 		EC5A79541FC8A52900F38F34 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5A79531FC8A52900F38F34 /* TabBarController.swift */; };
 		EC5BAE141FEB61850056448F /* PersistanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5BAE131FEB61850056448F /* PersistanceManager.swift */; };
+		EC93F7962006A59800673DC7 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC93F7952006A59800673DC7 /* DateManager.swift */; };
 		ECB975161FECAB5B00989467 /* CourseDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB975151FECAB5B00989467 /* CourseDetailViewController.swift */; };
 		ECB975181FECAD7500989467 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB975171FECAD7500989467 /* FilterViewController.swift */; };
 		ECBA71981FCDC95100B7364A /* SearchBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBA71971FCDC95100B7364A /* SearchBox.swift */; };
@@ -38,6 +39,7 @@
 		EC5926521FCCE81C00E73268 /* CourseListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListViewController.swift; sourceTree = "<group>"; };
 		EC5A79531FC8A52900F38F34 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		EC5BAE131FEB61850056448F /* PersistanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistanceManager.swift; sourceTree = "<group>"; };
+		EC93F7952006A59800673DC7 /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
 		ECB975151FECAB5B00989467 /* CourseDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailViewController.swift; sourceTree = "<group>"; };
 		ECB975171FECAD7500989467 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		ECBA71971FCDC95100B7364A /* SearchBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBox.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				ECCB1BA91FC54DCA00DB7EB9 /* PullCourses.swift */,
+				EC93F7952006A59800673DC7 /* DateManager.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -339,6 +342,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC93F7962006A59800673DC7 /* DateManager.swift in Sources */,
 				ECC8E56F1FCFAF9200E49DCE /* CalendarViewController.swift in Sources */,
 				ECF5BD5F1FC4CE99006988B9 /* ProfileViewController.swift in Sources */,
 				ECCB1BAA1FC54DCA00DB7EB9 /* PullCourses.swift in Sources */,

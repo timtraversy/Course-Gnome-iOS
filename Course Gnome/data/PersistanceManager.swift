@@ -40,6 +40,8 @@ class SelectionObject {
     var courseName: String?
     var subjectNumber: String?
     var days = Days()
+    var startTime = 480
+    var endTime = 1320
     
 }
 
@@ -57,12 +59,11 @@ class PersistanceManager {
     }
     
     func getCourses (selections: SelectionObject) -> (courses: Results<Course>, offerings: Results<Offering>){
-        
+            
         let realm = try! Realm()
         var offerings = realm.objects(Offering.self)
         
         if let term = selections.department {
-            print(term)
             offerings = offerings.filter("department.name = %@", term)
         }
         if let term = selections.crn { offerings = offerings.filter("crn = %@", term) }
@@ -126,7 +127,22 @@ class PersistanceManager {
             offerings = offerings.filter(predicateString)
         }
         
+        if selections.startTime > 480 {
+            offerings = offerings.filter("NOT (ANY classDays.startTime.value < %@)", selections.startTime)
+        }
+        if selections.endTime < 1320 {
+            offerings = offerings.filter("NOT (ANY classDays.endTime.value > %@)", selections.endTime)
+        }
+        
+        for offer in offerings {
+            print("Offer Name: \(offer.courseName) Status: \(offer.status!.name)")
+        }
+//
         var courses = realm.objects(Course.self).filter("ANY offerings IN %@", offerings)
+        
+//        for course in courses {
+//            print("Course Name: \(course.courseName)")
+//        }
         
         courses = courses.sorted(byKeyPath: String(describing: selections.sortBy.rawValue))
         return (courses: courses, offerings: offerings)

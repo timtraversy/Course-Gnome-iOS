@@ -104,6 +104,13 @@ class FilterViewController: UIViewController {
         }
     }
     
+    @IBAction func timeChanged(_ sender: RangeSlider) {
+        selections.startTime = DateManager().getTimeValue(value: sender.lowerValue)
+//        print(selections.startTime)
+        selections.endTime = DateManager().getTimeValue(value: sender.upperValue)
+//        print(selections.endTime)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -153,10 +160,10 @@ class FilterViewController: UIViewController {
         }
         
         //load times
-        timeSlider.lowerValue = 20;
-        timeSlider.upperValue = 50;
+        timeSlider.lowerValue = DateManager().getSliderIncrement(value: selections.startTime)
+        timeSlider.upperValue = DateManager().getSliderIncrement(value: selections.endTime)
         
-        //load department
+        //load departmentb
         departmentField.text = selections.department
         
         //load instructor
