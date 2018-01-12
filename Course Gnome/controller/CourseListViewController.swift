@@ -355,12 +355,17 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "courseDetailSegue", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let navViewController = segue.destination as? SearchNavigationController
-        let filterViewController = navViewController?.viewControllers.first as! FilterViewController
-        filterViewController.selections = selections
+        if (segue.identifier == "courseDetailSegue") {
+//            let navViewController = segue.destination as? SearchNavigationController
+        } else {
+            let navViewController = segue.destination as? SearchNavigationController
+            let filterViewController = navViewController?.viewControllers.first as! FilterViewController
+            filterViewController.selections = selections
+        }
     }
 
     @IBAction func unwindToCourseList(segue: UIStoryboardSegue) {

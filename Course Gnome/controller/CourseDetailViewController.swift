@@ -2,11 +2,21 @@
 //  CourseDetailViewController.swift
 //  Course Gnome
 //
-//  Created by Tim Traversy on 12/21/17.
-//  Copyright © 2017 Tim Traversy. All rights reserved.
+//  Created by Tim Traversy on 1/12/18.
+//  Copyright © 2018 Tim Traversy. All rights reserved.
 //
 
 import UIKit
+
+class BlueButton: UIButton {
+    override open var isSelected: Bool {
+        didSet {
+            UIView.animate(withDuration: 0.25) {
+                self.backgroundColor = self.isSelected ? UIColor(named: "Red") : UIColor.white
+            }
+        }
+    }
+}
 
 class CourseDetailViewController: UIViewController {
 

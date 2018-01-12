@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		27A100D781C66EFA45D73938 /* Pods_Course_Gnome.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBAAE2DA9EBC15F77AC328 /* Pods_Course_Gnome.framework */; };
+		EC185A8020087F8600960BF7 /* CourseDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC185A7F20087F8600960BF7 /* CourseDetailViewController.swift */; };
 		EC308FCC1FF2D54500D17163 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC308FCB1FF2D54400D17163 /* Assets.xcassets */; };
 		EC4F85F31FEF55F000D795B9 /* FilterNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4F85F21FEF55F000D795B9 /* FilterNavigationController.swift */; };
 		EC5926531FCCE81C00E73268 /* CourseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5926521FCCE81C00E73268 /* CourseListViewController.swift */; };
 		EC5A79541FC8A52900F38F34 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5A79531FC8A52900F38F34 /* TabBarController.swift */; };
 		EC5BAE141FEB61850056448F /* PersistanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5BAE131FEB61850056448F /* PersistanceManager.swift */; };
 		EC93F7962006A59800673DC7 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC93F7952006A59800673DC7 /* DateManager.swift */; };
-		ECB975161FECAB5B00989467 /* CourseDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB975151FECAB5B00989467 /* CourseDetailViewController.swift */; };
 		ECB975181FECAD7500989467 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB975171FECAD7500989467 /* FilterViewController.swift */; };
 		ECBA71981FCDC95100B7364A /* SearchBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBA71971FCDC95100B7364A /* SearchBox.swift */; };
 		ECC8E56F1FCFAF9200E49DCE /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC8E56E1FCFAF9200E49DCE /* CalendarViewController.swift */; };
@@ -34,13 +34,13 @@
 		1AFBAAE2DA9EBC15F77AC328 /* Pods_Course_Gnome.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Course_Gnome.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A1BFBF6E93E5DEE43688DEC /* Pods-Course Gnome.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Course Gnome.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Course Gnome/Pods-Course Gnome.debug.xcconfig"; sourceTree = "<group>"; };
 		D1D0B79AF72E4DBF39B2A884 /* Pods-Course Gnome.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Course Gnome.release.xcconfig"; path = "Pods/Target Support Files/Pods-Course Gnome/Pods-Course Gnome.release.xcconfig"; sourceTree = "<group>"; };
+		EC185A7F20087F8600960BF7 /* CourseDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailViewController.swift; sourceTree = "<group>"; };
 		EC308FCB1FF2D54400D17163 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC4F85F21FEF55F000D795B9 /* FilterNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterNavigationController.swift; sourceTree = "<group>"; };
 		EC5926521FCCE81C00E73268 /* CourseListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListViewController.swift; sourceTree = "<group>"; };
 		EC5A79531FC8A52900F38F34 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		EC5BAE131FEB61850056448F /* PersistanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistanceManager.swift; sourceTree = "<group>"; };
 		EC93F7952006A59800673DC7 /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
-		ECB975151FECAB5B00989467 /* CourseDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailViewController.swift; sourceTree = "<group>"; };
 		ECB975171FECAD7500989467 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		ECBA71971FCDC95100B7364A /* SearchBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBox.swift; sourceTree = "<group>"; };
 		ECC8E56E1FCFAF9200E49DCE /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
@@ -132,8 +132,8 @@
 				EC5A79531FC8A52900F38F34 /* TabBarController.swift */,
 				EC5926521FCCE81C00E73268 /* CourseListViewController.swift */,
 				ECC8E56E1FCFAF9200E49DCE /* CalendarViewController.swift */,
-				ECB975151FECAB5B00989467 /* CourseDetailViewController.swift */,
 				ECB975171FECAD7500989467 /* FilterViewController.swift */,
+				EC185A7F20087F8600960BF7 /* CourseDetailViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -350,11 +350,11 @@
 				ECCB1BAE1FC553C200DB7EB9 /* Course.swift in Sources */,
 				EC5BAE141FEB61850056448F /* PersistanceManager.swift in Sources */,
 				EC4F85F31FEF55F000D795B9 /* FilterNavigationController.swift in Sources */,
-				ECB975161FECAB5B00989467 /* CourseDetailViewController.swift in Sources */,
 				EC5A79541FC8A52900F38F34 /* TabBarController.swift in Sources */,
 				ECF5BD611FC4CED6006988B9 /* SearchViewController.swift in Sources */,
 				ECB975181FECAD7500989467 /* FilterViewController.swift in Sources */,
 				ECF5BD651FC4D202006988B9 /* SearchNavigationController.swift in Sources */,
+				EC185A8020087F8600960BF7 /* CourseDetailViewController.swift in Sources */,
 				ECF73F9F1FA7D2A800F030FC /* ViewController.swift in Sources */,
 				ECBA71981FCDC95100B7364A /* SearchBox.swift in Sources */,
 				ECF73F9D1FA7D2A800F030FC /* AppDelegate.swift in Sources */,
