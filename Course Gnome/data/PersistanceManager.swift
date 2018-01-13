@@ -96,7 +96,7 @@ class PersistanceManager {
         
         if let term = selections.courseAttribute { offerings = offerings.filter("ANY courseAttributes.name = %@", term) }
         if let term = selections.courseName { offerings = offerings.filter("courseName = %@", term) }
-        if let term = selections.subjectNumber { offerings = offerings.filter("subjectNumber = %@", term) }
+        if let term = selections.subjectNumber { offerings = offerings.filter("subjectNumber.string = %@", term) }
         
         var predicateString = ""
         let days = selections.days
@@ -182,6 +182,13 @@ class PersistanceManager {
         }
         return array
     }
+    
+    func getOffering(crn: String) -> Offering {
+        let realm = try! Realm()
+        let offering = realm.objects(Offering.self).filter("crn.name = %@", crn)
+        return offering[0]
+    }
+    
 }
 
 

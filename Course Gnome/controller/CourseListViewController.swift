@@ -17,6 +17,9 @@ class OfferingCell: UITableViewCell {
 
 class CourseListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    // offering to pass to detail view
+    var selectedCRN: String?
+    
     // get selection from search, matches one key from below
     var selectedSearch: String!
     var selectedCategory: String!
@@ -355,12 +358,15 @@ class CourseListViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedRow = tableView.cellForRow(at: indexPath) as! OfferingCell
+        selectedCRN = selectedRow.crnLabel.text
         performSegue(withIdentifier: "courseDetailSegue", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "courseDetailSegue") {
-//            let navViewController = segue.destination as? SearchNavigationController
+            let destinationVC = segue.destination as? CourseDetailViewController
+            destinationVC?.offeringCRN = selectedCRN
         } else {
             let navViewController = segue.destination as? SearchNavigationController
             let filterViewController = navViewController?.viewControllers.first as! FilterViewController

@@ -5,7 +5,7 @@ class Course: Object {
     @objc dynamic var department: Department? = nil
     @objc dynamic var subjectNumber: SubjectNumber? = nil
     @objc dynamic var courseName: String = ""
-    @objc dynamic var credit: Int = 0
+    let credit = RealmOptional<Int>()
     let offerings = List<Offering>()
 }
 
@@ -18,12 +18,12 @@ class Offering: Course {
     @objc dynamic var status: Status? = nil
     @objc dynamic var crn: CRN? = nil
     @objc dynamic var bulletinLink: String = ""
-    @objc dynamic var sectionNumber: String = ""
+    @objc dynamic var sectionNumber: String? = nil
     let instructors = List<Instructor>()
     let classDays = List<ClassDay>()
     @objc dynamic var start: String = ""
     @objc dynamic var end: String = ""
-    @objc dynamic var comment: String = ""
+    @objc dynamic var comment: String? = nil
     @objc dynamic var oldCourseNumber: String = ""
     @objc dynamic var findBooksLink: String = ""
     let xList = List<Course>()

@@ -98,7 +98,7 @@ class PullCourses {
                         let justNumbers = newCourse.subjectNumber?.string.trimmingCharacters(in: CharacterSet(charactersIn: "01234567890.").inverted)
                         newCourse.subjectNumber?.integer = Int(justNumbers!)!
                     }
-                    newCourse.credit = Int(course["credit"].stringValue)!
+                    newCourse.credit.value = Int(course["credit"].stringValue)!
                     
                     // get department
                     let found = realm.objects(Department.self).filter("acronym = %@", course["subjectAcronym"].stringValue)
@@ -120,7 +120,7 @@ class PullCourses {
                         newOffering.department = newCourse.department
                         newOffering.subjectNumber = newCourse.subjectNumber
                         newOffering.courseName = newCourse.courseName
-                        newOffering.credit = newCourse.credit
+                        newOffering.credit.value = newCourse.credit.value
                         
                         newOffering.courseName = offering["courseName"].stringValue
                         
@@ -178,7 +178,9 @@ class PullCourses {
                         
                         newOffering.start = offering["start"].stringValue
                         newOffering.end = offering["end"].stringValue
-                        newOffering.comment = offering["comment"].stringValue
+                        if (!offering["comment"].stringValue.isEmpty) {
+                            newOffering.comment = offering["comment"].stringValue
+                        }
                         newOffering.oldCourseNumber = offering["oldCourseNumber"].stringValue
                         newOffering.findBooksLink = offering["findBooksLink"].stringValue
                         

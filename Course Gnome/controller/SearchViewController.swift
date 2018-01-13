@@ -122,7 +122,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         // set up predicates to query for strings containing or beginning with text
         let predicates =  [NSPredicate(format: "name beginswith [c]'\(text)'"), NSPredicate(format: "name contains [c]'\(text)' and not name beginswith [c]'\(text)'")]
         let courseNamePredicates = [NSPredicate(format: "courseName beginswith [c]'\(text)'"), NSPredicate(format: "courseName contains [c]'\(text)' and not courseName beginswith [c]'\(text)'")]
-//        let subjectNumberPredicate = NSPredicate(format: "subjectNumber beginswith [c]'\(text)'")
 
         // in background do realm query
         DispatchQueue.global(qos: .background).async {
@@ -180,7 +179,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                         if (totalCount == maxResults) { break mainRun }
                     }
                 }
-                for result in realm.objects(Course.self).filter("subjectNumber beginswith '\(self.text)'") {
+                for result in realm.objects(Course.self).filter("subjectNumber.string beginswith '\(self.text)'") {
                     if (!realm.objects(SavedSearch.self).filter("search = %@", result.subjectNumber!.string).isEmpty) {
                         continue
                     }
@@ -219,13 +218,11 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         var categoryTitlesCount = 0
         if (!departments.isEmpty) { categoryTitlesCount += 1 }
         if (!crns.isEmpty) { categoryTitlesCount += 1 }
-        //if (!statuses.isEmpty) { categoryTitlesCount += 1 }
         if (!instructors.isEmpty) { categoryTitlesCount += 1 }
         if (!names.isEmpty) { categoryTitlesCount += 1 }
         if (!numbers.isEmpty) { categoryTitlesCount += 1 }
         if (!attributes.isEmpty) { categoryTitlesCount += 1 }
         return (categoryTitlesCount+savedSearches.count+departments.count+crns.count+attributes.count+instructors.count+names.count+numbers.count)
-        // statuses.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
