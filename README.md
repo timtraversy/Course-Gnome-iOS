@@ -9,4 +9,6 @@ App pictures: https://appsite.skygear.io/coursegnome/
 
 App video: https://youtu.be/bJYx7ZafNCk
 
+GWU New Venture Application Video: https://vimeo.com/253648687
+
 GWU's current course list: https://my.gwu.edu/mod/pws/coursesearch.cfm
