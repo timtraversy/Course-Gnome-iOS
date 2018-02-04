@@ -3,8 +3,6 @@ Delivering GWU's entire course registrar to your mobile device. Quickly filter b
 
 Still in development. If you'd like to see progress so far, check out the links below.
 
-Web app: www.coursegnome.com
-
 App pictures: https://appsite.skygear.io/coursegnome/
 
 App video: https://youtu.be/bJYx7ZafNCk
