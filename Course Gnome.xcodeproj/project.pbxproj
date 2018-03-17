@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		27A100D781C66EFA45D73938 /* Pods_Course_Gnome.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBAAE2DA9EBC15F77AC328 /* Pods_Course_Gnome.framework */; };
 		EC185A8020087F8600960BF7 /* CourseDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC185A7F20087F8600960BF7 /* CourseDetailViewController.swift */; };
+		EC185A82200AAD5C00960BF7 /* Hat.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC185A81200AAD5B00960BF7 /* Hat.swift */; };
+		EC185A84200AE23800960BF7 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC185A83200AE23800960BF7 /* HomeViewController.swift */; };
 		EC308FCC1FF2D54500D17163 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC308FCB1FF2D54400D17163 /* Assets.xcassets */; };
 		EC4F85F31FEF55F000D795B9 /* FilterNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4F85F21FEF55F000D795B9 /* FilterNavigationController.swift */; };
 		EC5926531FCCE81C00E73268 /* CourseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5926521FCCE81C00E73268 /* CourseListViewController.swift */; };
@@ -35,6 +37,8 @@
 		5A1BFBF6E93E5DEE43688DEC /* Pods-Course Gnome.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Course Gnome.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Course Gnome/Pods-Course Gnome.debug.xcconfig"; sourceTree = "<group>"; };
 		D1D0B79AF72E4DBF39B2A884 /* Pods-Course Gnome.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Course Gnome.release.xcconfig"; path = "Pods/Target Support Files/Pods-Course Gnome/Pods-Course Gnome.release.xcconfig"; sourceTree = "<group>"; };
 		EC185A7F20087F8600960BF7 /* CourseDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailViewController.swift; sourceTree = "<group>"; };
+		EC185A81200AAD5B00960BF7 /* Hat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hat.swift; sourceTree = "<group>"; };
+		EC185A83200AE23800960BF7 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		EC308FCB1FF2D54400D17163 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC4F85F21FEF55F000D795B9 /* FilterNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterNavigationController.swift; sourceTree = "<group>"; };
 		EC5926521FCCE81C00E73268 /* CourseListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListViewController.swift; sourceTree = "<group>"; };
@@ -113,6 +117,7 @@
 		EC6A74CB1FC33F900039840C /* view */ = {
 			isa = PBXGroup;
 			children = (
+				EC185A81200AAD5B00960BF7 /* Hat.swift */,
 				EC308FCB1FF2D54400D17163 /* Assets.xcassets */,
 				ECBA71971FCDC95100B7364A /* SearchBox.swift */,
 				ECF73FA01FA7D2A800F030FC /* Main.storyboard */,
@@ -134,6 +139,7 @@
 				ECC8E56E1FCFAF9200E49DCE /* CalendarViewController.swift */,
 				ECB975171FECAD7500989467 /* FilterViewController.swift */,
 				EC185A7F20087F8600960BF7 /* CourseDetailViewController.swift */,
+				EC185A83200AE23800960BF7 /* HomeViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -294,7 +300,13 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Course Gnome/Pods-Course Gnome-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire-SwiftyJSON/Alamofire_SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookCore/FacebookCore.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookLogin/FacebookLogin.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
+				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SearchTextField/SearchTextField.framework",
@@ -305,7 +317,13 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire_SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookLogin.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SearchTextField.framework",
@@ -346,6 +364,8 @@
 				ECC8E56F1FCFAF9200E49DCE /* CalendarViewController.swift in Sources */,
 				ECF5BD5F1FC4CE99006988B9 /* ProfileViewController.swift in Sources */,
 				ECCB1BAA1FC54DCA00DB7EB9 /* PullCourses.swift in Sources */,
+				EC185A82200AAD5C00960BF7 /* Hat.swift in Sources */,
+				EC185A84200AE23800960BF7 /* HomeViewController.swift in Sources */,
 				EC5926531FCCE81C00E73268 /* CourseListViewController.swift in Sources */,
 				ECCB1BAE1FC553C200DB7EB9 /* Course.swift in Sources */,
 				EC5BAE141FEB61850056448F /* PersistanceManager.swift in Sources */,

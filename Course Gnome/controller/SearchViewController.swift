@@ -48,7 +48,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     
     // define width of cancel button to move text view
     let cancelButtonSize: CGFloat = 70.0
-    var screenWidth: CGFloat =  0.0
     
     // outlets
     @IBOutlet weak var tableView: UITableView!
@@ -58,10 +57,21 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     // on load, determine screen size and set up delegates
     override func viewDidLoad() {
         super.viewDidLoad()
-        screenWidth = UIScreen.main.bounds.width
         tableView.dataSource = self
         tableView.delegate = self
         searchBox.delegate = self
+        
+        
+        
+//        var loader = WavesLoader.createProgressBasedLoader(with: Hat().getHatPath())
+//        loader.loaderColor = UIColor(named: "Red")
+//        loader.loaderStrokeColor = UIC
+//        loader.progress = 0.5
+//
+//        loader.showLoader()
+        
+        
+        
     }
     
     // update results so freshly saved search will appear

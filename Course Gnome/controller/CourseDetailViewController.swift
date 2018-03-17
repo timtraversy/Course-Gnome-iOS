@@ -103,7 +103,7 @@ class CourseDetailViewController: UIViewController {
                     instructorLabel.text = instructor.name
                     first = false
                 } else {
-                    instructorLabel.text! += "/n\(instructor.name)"
+                    instructorLabel.text! += "\n\(instructor.name)"
                 }
             }
         } else {
